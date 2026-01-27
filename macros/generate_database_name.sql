@@ -9,7 +9,7 @@ target. Database {% macro generate_database_name(custom_database_name=none, node
       {% set file_path = node.original_file_path %}
       {% if 'silver' in file_path  %}
           SILVER_UAT
-      {% elif 'gold' in file_path  %}
+      {% elif 'gold' in file_path  %}   
           GOLD_UAT
       {% elif 'datalake' in file_path  %}
           BRONZE_UAT
