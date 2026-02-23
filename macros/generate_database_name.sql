@@ -11,7 +11,7 @@ target. Database {% macro generate_database_name(custom_database_name=none, node
           SILVER_UAT
       {% elif 'gold' in file_path  %}
           GOLD_UAT
-      {% elif 'datalake' in file_path  %}
+      {% elif 'bronze' in file_path  %}
           BRONZE_UAT
       {% else %}
           {{target.database}} {# Default fallback to target database #}
@@ -23,7 +23,7 @@ target. Database {% macro generate_database_name(custom_database_name=none, node
           SILVER_PROD
       {% elif 'gold' in file_path  %}
           GOLD_PROD
-      {% elif 'datalake' in file_path  %}
+      {% elif 'bronze' in file_path  %}
           BRONZE_PROD
       {% else %}
           {{target.database}} {# Default fallback to target database #}
