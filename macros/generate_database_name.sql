@@ -2,7 +2,7 @@ target. Database {% macro generate_database_name(custom_database_name=none, node
  
   {%- set target_name = target.name -%}
  
-  {% if target_name == 'DEV' %}
+  {% if target_name == 'dev' %}
       DEVELOPMENT
   {% elif target_name == 'UAT' %}
      {# Non-dev, non-ci environments use folder-based database logic #}

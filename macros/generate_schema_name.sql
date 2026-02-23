@@ -2,7 +2,7 @@
 
     {%- set target_name = target.name -%}
 
-    {% if target_name == 'DEV' %}
+    {% if target_name == 'dev' %}
         {# Use the profile name to create a developer-specific schema #}
         {{target.schema}}
     {% else %}
