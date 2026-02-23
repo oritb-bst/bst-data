@@ -1,0 +1,8 @@
+sources:
+  - name: bronze
+    database: BRONZE_UAT
+    schema: RAW_PRIORITY
+    tables:
+      - name: CUSTOMERS
+      - name: FORECAST_PROJECTS
+      - name: INVOICES
