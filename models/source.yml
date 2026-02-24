@@ -6,3 +6,32 @@ sources:
       - name: CUSTOMERS
       - name: FORECAST_PROJECTS
       - name: INVOICES
+models:
+  - name: CUSTOMERS
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+
+  - name: INVOICES
+    columns:
+      - name: invoice_number
+        tests:
+          - not_null
+          - unique
+     
+
+  - name: FORECAST_PROJECTS
+    columns:
+      - name: project_doc_no
+        tests:
+          - not_null
+          - unique
+
+  - name: project_summary
+    columns:
+      - name: project_doc_no
+        tests:
+          - not_null
+          - unique
