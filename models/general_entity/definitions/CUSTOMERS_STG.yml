@@ -1,0 +1,8 @@
+models:
+  - name: CUSTOMERS_STG
+    columns:
+      - name: CUST
+        data_tests:
+          - unique
+          - not_null
+          

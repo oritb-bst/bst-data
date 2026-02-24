@@ -41,6 +41,10 @@ models:
     
     general_entity:
       +materialized: table
-      
-    example:
-      +materialized: table
+
+    project:
+       +materialized: table
+
+    
+    finance:
+       +materialized: table
