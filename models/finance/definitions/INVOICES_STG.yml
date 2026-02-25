@@ -1,0 +1,13 @@
+  models:
+  - name: INVOICES_STG
+    columns:
+      - name: invoice_number
+        data_tests:
+          - unique
+          - not_null
+      - name: doc_project
+        data_tests:
+          - unique
+
+          
+

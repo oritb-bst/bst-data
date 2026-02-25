@@ -1,0 +1,9 @@
+  models:
+  - name: FORECAST_PROJECTS_STG
+    columns:
+      - name: project_doc_no
+        data_tests:
+          - unique
+          - not_null
+      
+
