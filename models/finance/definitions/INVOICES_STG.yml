@@ -1,0 +1,8 @@
+  models:
+  - name: INVOICES_STG
+    columns:
+      - name: id
+        data_tests:
+          - unique
+          - not_null
+     
