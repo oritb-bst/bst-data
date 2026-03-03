@@ -1,6 +1,6 @@
-select
-    IVNUM as invoice_number,
-    DOC_PROJECT as doc_project,
-    IVDATE as invoice_date,
-    TOTPRICE as total_price
-from {{ source('bronze', 'INVOICES') }}
+SELECT
+    IVNUM AS INVOICE_NUMBER,
+    DOC_PROJECT,
+    IVDATE::DATE AS INVOICE_DATE,
+    TOTPRICE::FLOAT AS TOTAL_PRICE
+FROM {{ source('bronze', 'INVOICES') }}
