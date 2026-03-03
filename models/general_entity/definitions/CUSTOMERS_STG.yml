@@ -1,7 +1,7 @@
 models:
   - name: CUSTOMERS_STG
     columns:
-      - name: CUST
+      - name: customer_id
         data_tests:
           - unique
           - not_null
