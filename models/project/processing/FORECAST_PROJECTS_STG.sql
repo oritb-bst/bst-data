@@ -6,5 +6,6 @@ select
     STATDES as status_description,
     EARNCAST::decimal(18,2) as forecast_revenue,
     TOTEXPENSE::decimal(18,2) as forecast_expense,
+    FOREX as id,
     LOAD_TS
 from {{ source('bronze', 'FORECAST_PROJECTS') }}
