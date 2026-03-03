@@ -1,7 +1,7 @@
   models:
   - name: FORECAST_PROJECTS_STG
     columns:
-      - name: project_doc_no
+      - name: id
         data_tests:
           - unique
           - not_null
