@@ -6,3 +6,10 @@ sources:
       - name: CUSTOMERS
       - name: FORECAST_PROJECTS
       - name: INVOICES
+  - name: csv
+    database: BRONZE_UAT
+    schema: CSV_FILES
+    tables:
+      - name: CONTROL_MANAGEMENT_TARGET
+      - name: EXPENSES
+      - name: WORK_PLAN
