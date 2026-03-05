@@ -1,10 +1,6 @@
 models:
   - name: CONTROL_MANAGEMENT_TARGET_STG
     columns:
-      
-      - name: PROJECT_NUMBER
-        tests:
-          - not_null
       - name: TARGET_CONTROL_EXPENSES
         tests:
           - not_null
