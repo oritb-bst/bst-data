@@ -1,0 +1,12 @@
+models:
+  - name: CONTROL_MANAGEMENT_TARGET_STG
+    columns:
+      - name: TARGET_CONTROL_EXPENSES
+        tests:
+          - not_null
+      - name: TARGET_CONTROL_REVENUES
+        tests:
+          - not_null
+
+
+    
