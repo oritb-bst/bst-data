@@ -3,6 +3,6 @@ select
     DOC_PROJECT as "מספר פרויקט",
     INVOICE_DATE as "תאריך חשבונית",
     TOTAL_PRICE as "סכום חשבונית",
-    id 
+    id AS id_INVOICES
 
 from {{ ref('INVOICES_STG') }}
