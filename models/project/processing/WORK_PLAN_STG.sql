@@ -7,7 +7,7 @@ SELECT
             MONTH(MONTH_WORK_PLAN),
             1
         ),
-        'MM/YY'
+            'DD/MM/YYYY'                    
    ) AS MONTH_YEAR,
 	REVENUE,
 	EXPENSE
