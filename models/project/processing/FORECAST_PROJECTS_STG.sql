@@ -1,10 +1,13 @@
 select
-      DATE_FROM_PARTS(
-        2000 + TO_NUMBER(RIGHT(FORDATE, 2)),  -- שנה: '26' → 2026
-        TO_NUMBER(LEFT(FORDATE, 2)),          -- חודש: '01' → 1
-        1                                     -- יום ראשון של החודש
-    ) AS forecast_month,
-    PROJDOCNO as project_doc_no,
+ TO_CHAR(
+        DATE_FROM_PARTS(
+            2000 + TO_NUMBER(RIGHT(FORECAST_PROJECTS.FORDATE,2)),  -- שנה
+            TO_NUMBER(LEFT(FORECAST_PROJECTS.FORDATE,2)),          -- חודש
+            1                                                      -- יום
+        ),
+        'DD/MM/YYYY'
+   ) AS forecast_month,
+       PROJDOCNO as project_doc_no,
     PROJDES as project_description,
     OORDNAME as order_name,
     STATDES as status_description,
