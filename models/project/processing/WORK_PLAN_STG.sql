@@ -8,7 +8,7 @@ SELECT
             1                                                      -- יום
         ),
         'DD/MM/YYYY'
-   ) AS MONTH_WORK_PLAN,
+   )  ::DATE AS MONTH_WORK_PLAN,
    REVENUE,
    EXPENSE
 FROM {{ source('csv', 'WORK_PLAN') }}

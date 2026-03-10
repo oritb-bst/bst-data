@@ -6,7 +6,7 @@ select
             1                                                      -- יום
         ),
         'DD/MM/YYYY'
-   ) AS forecast_month,
+   )  ::DATE AS forecast_month,
        PROJDOCNO as project_doc_no,
     PROJDES as project_description,
     OORDNAME as order_name,
