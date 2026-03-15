@@ -1,0 +1,9 @@
+  models:
+  - name: DIM_PROJECTS_STG
+    columns:
+      - name: DOCNO
+        data_tests:
+          - unique
+          - not_null
+      
+

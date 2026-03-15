@@ -1,0 +1,9 @@
+  models:
+  - name: ORDERS_STG
+    columns:
+      - name: ORD
+        data_tests:
+          - unique
+          - not_null
+      
+
