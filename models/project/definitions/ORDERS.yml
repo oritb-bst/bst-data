@@ -1,7 +1,7 @@
   models:
   - name: ORDERS_STG
     columns:
-      - name: ORD
+      - name: ORDNAME
         data_tests:
           - unique
           - not_null
