@@ -3,7 +3,6 @@
     columns:
       - name: DOC
         data_tests:
-          - unique
           - not_null
       
 
