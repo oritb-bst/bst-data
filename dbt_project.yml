@@ -41,8 +41,7 @@ models:
     general_entity:
       +materialized: table
 
-    project:
+    Income Expenses:
        +materialized: table
 
-    finance:
-       +materialized: table
+ 
