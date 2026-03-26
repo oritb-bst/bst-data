@@ -6,6 +6,8 @@ select
     status_description as "סטאטוס תחזית", 
     forecast_revenue as "הכנסות",   
     forecast_expense as "הוצאות",    
+    forecast_revenue_new,
+    forecast_expense_new,
     id,   
     LOAD_TS 
 from {{ ref('FORECAST_PROJECTS_STG') }}
