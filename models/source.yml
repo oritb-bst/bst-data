@@ -5,6 +5,7 @@ sources:
     tables:
       - name: CUSTOMERS
       - name: FORECAST_PROJECTS
+      - name: FORECAST_INCOME_EXPENSES
       - name: INVOICES
       - name: DIM_PROJECTS
       - name: ORDERS
