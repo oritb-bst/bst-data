@@ -1,0 +1,6 @@
+SELECT
+    DOC_PROJECT as "מספר פרויקט",
+    INVOICE_DATE  as "Date",
+    INVOICES_ACTUALLY_NEW,
+    INVOICES_ACTUALLY_EXPENSE_NEW 
+from {{ ref('INVOICES_ACTUALLY_STG') }}

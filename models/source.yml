@@ -10,6 +10,7 @@ sources:
       - name: DIM_PROJECTS
       - name: ORDERS
       - name: ZCBS_PROJPOSITIONS
+      - name: INVOICES_ACTUALLY
 
   - name: csv
     database: BRONZE_UAT
