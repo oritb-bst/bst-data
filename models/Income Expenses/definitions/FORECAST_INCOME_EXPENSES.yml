@@ -1,0 +1,8 @@
+  models:
+  - name: FORECAST_INCOME_EXPENSES_STG
+    columns:
+      - name: project_doc_no
+        data_tests:
+          - not_null
+      
+

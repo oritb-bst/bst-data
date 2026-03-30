@@ -1,0 +1,7 @@
+  models:
+  - name: INVOICES_ACTUALLY_STG
+    columns:
+      - name: INVOICE_DATE
+        data_tests:
+          - not_null
+     
