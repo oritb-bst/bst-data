@@ -1,5 +1,5 @@
 select
-    forecast_month as "חודש ביצוע",    
+    forecast_month as "Date",    
     project_doc_no as "מספר פרויקט",   
     project_description as "תאור פרויקט",  
     order_name as "חוזה מזמין",    
