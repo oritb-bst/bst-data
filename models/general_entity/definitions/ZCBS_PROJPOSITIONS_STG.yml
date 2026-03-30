@@ -1,0 +1,8 @@
+  models:
+  - name: ZCBS_PROJPOSITIONS_STG
+    columns:
+      - name: DOC
+        data_tests:
+          - not_null
+      
+

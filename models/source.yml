@@ -6,6 +6,10 @@ sources:
       - name: CUSTOMERS
       - name: FORECAST_PROJECTS
       - name: INVOICES
+      - name: DIM_PROJECTS
+      - name: ORDERS
+      - name: ZCBS_PROJPOSITIONS
+
   - name: csv
     database: BRONZE_UAT
     schema: CSV_FILES
