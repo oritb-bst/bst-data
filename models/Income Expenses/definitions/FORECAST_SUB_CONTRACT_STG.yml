@@ -1,0 +1,8 @@
+  models:
+  - name: FORECAST_SUB_CONTRACT_STG
+    columns:
+      - name: forecast 
+        data_tests:
+          - not_null
+      
+
