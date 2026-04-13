@@ -6,6 +6,7 @@ sources:
       - name: CUSTOMERS
       - name: FORECAST_PROJECTS
       - name: FORECAST_INCOME_EXPENSES
+      - name: FORECAST_SUB_CONTRACT
       - name: INVOICES
       - name: DIM_PROJECTS
       - name: ORDERS
