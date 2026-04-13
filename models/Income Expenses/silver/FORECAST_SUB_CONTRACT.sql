@@ -9,4 +9,5 @@ select
 	status_desc as "סטטוס החשבון",
 	price as "מחיר כולל",
 	pay_date as "Date"
+    
 from {{ ref('FORECAST_SUB_CONTRACT_STG') }}
