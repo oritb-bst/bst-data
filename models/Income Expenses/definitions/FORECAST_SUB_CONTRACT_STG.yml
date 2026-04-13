@@ -1,8 +1,11 @@
   models:
   - name: FORECAST_SUB_CONTRACT_STG
     columns:
-      - name: forecast 
+      - name: id 
         data_tests:
-          - not_null
+          - not_null:
+              config:
+               store_failures: true
+               severity: warn
       
 

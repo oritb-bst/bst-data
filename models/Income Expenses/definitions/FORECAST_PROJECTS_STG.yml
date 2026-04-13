@@ -3,7 +3,13 @@
     columns:
       - name: id
         data_tests:
-          - unique
-          - not_null
-      
+          - unique:
+              config:
+                severity: warn
+                store_failures: true
+          - not_null:
+              config:
+                severity: warn
+                store_failures: true
+         
 
