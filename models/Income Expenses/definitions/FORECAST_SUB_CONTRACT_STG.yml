@@ -5,7 +5,6 @@
         data_tests:
           - not_null:
               config:
-               store_failures: true
                severity: warn
       
 
