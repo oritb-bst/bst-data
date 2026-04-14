@@ -6,10 +6,8 @@
           - unique:
               config:
                 severity: warn
-                store_failures: true
           - not_null:
               config:
                 severity: warn
-                store_failures: true
          
 
