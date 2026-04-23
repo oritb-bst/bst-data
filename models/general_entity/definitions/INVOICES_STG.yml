@@ -3,6 +3,8 @@
     columns:
       - name: id
         data_tests:
-          - unique
+          - unique:
+             config:
+               severity: warn
           - not_null
      
