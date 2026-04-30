@@ -1,8 +1,8 @@
 select    
     FKABLANIM as id,
 	ORDNAME as order_name,
-	SUPNAME as supplier_desc,
-	SUPDES as supplier_name,
+	SUPNAME as supplier_name,
+	SUPDES as supplier_desc,
 	DETAILS as details,
 	PREVALUE as prevalue,
 	BOOKNUM as book_num,
