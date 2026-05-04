@@ -8,7 +8,7 @@ from {{ source('bronze', 'BST_FKABLANIM') }}
 )
 
 select
-    FKABLANIM as ID,
+    cast(FKABLANIM as varchar) as ID,
     ORDNAME as ORDER_NAME,
     SUPNAME as SUPPLIER_NAME,
     SUPDES as SUPPLIER_DESC,
