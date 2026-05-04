@@ -1,5 +1,5 @@
   models:
-  - name: FORECAST_SUB_CONTRACT_STG
+  - name: BST_FKABLANIM_STG
     columns:
       - name: id 
         data_tests:

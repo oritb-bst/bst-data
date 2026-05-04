@@ -1,0 +1,32 @@
+with base as (
+
+select
+    *,
+    case when QPRICE is null then PREVALUE else 0 end as UNINVOICED_AMOUNT_SAFE
+from {{ source('bronze', 'BST_FKABLANIM') }}
+
+)
+
+select
+    FKABLANIM as ID,
+    ORDNAME as ORDER_NAME,
+    SUPNAME as SUPPLIER_NAME,
+    SUPDES as SUPPLIER_DESC,
+    DETAILS,
+    PREVALUE,
+    BOOKNUM as BOOK_NUM,
+    STATDES as STATUS_DESC,
+    QPRICE as PRICE,
+    PAYDATE as PAY_DATE,
+
+    QPRICE + UNINVOICED_AMOUNT_SAFE as total_invoice_amount,
+
+    PREVALUE - QPRICE - UNINVOICED_AMOUNT_SAFE as net_amount,
+
+    case when QPRICE is null then PREVALUE else null end as uninvoiced_amount
+
+from base
+
+
+
+
