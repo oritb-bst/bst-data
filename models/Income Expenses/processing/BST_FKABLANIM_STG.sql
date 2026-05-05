@@ -2,7 +2,7 @@ with base as (
 
 select
     *,
-    case when QPRICE is null then PREVALUE else 0 end as UNINVOICED_AMOUNT_SAFE
+    case when QPRICE is null or QPRICE=0 then PREVALUE else 0 end as UNINVOICED_AMOUNT_SAFE
 from {{ source('bronze', 'BST_FKABLANIM') }}
 
 )
@@ -24,7 +24,7 @@ select
 
     PREVALUE - QPRICE - UNINVOICED_AMOUNT_SAFE as net_amount,
 
-    case when QPRICE is null then PREVALUE else null end as uninvoiced_amount
+    case when QPRICE is null or QPRICE=0 then PREVALUE else null end as uninvoiced_amount
 
 from base
 
