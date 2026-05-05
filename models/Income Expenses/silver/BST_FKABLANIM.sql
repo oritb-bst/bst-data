@@ -1,5 +1,6 @@
 select    
     id as "תחזית פרויקט ID",
+    FOREX as "תחזית הוצאות ID",   
 	order_name as "חוזה קבלן",
 	supplier_desc as "שם קבלן",
 	supplier_name as "מספר קבלן",
