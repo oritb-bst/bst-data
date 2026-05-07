@@ -1,17 +1,17 @@
 select    
-    id as "תחזית פרויקט ID",
-    FOREX as "תחזית הוצאות ID",   
-	order_name as "חוזה קבלן",
-	supplier_desc as "שם קבלן",
-	supplier_name as "מספר קבלן",
-	details as "נושא",
-	prevalue as "הערכת טרום תקופה",
-	book_num as "מספר חשבון חלקי קבלן",
-	status_desc as "סטטוס החשבון",
-	price as "מחיר כולל",
-    uninvoiced_amount as "טרם הופק חשבון",
-    net_amount as "הקטנה",
-    total_invoice_amount as "סך החשבון",
-	pay_date as  "תאריך ת. תשלום"
+    id,
+    "FOREX", 
+	order_name,
+	supplier_desc,
+	supplier_name,
+	details,
+	prevalue,
+	book_num,
+	status_desc,
+	price,
+    uninvoiced_amount,
+    net_amount,
+    total_invoice_amount,
+	pay_date
     
 from {{ ref('BST_FKABLANIM_STG') }}
