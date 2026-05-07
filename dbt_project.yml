@@ -44,4 +44,7 @@ models:
     Income Expenses:
        +materialized: table
 
+    Budget_Control:
+       +materialized: table
+
  
