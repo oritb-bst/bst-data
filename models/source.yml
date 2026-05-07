@@ -23,3 +23,9 @@ sources:
       - name: CONTROL_MANAGEMENT_TARGET
       - name: EXPENSES
       - name: WORK_PLAN
+
+  - name: json
+    database: BRONZE_UAT
+    schema: RAW_PRIORITY_JSON
+    tables:
+      - name: BUD_FORECAST_R
