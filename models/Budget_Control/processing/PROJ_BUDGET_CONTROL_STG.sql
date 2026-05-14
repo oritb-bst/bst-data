@@ -3,7 +3,7 @@ select
     DOC      as PROJECT_ID,
     DOCNO    as PROJECT_NAME,
     CONMONTH as BUD_CONTROL_MONTH,
-    CONDATE  as BUD_CONTROL_DATE ,
+    CONDATE  as BUD_CONTROL_DATE,
     CURVERSION,
     SOURCE_DB
 from {{ source('bronze', 'BUD_CONTROLPERIODS_Z') }}
