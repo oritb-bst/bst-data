@@ -41,19 +41,20 @@ models:
     general_entity:
       +materialized: table
 
-      views:
-        +materialized: view
+      silver:
+        views:
+          +materialized: view
 
-    Income Expenses:
+    Income_Expenses:
       +materialized: table
 
-      views:
-        +materialized: view
+      silver:
+        views:
+          +materialized: view
 
     Budget_Control:
       +materialized: table
 
-      views:
-        +materialized: view
-
- 
+      silver:
+        views:
+          +materialized: view
