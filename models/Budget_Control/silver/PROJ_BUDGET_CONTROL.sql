@@ -1,8 +1,9 @@
 select 
-    "PERIOD",
+    BUD_CONTROL_PERIOD_ID,
     PROJECT_ID,
-    "MONTH",
-    DATE,
-    CURVERSION,
+    PROJECT_NAME,
+    BUD_CONTROL_MONTH,
+    BUD_CONTROL_DATE,
+    CURVERSION ,
     SOURCE_DB
 from {{ ref('PROJ_BUDGET_CONTROL_STG') }}
