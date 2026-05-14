@@ -1,5 +1,6 @@
 select
-    ORD  ,
-    CUSTNAME  as "מזמין" , 
-    ORDNAME AS "חוזה מזמין"
+    ORD,
+    CUSTNAME, 
+    ORDNAME,
+    SOURCE_DB
 from {{ ref('ORDERS_STG') }}

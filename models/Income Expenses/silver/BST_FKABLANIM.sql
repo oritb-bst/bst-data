@@ -12,6 +12,7 @@ select
     uninvoiced_amount,
     net_amount,
     total_invoice_amount,
-	pay_date
+	pay_date,
+    source_db
     
 from {{ ref('BST_FKABLANIM_STG') }}

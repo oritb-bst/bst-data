@@ -1,0 +1,12 @@
+select
+    forecast_month as "Date",    
+    project_doc_no as "מספר פרויקט",   
+    project_description as "תאור פרויקט",  
+    order_name as "חוזה מזמין",    
+    status_description as "סטאטוס תחזית", 
+    forecast_revenue as "הכנסות",   
+    forecast_expense as "הוצאות",    
+    id as "תחזית הוצאות ID",   
+    LOAD_TS,
+    SOURCE_DB  as "חברה"
+from {{ ref('FORECAST_PROJECTS') }}
