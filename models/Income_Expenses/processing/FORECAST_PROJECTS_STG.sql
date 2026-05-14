@@ -7,5 +7,6 @@ select
     (EARNCAST/1000) ::INTEGER AS forecast_revenue,
     (TOTEXPENSE/1000) ::INTEGER AS forecast_expense,
     FOREX as id,
-    LOAD_TS
+    LOAD_TS,
+    SOURCE_DB
 from {{ source('bronze', 'FORECAST_PROJECTS') }}

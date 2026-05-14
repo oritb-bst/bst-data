@@ -7,5 +7,6 @@ select
     forecast_revenue as "הכנסות",   
     forecast_expense as "הוצאות",    
     id as "תחזית הוצאות ID",   
-    LOAD_TS 
-from {{ ref('FORECAST_PROJECTS_STG') }}
+    LOAD_TS,
+    SOURCE_DB  as "חברה"
+from {{ ref('FORECAST_PROJECTS') }}

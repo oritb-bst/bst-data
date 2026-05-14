@@ -4,4 +4,4 @@ SELECT
 	MONTH_WORK_PLAN as "Date",
 	REVENUE as "תוכנית עבודה הכנסות",
 	EXPENSE as "תוכנית עבודה הוצאות"
-from {{ ref('WORK_PLAN_STG') }}
+from {{ ref('WORK_PLAN') }}

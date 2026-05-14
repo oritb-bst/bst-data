@@ -19,6 +19,7 @@ select
     STATDES as STATUS_DESC,
     QPRICE as PRICE,
     PAYDATE as PAY_DATE,
+    SOURCE_DB,
 
     QPRICE + UNINVOICED_AMOUNT_SAFE as total_invoice_amount,
 

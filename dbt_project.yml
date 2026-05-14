@@ -37,14 +37,24 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   my_new_project:
-    
+
     general_entity:
       +materialized: table
 
-    Income Expenses:
-       +materialized: table
+      silver:
+        views:
+          +materialized: view
+
+    Income_Expenses:
+      +materialized: table
+
+      silver:
+        views:
+          +materialized: view
 
     Budget_Control:
-       +materialized: table
+      +materialized: table
 
- 
+      silver:
+        views:
+          +materialized: view
