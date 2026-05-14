@@ -1,6 +1,6 @@
 select 
-    PROJECT_NAME as "שם פרויקט",
-    PROJECT_NUMBER as "מספר פרויקט",
-    EXPENSE_DATE  as "Date",
-    EXPENSE_AMOUNT as "סכום הוצאות",
+    PROJECT_NAME,
+    PROJECT_NUMBER,
+    EXPENSE_DATE,
+    EXPENSE_AMOUNT,
 from {{ ref('EXPENSES_STG') }}

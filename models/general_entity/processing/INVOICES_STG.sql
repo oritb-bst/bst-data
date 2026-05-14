@@ -3,5 +3,6 @@ SELECT
     DOC_PROJECT,
     IVDATE ::DATE AS  INVOICE_DATE,
     (TOTPRICE/1000)::INTEGER AS TOTAL_PRICE,
-    IV AS id
+    IV AS id,
+    SOURCE_DB
 FROM {{ source('bronze', 'INVOICES') }}

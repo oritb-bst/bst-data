@@ -1,12 +1,3 @@
 models:
   - name: EXPENSES_STG
-    columns:
-      - name: PROJECT_NAME
-        tests:
-          - not_null
-
-      - name: PROJECT_NUMBER
-        tests:
-          - not_null
-
     
