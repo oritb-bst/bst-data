@@ -12,6 +12,7 @@ select
     uninvoiced_amount as "טרם הופק חשבון",
     net_amount as "הקטנה",
     total_invoice_amount as "סך החשבון",
-	pay_date as  "תאריך ת. תשלום"
+	pay_date as  "תאריך ת. תשלום",
+    SOURCE_DB  as "חברה"
     
 from {{ ref('BST_FKABLANIM') }}
