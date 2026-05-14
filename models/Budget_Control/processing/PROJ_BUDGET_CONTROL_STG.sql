@@ -1,5 +1,5 @@
 select
-    "PERIOD",
+    "PERIOD" as PERIOD_ID,
     DOC      as PROJECT_ID,
     CONMONTH as "MONTH",
     CONDATE  as DATE,
