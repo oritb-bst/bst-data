@@ -1,8 +1,9 @@
 select
-    "PERIOD" as PERIOD_ID,
+    "PERIOD" as BUD_CONTROL_PERIOD_ID,
     DOC      as PROJECT_ID,
-    CONMONTH as "MONTH",
-    CONDATE  as DATE,
+    DOCNO    as PROJECT_NAME,
+    CONMONTH as BUD_CONTROL_MONTH,
+    CONDATE  as BUD_CONTROL_DATE,
     CURVERSION,
     SOURCE_DB
 from {{ source('bronze', 'BUD_CONTROLPERIODS_Z') }}
