@@ -1,0 +1,9 @@
+select 
+    PROJECT_ID,
+    VERSION_ID,
+    VER_DATE,
+	VER_DES,
+	IS_ZERO_EDITION,
+	IS_EXECUTED,  
+	SOURCE_DB
+from {{ ref('PROJ_BUD_VERSIONS_STG') }}
