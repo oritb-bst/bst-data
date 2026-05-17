@@ -13,6 +13,6 @@ select
 	CURRENT_BUDGET        as "תקציב הוצאות עדכני",
 	APPROVED_TO_PAY       as "מאושר לתשלום",
 	PREVIOUS_FORECAST     as "אומדן קודם (הוצאות)",
-    ORIGINAL_BUDGET       as "תקציב הוצאות מקורי",
+    ORIGINAL_BUDGET       as "תקציב הוצאות מקורי" ,
 	SOURCE_DB             as "חברה"
 from {{ ref('PROJ_BUD_EXP_FORECAST') }}
