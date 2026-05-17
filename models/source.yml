@@ -15,6 +15,12 @@ sources:
       - name: BUD_CONTROLPERIODS_Z
       - name: BUD_FORECAST
       - name: BUD_FORECAST_R
+      - name: BUD_FORCASTCONDITION
+      - name: PROJVERSIONS
+      - name: PROJACTS
+      - name: BUD_CHAPTERS
+      - name: COSTCENTERS
+
 
   - name: csv
     database: BRONZE_UAT
