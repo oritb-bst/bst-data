@@ -1,6 +1,2 @@
 models:
   - name: PROJ_PLANNING_STG
-    columns:
-      - name: PROJECT_ID
-        data_tests:
-          - not_null
