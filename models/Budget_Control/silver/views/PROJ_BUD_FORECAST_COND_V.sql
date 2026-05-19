@@ -1,3 +1,4 @@
+--BUD_FORCASTCONDITION
 select
 	BUD_CONTROL_PERIOD_ID              as "תקופה לבקרה",
 	CUST_CUMULATIVE_INCREASE           as "מזמין - התייקרות מצטברת",

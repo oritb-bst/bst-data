@@ -1,7 +1,8 @@
+--BUD_CONTROLPERIODS_Z
 select 
     BUD_CONTROL_PERIOD_ID as "תקופה לבקרה",
-    PROJECT_ID            as "מספר פרויקט",
-    PROJECT_NAME          as "שם פרויקט",
+    PROJECT_ID            as "פרויקט_ID",
+    PROJECT_NAME          as "מספר פרויקט",
     BUD_CONTROL_MONTH     as "חודש בקרה",
     BUD_CONTROL_DATE      as "תאריך בקרה",
     CURVERSION            as "מהדורה נוכחית",

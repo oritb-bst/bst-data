@@ -1,3 +1,4 @@
+--PROJACTS
 select 
     PROJPLAN_ID       as "תכנון פעילות",
 	PROJECT_ID        as "מספר פרויקט",

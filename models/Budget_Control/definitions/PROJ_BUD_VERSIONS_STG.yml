@@ -1,2 +1,6 @@
 models:
   - name: PROJ_BUD_VERSIONS_STG
+    columns:
+      - name: DOC
+        data_tests:
+          - not_null

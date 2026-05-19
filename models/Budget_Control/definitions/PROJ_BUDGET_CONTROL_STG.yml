@@ -1,2 +1,6 @@
 models:
   - name: PROJ_BUDGET_CONTROL_STG
+    columns:
+      - name: DOC
+        data_tests:
+          - not_null
