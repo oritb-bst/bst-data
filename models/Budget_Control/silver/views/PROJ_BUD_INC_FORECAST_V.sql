@@ -1,3 +1,4 @@
+--BUD_FORECAST_R
 select 
     FORECAST_ID                   as "צפי לגמר",
 	BUD_CONTROL_PERIOD_ID         as "תקופה לבקרה",

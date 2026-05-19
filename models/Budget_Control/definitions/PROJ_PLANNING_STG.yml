@@ -1,2 +1,6 @@
 models:
   - name: PROJ_PLANNING_STG
+    columns:
+      - name: DOC
+        data_tests:
+          - not_null

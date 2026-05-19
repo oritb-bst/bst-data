@@ -1,3 +1,4 @@
+--BUD_FORECAST
 select 
     FORECAST_ID           as "צפי לגמר",
 	USER_ID               as "משתמש",
