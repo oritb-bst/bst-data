@@ -1,6 +1,7 @@
+--DOCUMENTS_p
 select
-    DOCNO  as "מספר פרויקט",
-    DOC as id,
+    DOCNO as "מספר פרויקט",
+    DOC   as "פרויקט_ID",
     PROJDES as "שם פרויקט",
     PROJMANG as "שם מנהל פרויקט",
     PROJTYPECODE as "קוד סוג פרויקט",
