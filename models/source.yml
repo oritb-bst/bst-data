@@ -20,6 +20,8 @@ sources:
       - name: PROJACTS
       - name: BUD_CHAPTERS
       - name: COSTCENTERS
+      - name: MED_PORDERS
+      - name: MED_DOCUMENTS_P
 
 
   - name: csv
