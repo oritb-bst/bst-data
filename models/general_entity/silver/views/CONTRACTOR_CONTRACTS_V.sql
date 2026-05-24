@@ -8,5 +8,6 @@ select
 	PRICE_AFTER_DIS as "מחיר אחרי הנחה",
 	DATE,
     ORDER_NAME      as "שם הזמנה",
+    MED_TYPE_DESC   as "תיאור סוג חוזה",
 	SOURCE_DB       as "חברה"
 from {{ ref('CONTRACTOR_CONTRACTS') }}
