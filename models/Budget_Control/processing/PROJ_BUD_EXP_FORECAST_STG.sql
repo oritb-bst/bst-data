@@ -14,5 +14,6 @@ select
 	APPROVEDTOPAY  as APPROVED_TO_PAY,
 	EPREVFORECAST  as PREVIOUS_FORECAST,
     ORIGBUDGET     as ORIGINAL_BUDGET,
+    DOC            as PROJECT_ID,
 	SOURCE_DB
 from {{ source('bronze', 'BUD_FORECAST') }}
