@@ -9,6 +9,6 @@ select
 	CURRENT_REVENUE_BUDGET        as "תקציב הכנסות עדכני",
 	PREVIOUS_REVENUE_FORECAST     as "אומדן קודם (הכנסות)",
     ORIGINAL_REVENUE_BUDGET       as "תקציב הכנסות מקורי",
-    PROJECT_ID                    as "מספר פרויקט",
+    PROJECT_ID                    as "פרויקט_ID",
 	SOURCE_DB                     as "חברה"
 from {{ ref('PROJ_BUD_INC_FORECAST') }}
