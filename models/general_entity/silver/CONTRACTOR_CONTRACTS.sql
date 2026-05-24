@@ -7,6 +7,6 @@ select
 	MED_TYPE,
 	PRICE_AFTER_DIS,
 	DATE,
-    ORDER_NAME
+    ORDER_NAME,
 	SOURCE_DB 
 from {{ ref('CONTRACTOR_CONTRACTS_STG') }}
