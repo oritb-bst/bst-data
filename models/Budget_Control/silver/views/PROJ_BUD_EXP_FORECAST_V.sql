@@ -15,6 +15,6 @@ select
 	APPROVED_TO_PAY       as "מאושר לתשלום",
 	PREVIOUS_FORECAST     as "אומדן קודם (הוצאות)",
     ORIGINAL_BUDGET       as "תקציב הוצאות מקורי",
-    PROJECT_ID            as "מספר פרויקט",
+    PROJECT_ID            as "פרויקט_ID",
 	SOURCE_DB             as "חברה"
 from {{ ref('PROJ_BUD_EXP_FORECAST') }}
