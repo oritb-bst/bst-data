@@ -8,5 +8,7 @@ select
 	ACTIVITY_NAME     as "שם פעילות",
 	SUBMISSION_TOTAL_PRICE as "סך הכל מחיר הגשה",
 	MATERIAL_COST          as "עלות חומר לפעילות",
+    BUD_SUBCHAPTER_NAME    as "מספר תת פרק",
+    BUD_SUBCHAPTER_DES     as "תיאור תת פרק",
     SOURCE_DB              as "חברה"
 from {{ ref('PROJ_PLANNING') }}
