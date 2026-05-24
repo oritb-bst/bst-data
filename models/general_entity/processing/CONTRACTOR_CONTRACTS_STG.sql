@@ -7,6 +7,6 @@ SELECT
 	MED_TYPE        as MED_TYPE,
 	DISPRICE        as PRICE_AFTER_DIS,
 	CURDATE         as DATE,
-    ORDNAME         as ORDER_NAME
+    ORDNAME         as ORDER_NAME,
 	SOURCE_DB 
 FROM {{ source('bronze', 'MED_PORDERS') }}
