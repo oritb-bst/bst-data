@@ -8,5 +8,5 @@ select
 	PRICE_AFTER_DIS as "מחיר אחרי הנחה",
 	DATE,
     ORDER_NAME      as "שם הזמנה",
-	SOURCE_DB 
+	SOURCE_DB       as "חברה"
 from {{ ref('CONTRACTOR_CONTRACTS') }}
