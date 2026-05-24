@@ -7,6 +7,6 @@ select
 	MED_TYPE        as "סוג חוזה",
 	PRICE_AFTER_DIS as "מחיר אחרי הנחה",
 	DATE,
-    ORDER_NAME      as "שם הזמנה"
+    ORDER_NAME      as "שם הזמנה",
 	SOURCE_DB 
 from {{ ref('CONTRACTOR_CONTRACTS') }}
