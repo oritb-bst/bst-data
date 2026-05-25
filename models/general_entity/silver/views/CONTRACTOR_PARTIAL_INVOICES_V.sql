@@ -4,6 +4,6 @@ select
 	CONTRACTOR_NAME     as "שם קבלן",
 	CONTRACTOR_DES      as "תיאור קבלן",
 	PARTIAL_INVOICE_NUM as "מספר חשבון",
-	Date,
+	Date ,
 	SOURCE_DB           as "חברה"
 from {{ ref('CONTRACTOR_PARTIAL_INVOICES') }}
