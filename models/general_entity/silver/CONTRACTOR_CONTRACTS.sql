@@ -6,7 +6,7 @@ select
 	PRICETOAPP,
 	MED_TYPE,
 	PRICE_AFTER_DIS,
-	DATE,
+	Date,
     ORDER_NAME,
     MED_TYPE_DESC,
 	SOURCE_DB 
