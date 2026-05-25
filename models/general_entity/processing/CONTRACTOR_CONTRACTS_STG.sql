@@ -11,5 +11,6 @@ SELECT
     CASE WHEN MED_TYPE = 'CO' THEN 'חוזה'
          WHEN MED_TYPE = 'CH' THEN 'הוראת שינוי'
     ELSE MED_TYPE END as MED_TYPE_DESC,
+    STATDES         as STATUS_CON,
 	SOURCE_DB 
 FROM {{ source('bronze', 'MED_PORDERS') }}
