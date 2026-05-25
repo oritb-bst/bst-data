@@ -1,6 +1,6 @@
 select 
     PROJECT_ID      as "פרויקט_ID",
-	PROJECT_NAME    as "שם פרויקט",
+	PROJECT_NAME    as "מספר פרויקט",
 	CONTRACTOR_NAME as "שם קבלן",
 	CONTRACTOR_DES  as "תיאור קבלן",
 	PRICETOAPP      as "מצטבר חוזה",
