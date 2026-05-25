@@ -5,7 +5,7 @@ select
 	CONTRACTOR_DES  as "תיאור קבלן",
 	PRICETOAPP      as "מצטבר חוזה",
 	MED_TYPE        as "סוג חוזה",
-	PRICE_AFTER_DIS as "מחיר אחרי הנחה",
+	PRICE_AFTER_DIS_CON as "מחיר חוזה אחרי הנחה",
 	CURDATE         as "Date",
     ORDER_NAME      as "שם הזמנה",
     MED_TYPE_DESC   as "תיאור סוג חוזה",
