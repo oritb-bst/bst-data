@@ -6,7 +6,7 @@ SELECT
 	ZCBS_PRICETOAPP as PRICETOAPP,
 	MED_TYPE        as MED_TYPE,
 	DISPRICE        as PRICE_AFTER_DIS,
-	CURDATE         as "Date",
+	CURDATE,
     ORDNAME         as ORDER_NAME,
     CASE WHEN MED_TYPE = 'CO' THEN 'חוזה'
          WHEN MED_TYPE = 'CH' THEN 'הוראת שינוי'
