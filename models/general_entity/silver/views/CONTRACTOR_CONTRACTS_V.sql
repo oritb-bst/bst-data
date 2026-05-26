@@ -9,6 +9,6 @@ select
 	CURDATE         as "Date",
     ORDER_NAME      as "שם הזמנה",
     MED_TYPE_DESC   as "תיאור סוג חוזה",
-    STATUS_CON      as "סטטוס חוזה",
+    STATUS_CON      as "סטטוס חוזה" ,
 	SOURCE_DB       as "חברה"
 from {{ ref('CONTRACTOR_CONTRACTS') }}
