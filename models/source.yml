@@ -22,6 +22,7 @@ sources:
       - name: COSTCENTERS
       - name: MED_PORDERS
       - name: MED_DOCUMENTS_P
+      - name: SUPPLIERS
 
 
   - name: csv
