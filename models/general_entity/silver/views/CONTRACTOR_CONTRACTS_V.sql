@@ -1,8 +1,9 @@
+--MED_PORDERS
 select 
     PROJECT_ID      as "פרויקט_ID",
 	PROJECT_NAME    as "מספר פרויקט",
-	CONTRACTOR_NAME as "שם קבלן",
-	CONTRACTOR_DES  as "תיאור קבלן",
+	SUP_NAME        as "מספר קבלן",
+	SUP_DES         as "תיאור קבלן",
 	PRICETOAPP      as "מצטבר חוזה",
 	MED_TYPE        as "סוג חוזה",
 	PRICE_AFTER_DIS_CON as "מחיר חוזה אחרי הנחה",
