@@ -13,4 +13,4 @@ SELECT
     ELSE MED_TYPE END as MED_TYPE_DESC,
     STATDES         as STATUS_CON ,
 	SOURCE_DB 
-FROM {{ ref('MED_PORDERS') }}
+FROM {{ ref('MED_PORDERS_J') }}

@@ -6,4 +6,4 @@ select
     CONDATE  as BUD_CONTROL_DATE,
     CURVERSION,
     SOURCE_DB
-from {{ source('bronze', 'BUD_CONTROLPERIODS_Z') }}
+from {{ ref('BUD_CONTROLPERIODS_Z_J') }}
