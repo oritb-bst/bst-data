@@ -1,3 +1,3 @@
 select
  *
-from {{ source('bronze', 'ORDERS') }}
+from {{ ref('ORDERS') }}

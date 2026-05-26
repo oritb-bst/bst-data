@@ -8,4 +8,5 @@ SELECT
     DISPRICE  as PRICE_AFTER_DISCOUNT_INV,
     STATDES   as STATUS_INV,
 	SOURCE_DB
-FROM {{ source('bronze', 'MED_DOCUMENTS_P') }}
+FROM {{ ref('MED_DOCUMENTS_P') }}
+
