@@ -1,0 +1,9 @@
+--DOCUMENTS_P
+select
+    PROJECT_NAME,
+    SUP_NAME,
+    CURDATE,
+    PRICE_AFTER_DIS_GR,
+    STATUS_GR,
+    SOURCE_DB
+from {{ ref('GOODS_RECEIPTS_STG') }}
