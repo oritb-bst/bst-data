@@ -1,4 +1,4 @@
 --DOCUMENTS_p
 select
  *
-from {{ source('bronze', 'DIM_PROJECTS') }}
+from {{ ref('DIM_PROJECTS_J') }}

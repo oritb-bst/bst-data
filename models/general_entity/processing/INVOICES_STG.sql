@@ -5,4 +5,4 @@ SELECT
     (TOTPRICE/1000)::INTEGER AS TOTAL_PRICE,
     IV AS id,
     SOURCE_DB
-FROM {{ source('bronze', 'INVOICES') }}
+FROM {{ ref('CINVOICES_J') }}
