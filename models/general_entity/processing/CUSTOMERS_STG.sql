@@ -3,4 +3,4 @@ SELECT
     CUSTNAME as customer_name,
     CUSTDES as customer_description,
     SOURCE_DB
-FROM {{ ref('CUSTOMERS') }}
+FROM {{ ref('CUSTOMERS_J') }}

@@ -56,3 +56,5 @@ sources:
       - name: MED_DOCUMENTS_P
       - name: DIM_PROJECTS
       - name: COSTCENTERS3Q
+      - name: SUPPLIERS
+      - name: PORDERS

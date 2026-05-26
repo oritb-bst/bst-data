@@ -1,3 +1,3 @@
 select
  *
-from {{ ref('ORDERS') }}
+from {{ ref('ORDERS_J') }}

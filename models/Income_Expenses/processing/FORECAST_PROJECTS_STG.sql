@@ -1,5 +1,5 @@
 select
-    TO_DATE('01/' || FORECAST_PROJECTS.FORDATE , 'DD/MM/YY') ::DATE AS forecast_month,
+    TO_DATE('01/' || FORECAST_PROJECTS_J.FORDATE , 'DD/MM/YY') ::DATE AS forecast_month,
     PROJDOCNO as project_doc_no,
     PROJDES as project_description,
     OORDNAME as order_name,
@@ -9,4 +9,4 @@ select
     FOREX as id,
     LOAD_TS,
     SOURCE_DB
-from {{ source('bronze', 'FORECAST_PROJECTS') }}
+from {{ ref('FORECAST_PROJECTS_J') }}
