@@ -4,7 +4,7 @@
 
     {% if target_name == 'dev' %}
         DEVELOPMENT
-    {% elif target_name == 'UAT' %}
+    {% elif target_name == 'uat' %}
        {# Non-dev, non-ci environments use folder-based database logic #}
         {% set file_path = node.original_file_path %}
         {% if 'silver' in file_path  %}
@@ -25,6 +25,8 @@
             SILVER_PROD
         {% elif 'gold' in file_path  %}
             GOLD_PROD
+        {% elif 'jsonextract' in file_path  %}
+            BRONZE_UAT
         {% elif 'bronze' in file_path  %}
             BRONZE_PROD
         {% elif 'processing' in file_path  or 'ready' in file_path %}
