@@ -37,4 +37,22 @@ sources:
     database: BRONZE_UAT
     schema: RAW_PRIORITY_JSON
     tables:
-      - name: BUD_FORECAST_R
+      - name: BST_FOREXSUB
+      - name: BST_FKABLANIM_SUBFORM
+      - name: BUD_FORECAST_R_SUBFORM
+      - name: BUD_CHAPTERS
+      - name: BUD_CONTROLPERIODS_Z
+      - name: BUD_FORCASTCONDITION_SUBFORM
+      - name: BUD_FORECAST_SUBFORM
+      - name: BUD_TOPCHAP
+      - name: CUSTOMERS
+      - name: DOCUMENTS_P
+      - name: CINVOICES
+      - name: MED_PORDERS
+      - name: ORDERS
+      - name: PROJACTS_SUBFORM
+      - name: PROJVERSIONS_SUBFORM
+      - name: ZCBS_PROJPOSITIONS_SUBFORM
+      - name: MED_DOCUMENTS_P
+      - name: DIM_PROJECTS
+      - name: COSTCENTERS3Q
