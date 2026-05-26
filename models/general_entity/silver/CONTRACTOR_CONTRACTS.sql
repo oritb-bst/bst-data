@@ -1,6 +1,5 @@
 --MED_PORDERS
 select 
-   
 	PROJECT_NAME,
 	SUP_NAME,
 	SUP_DES,
@@ -10,6 +9,6 @@ select
 	CURDATE,
     ORDER_NAME,
     MED_TYPE_DESC,
-    STATUS_CON,
+    STATUS_CON ,
 	SOURCE_DB 
 from {{ ref('CONTRACTOR_CONTRACTS_STG') }}
