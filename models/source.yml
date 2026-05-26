@@ -47,7 +47,7 @@ sources:
       - name: BUD_FORECAST_SUBFORM
       - name: BUD_TOPCHAP
       - name: CUSTOMERS
-      - name: DOCUMENTS_P
+      - name: DOCUMENTS_p
       - name: CINVOICES
       - name: MED_PORDERS
       - name: ORDERS
