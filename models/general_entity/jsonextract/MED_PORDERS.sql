@@ -1,5 +1,5 @@
 select
-    item.value:DOCPROJ::number              as DOCPROJ,
+   
     item.value:PROJDOCNO::string            as PROJDOCNO,
     item.value:SUPNAME::string              as SUPNAME,
     item.value:CDES::string                 as CDES,
