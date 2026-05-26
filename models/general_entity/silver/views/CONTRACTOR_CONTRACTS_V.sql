@@ -1,6 +1,6 @@
 --MED_PORDERS
 select 
-    PROJECT_ID      as "פרויקט_ID",
+   
 	PROJECT_NAME    as "מספר פרויקט",
 	SUP_NAME        as "מספר קבלן",
 	SUP_DES         as "תיאור קבלן",
