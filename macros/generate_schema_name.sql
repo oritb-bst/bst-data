@@ -9,6 +9,8 @@
             READY
         {% elif 'processing' in file_path %}
             PROCESSING
+        {% elif 'JsonExtract' in file_path %}
+            RAW_PRIORITY
         {% else %}
             MAIN
         {% endif %}
