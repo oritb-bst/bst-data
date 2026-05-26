@@ -1,0 +1,9 @@
+--DOCUMENTS_P
+select
+    PROJDOCNO as PROJECT_NAME,
+    SUPNAME   as SUP_NAME,
+    CURDATE,
+    DISPRICE  as PRICE_AFTER_DIS_GR,
+    STATDES   as STATUS_GR,
+    SOURCE_DB
+from {{ ref('DOCUMENTS_P_J') }}
