@@ -1,6 +1,5 @@
 --MED_PORDERS
 select 
-   
 	PROJECT_NAME,
 	SUP_NAME,
 	SUP_DES,
