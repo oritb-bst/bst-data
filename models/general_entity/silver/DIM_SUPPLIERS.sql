@@ -3,5 +3,7 @@ select
     SUP_ID,
 	SUP_NAME,
 	SUP_DES,
+    SUP_TYPE_CODE,
+    SUP_TYPE_DES,
 	SOURCE_DB
 from {{ ref('DIM_SUPPLIERS_STG') }}
