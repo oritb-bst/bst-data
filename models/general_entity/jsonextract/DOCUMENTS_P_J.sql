@@ -1,9 +1,10 @@
 SELECT
     item.value:PROJDOCNO::string        AS PROJDOCNO,
-    item.value:SUPNAME::string            AS SUPNAME,
+    item.value:SUPNAME::string          AS SUPNAME,
     item.value:CURDATE::date            AS CURDATE,
-    item.value:DISPRICE::float         AS DISPRICE,
+    item.value:DISPRICE::float          AS DISPRICE,
     item.value:STATDES::string          AS STATDES,
+    item.value:DOCNO::string            AS DOCNO,
     SOURCE_DB::string                   AS SOURCE_DB
 
 FROM {{ source('json', 'DOCUMENTS_P') }},

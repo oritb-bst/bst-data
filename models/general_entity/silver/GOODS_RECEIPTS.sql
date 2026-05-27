@@ -5,5 +5,6 @@ select
     CURDATE,
     PRICE_AFTER_DIS_GR,
     STATUS_GR,
+    DOCUMENT_NAME,
     SOURCE_DB
 from {{ ref('GOODS_RECEIPTS_STG') }}
