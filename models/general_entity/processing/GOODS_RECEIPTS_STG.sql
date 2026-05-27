@@ -7,4 +7,5 @@ select
     STATDES   as STATUS_GR,
     DOCNO     as DOCUMENT_NAME,
     SOURCE_DB
-from {{ ref('DOCUMENTS_P_J') }}
+--from {{ ref('DOCUMENTS_P_J') }}
+FROM {{ source('bronze', 'DOCUMENTS_P') }}
