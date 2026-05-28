@@ -7,4 +7,4 @@ SELECT
 	STATDES   as STATUS_PORD,
     ORDNAME   as PORDER_NAME,
 	SOURCE_DB
-FROM {{ source('bronze', 'PORDERS') }}
+FROM {{ ref('PORDERS_J') }}
