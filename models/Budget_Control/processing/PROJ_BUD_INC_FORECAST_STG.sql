@@ -10,4 +10,4 @@ select
 	RPREVFORECAST  as PREVIOUS_REVENUE_FORECAST,
     DOC            as PROJECT_ID,
 	SOURCE_DB
-from {{ source('bronze', 'BUD_FORECAST_R') }}
+from {{ ref ('BUD_FORECAST_R_J') }}

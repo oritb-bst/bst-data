@@ -10,4 +10,4 @@ select
     BUD_SUBCHAPTERNAME as BUD_SUBCHAPTER_NAME,
     BUD_SUBCHAPTERDES  as BUD_SUBCHAPTER_DES,
 	SOURCE_DB
-from {{ source('bronze', 'PROJACTS') }}
+from {{ ref ('PROJACTS_J') }}

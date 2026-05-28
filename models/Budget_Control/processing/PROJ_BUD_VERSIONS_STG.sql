@@ -6,4 +6,4 @@ select
 	BUD_ZERO    as IS_ZERO_EDITION,
 	BUD_EXECUTE as IS_EXECUTED,  
 	SOURCE_DB
-from {{ source('bronze', 'PROJVERSIONS') }}
+from {{ ref ('PROJVERSIONS_J') }}

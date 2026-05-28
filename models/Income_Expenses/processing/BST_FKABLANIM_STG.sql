@@ -3,7 +3,7 @@ with base as (
 select
     *,
     case when QPRICE is null or QPRICE=0 then PREVALUE else 0 end as UNINVOICED_AMOUNT_SAFE
-from {{ source('bronze', 'BST_FKABLANIM') }}
+from {{ ref('BST_FKABLANIM_J') }}
 
 )
 
