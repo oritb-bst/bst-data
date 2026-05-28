@@ -1,6 +1,6 @@
 SELECT
     item.value:IVNUM::string            AS IVNUM,
-    item.value:DOC_PROJECT::string      AS DOC_PROJECT,
+    item.value:PROJDOCNO::string        AS DOC_PROJECT,
     item.value:IVDATE::date             AS IVDATE,
     item.value:TOTPRICE::number(18,2)   AS TOTPRICE,
     item.value:IV::number(18,0)         AS IV,
