@@ -4,8 +4,8 @@ SELECT
     item.value:CONMONTH::string         AS CONMONTH,
     item.value:CONDATE::date            AS CONDATE,
     item.value:CURVERSION::number(3,0)  AS CURVERSION,
-    item.value:SOURCE_DB::string       AS SOURCE_DB,
-    item.value:DOCNO::string           AS DOCNO
+    SOURCE_DB::string                   AS SOURCE_DB
+    item.value:DOCNO::string            AS DOCNO
 
 FROM {{ source('json', 'BUD_CONTROLPERIODS_Z') }},
 LATERAL FLATTEN(input => DATA) item
