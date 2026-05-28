@@ -19,4 +19,4 @@ SELECT
 
 FROM {{ source('json', 'BUD_FORECAST_SUBFORM') }},
 LATERAL FLATTEN(input => DATA) item,
-LATERAL FLATTEN(input => item.value) sub
+LATERAL FLATTEN(input => item.value:BUD_FORECAST_SUBFORM) sub
