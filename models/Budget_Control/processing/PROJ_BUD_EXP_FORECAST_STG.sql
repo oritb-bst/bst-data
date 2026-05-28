@@ -16,4 +16,4 @@ select
     ORIGBUDGET     as ORIGINAL_BUDGET,
     DOC            as PROJECT_ID,
 	SOURCE_DB
-from {{ source('bronze', 'BUD_FORECAST') }}
+from {{ ref ('BUD_FORECAST_J') }}

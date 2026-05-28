@@ -6,4 +6,4 @@ select
 	EFCINCREASETOPAY   as CONTRACTOR_FORECASTED_INCREASE_TO_PAY,
     DOC                as PROJECT_ID,
 	SOURCE_DB
-from {{ source('bronze', 'BUD_FORCASTCONDITION') }}
+from {{ ref ('BUD_FORCASTCONDITION_J') }}
