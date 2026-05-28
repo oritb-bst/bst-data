@@ -1,0 +1,12 @@
+SELECT
+    sub.value:CUSTLINKING::FLOAT            AS CUSTLINKING,
+    sub.value:EFCINCREASERECIEVE::FLOAT     AS EFCINCREASERECIEVE,
+    sub.value:LINKING::FLOAT                AS LINKING,
+    sub.value:EFCINCREASETOPAY::FLOAT       AS EFCINCREASETOPAY,
+    SOURCE_DB::STRING                       AS SOURCE_DB,
+    sub.value:PERIOD::NUMBER(38,0)          AS PERIOD,
+    sub.value:DOC::NUMBER(38,0)             AS DOC
+
+FROM {{ source('json', 'BUD_FORCASTCONDITION_SUBFORM') }},
+LATERAL FLATTEN(INPUT => DATA) item,
+LATERAL FLATTEN(INPUT => item.value) sub

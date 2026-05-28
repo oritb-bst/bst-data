@@ -1,4 +1,4 @@
 select
  *
-from {{ source('bronze', 'ZCBS_PROJPOSITIONS') }}
+from {{ ref ('ZCBS_PROJPOSITIONS_J') }}
 where POSITIONCODE = 33
