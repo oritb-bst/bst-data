@@ -5,5 +5,5 @@ SELECT
     NULL::FLOAT                         AS INVOICES_ACTUALLY_NEW,
     NULL::FLOAT                         AS INVOICES_ACTUALLY_EXPENSE_NEW
 
-FROM {{ source('json', 'INVOICES_ACTUALLY') }},
+FROM {{ source('json', 'CINVOICES') }},
 LATERAL FLATTEN(input => DATA) item
