@@ -4,7 +4,7 @@ select
     PROJECT_ID            as "פרויקט_ID",
     PROJECT_NAME          as "מספר פרויקט",
     BUD_CONTROL_MONTH     as "חודש בקרה",
-    BUD_CONTROL_DATE      as "תאריך בקרה",
+    BUD_CONTROL_DATE      as "Date",
     CURVERSION            as "מהדורה נוכחית",
     SOURCE_DB             as "חברה"
 from {{ ref('PROJ_BUDGET_CONTROL') }}
