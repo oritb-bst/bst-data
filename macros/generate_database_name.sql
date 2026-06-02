@@ -11,7 +11,9 @@
             SILVER_UAT
         {% elif 'gold' in file_path  %}
             GOLD_UAT
-        {% elif 'bronze' in file_path  or 'jsonextract' in file_path%}
+        {% elif 'jsonextract' in file_path %}
+            BRONZE_UAT
+        {% elif 'bronze' in file_path %}
             BRONZE_UAT
         {% elif 'processing' in file_path  or 'ready' in file_path %}
             STAGING_UAT
