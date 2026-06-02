@@ -1,6 +1,6 @@
 {% macro generate_database_name(custom_database_name=none, node=none) -%}
 
-    {%- set target_name = target.name -%}
+    {%- set target_name = target.name | lower -%}
 
     {% if target_name == 'dev' %}
         DEVELOPMENT
