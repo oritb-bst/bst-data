@@ -2,18 +2,18 @@
 SELECT
     COSTCNAME as SUB_CHAPTER_NAME,
 	COSTCDES  as SUB_CHAPTER_DES,
-    case 
-        when COSTCNAME = '991, 993' then null
-        else COSTCNAME
-    end as SUB_CHAPTER_CODE_FOR_BUD_CONTROL,
-    case 
-        when COSTCNAME = '991, 993' then 'התייקרות עתידית'
-        when COSTCNAME = '991, 993' then 'התייקרות מצטבר'
-        when COSTCNAME = '991, 993' then 'קיזוזי חוזי בפועל'
-        when COSTCNAME = '991, 993' then 'קיזוז חוזי עתידי'
-        when COSTCNAME = '991, 993' then 'קיזוז ידני בפועל'
-        when COSTCNAME = '991, 993' then 'ידני עתידי'
-        else COSTCDES
-    end as SUB_CHAPTER_DES_FOR_BUD_CONTROL,
+    CASE 
+        WHEN COSTCNAME IN ('991','993') THEN NULL 
+        ELSE COSTCNAME
+    END AS SUB_CHAPTER_NAME_FOR_BUD_CONTROL,
+    CASE 
+        WHEN COSTCNAME = '991' THEN 'התייקרות עתידית'
+        WHEN COSTCNAME = '991' THEN 'התייקרות מצטבר'
+        WHEN COSTCNAME = '993' THEN 'קיזוזי חוזי בפועל'
+        WHEN COSTCNAME = '993' THEN 'קיזוז חוזי עתידי'
+        WHEN COSTCNAME = '993' THEN 'קיזוז ידני בפועל'
+        WHEN COSTCNAME = '993' THEN 'ידני עתידי'
+        ELSE COSTCDES
+    END AS SUB_CHAPTER_DES_FOR_BUD_CONTROL,
 	SOURCE_DB
 FROM {{ ref('COSTCENTERS3Q_J') }}
