@@ -61,3 +61,5 @@ sources:
       - name: SUPPLIERS
       - name: PORDERS
       - name: DOCUMENTS_P
+      - name: ACCOUNTS
+      - name: ACCFNCITEMS2
