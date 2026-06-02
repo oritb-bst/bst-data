@@ -6,7 +6,8 @@
         DEVELOPMENT
     {% elif target_name == 'uat' %}
        {# Non-dev, non-ci environments use folder-based database logic #}
-        {%- set file_path = node.original_file_path | lower -%}
+       -- {%- set file_path = node.original_file_path | lower -%}
+        {%- set file_path = node.path | lower -%}
         {% if 'silver' in file_path  %}
             SILVER_UAT
         {% elif 'gold' in file_path  %}
@@ -22,7 +23,8 @@
         {% endif %}
     {% else %}
         {# Non-dev, non-ci environments use folder-based database logic #}
-        {%- set file_path = node.original_file_path | lower -%}
+       -- {%- set file_path = node.original_file_path | lower -%}
+        {%- set file_path = node.path | lower -%}
         {% if 'silver' in file_path  %}
             SILVER_PROD
         {% elif 'gold' in file_path  %}
