@@ -3,7 +3,7 @@ WITH mapping AS (
     UNION ALL
     SELECT '991', 'התייקרות מצטבר'
     UNION ALL
-    SELECT '993', 'קיזוזי חוזי בפועל'
+    SELECT '993', 'קיזוז חוזי בפועל'
     UNION ALL
     SELECT '993', 'קיזוז חוזי עתידי'
     UNION ALL
