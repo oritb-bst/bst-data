@@ -8,3 +8,4 @@ SELECT
     ORDNAME   as PORDER_NAME,
 	SOURCE_DB
 FROM {{ ref('PORDERS_J') }}
+WHERE STATDES NOT IN ('מבוטלת', 'טיוטא','מבוטל')
