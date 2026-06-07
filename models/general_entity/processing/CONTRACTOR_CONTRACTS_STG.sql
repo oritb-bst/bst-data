@@ -14,3 +14,4 @@ SELECT
     STATDES         as STATUS_CON,
 	SOURCE_DB 
 FROM {{ ref('MED_PORDERS_J') }}
+WHERE STATDES NOT IN ('מבוטלת', 'טיוטא')

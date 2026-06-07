@@ -8,4 +8,4 @@ select
     DOCNO     as DOCUMENT_NAME,
     SOURCE_DB
 from {{ ref('DOCUMENTS_P_J') }}
---FROM {{ source('bronze', 'DOCUMENTS_P') }}
+WHERE STATDES NOT IN ('מבוטלת')
