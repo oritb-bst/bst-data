@@ -8,3 +8,4 @@ SELECT
     STATDES   as STATUS_INV,
 	SOURCE_DB
 FROM {{ ref('MED_DOCUMENTS_P_J') }}
+WHERE STATDES NOT IN ('מבוטלת', 'טיוטא')
