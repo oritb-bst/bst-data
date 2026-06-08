@@ -9,5 +9,5 @@ SELECT
     SOURCE_DB::string               as SOURCE_DB
 
 FROM {{ source('json', 'MED_PORDERITEMS_SUBFORM') }},
-lateral flatten(input => DATA) item
+LATERAL FLATTEN(input => DATA) item,
 LATERAL FLATTEN(INPUT => item.value:MED_PORDERITEMS_SUBFORM) sub
