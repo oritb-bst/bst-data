@@ -5,5 +5,6 @@ SELECT
     TQUANT      as QUANTITY,
     PRICE       as NET_UNIT_PRICE,
     QPRICE      as TOTAL_PRICE,
+    ORD         as PORD_ID,
 	SOURCE_DB 
 FROM {{ ref('MED_PORDERITEMS_J') }}

@@ -5,6 +5,7 @@ SELECT
     item.value:TQUANT::float        as TQUANT,
     item.value:PRICE::float         as PRICE,
     item.value:QPRICE::float        as QPRICE,
+    item.value:ORD::varchar         as ORD,
     SOURCE_DB::string               as SOURCE_DB
 
 FROM {{ source('json', 'MED_PORDERITEMS_SUBFORM') }},
