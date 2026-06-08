@@ -10,5 +10,6 @@ select
     ORDER_NAME      as "מספר הזמנה",
     MED_TYPE_DESC   as "תיאור סוג חוזה",
     STATUS_CON      as "סטטוס חוזה",
+    PORD_ID         as "חוזה_ID",
 	SOURCE_DB       as "חברה"
 from {{ ref('CONTRACTOR_CONTRACTS') }}

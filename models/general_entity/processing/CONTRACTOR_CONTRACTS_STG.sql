@@ -11,7 +11,8 @@ SELECT
     CASE WHEN MED_TYPE = 'CO' THEN 'חוזה'
          WHEN MED_TYPE = 'CH' THEN 'הוראת שינוי'
     ELSE MED_TYPE END as MED_TYPE_DESC,
-    STATDES         as STATUS_CON,
+    STATDES           as STATUS_CON,
+    ORD               as PORD_ID,
 	SOURCE_DB 
 FROM {{ ref('MED_PORDERS_J') }}
 WHERE STATDES NOT IN ('מבוטלת', 'טיוטא')

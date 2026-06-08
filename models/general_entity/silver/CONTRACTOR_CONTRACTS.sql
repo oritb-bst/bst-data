@@ -10,5 +10,6 @@ select
     ORDER_NAME,
     MED_TYPE_DESC,
     STATUS_CON,
+    PORD_ID,
 	SOURCE_DB 
 from {{ ref('CONTRACTOR_CONTRACTS_STG') }}
