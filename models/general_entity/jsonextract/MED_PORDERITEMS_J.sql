@@ -1,12 +1,13 @@
 --MED_PORDERITEMS_SUBFORM
 SELECT
-    item.value:MED_SECTION::varchar  as MED_SECTION,
-    item.value:MED_SECDES::varchar   as MED_SECDES,
-    item.value:TQUANT::float        as TQUANT,
-    item.value:PRICE::float         as PRICE,
-    item.value:QPRICE::float        as QPRICE,
-    item.value:ORD::varchar         as ORD,
+    sub.value:MED_SECTION::varchar  as MED_SECTION,
+    sub.value:MED_SECDES::varchar   as MED_SECDES,
+    sub.value:TQUANT::float        as TQUANT,
+    sub.value:PRICE::float         as PRICE,
+    sub.value:QPRICE::float        as QPRICE,
+    sub.value:ORD::varchar         as ORD,
     SOURCE_DB::string               as SOURCE_DB
 
 FROM {{ source('json', 'MED_PORDERITEMS_SUBFORM') }},
 lateral flatten(input => DATA) item
+LATERAL FLATTEN(INPUT => item.value:MED_PORDERITEMS_SUBFORM) sub
