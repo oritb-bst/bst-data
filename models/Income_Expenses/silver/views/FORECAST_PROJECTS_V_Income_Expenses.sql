@@ -8,5 +8,10 @@ select
     forecast_expense as "הוצאות",    
     id as "תחזית הוצאות ID",   
     LOAD_TS,
-    SOURCE_DB  as "חברה"
-from {{ ref('FORECAST_PROJECTS') }}
+    t.SOURCE_DB  as "חברה",
+    p.projtypedes as "סוג פרויקט אחרי סינון"
+from {{ ref('FORECAST_PROJECTS') }} t
+
+{{ join_valid_projects('t.project_doc_no') }}
+where t.SOURCE_DB = 'BST'
+
