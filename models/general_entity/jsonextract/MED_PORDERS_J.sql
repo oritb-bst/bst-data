@@ -9,7 +9,8 @@ select
     item.value:CURDATE::date                as CURDATE,
     source_db::string                       as SOURCE_DB,
     item.value:ORDNAME::string              as ORDNAME,
-    item.value:STATDES::string              as STATDES
+    item.value:STATDES::string              as STATDES,
+    item.value:ORD::varchar                 as ORD
 
 from {{ source('json', 'MED_PORDERS') }},
 lateral flatten(input => DATA) item
