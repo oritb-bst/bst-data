@@ -9,6 +9,7 @@ select
     IS_BILLABLE              as "לחיוב",
     IS_INVOICED_FLAG         as "דגל חויבה",
     SUP_INVOICE_NUMBER       as "חשבונית ספק",
+    SUP_PAYMENT_NUMBER       as "מספר תשלום ספק",
     IS_INVOICED              as "חויבה",
 	SOURCE_DB                as "חברה"
 from {{ ref('CONTRACTOR_PARTIAL_INVOICES') }}
