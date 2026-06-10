@@ -11,7 +11,7 @@ select
     SUP_INVOICE_NUMBER       as "חשבונית ספק",
     SUP_PAYMENT_NUMBER       as "מספר תשלום ספק",
     IS_INVOICED              as "חויבה",
-	SOURCE_DB                as "חברה"
+	t.SOURCE_DB              as "חברה"
 from {{ ref('CONTRACTOR_PARTIAL_INVOICES') }} t
 
 {{ join_valid_projects_buildup('t.PROJECT_NAME', 't.SOURCE_DB') }}
