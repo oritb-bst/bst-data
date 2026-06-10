@@ -1,5 +1,5 @@
 select
-  	DOCNO as "מספר פרויקט",
+  	t.DOCNO as "מספר פרויקט",
 	DOC   as "פרויקט_ID",
 	AREA_MANAGER_POSITIONCODE as "מספר מנהל איזור",
     AREA_MANAGER_USERNAME     as "מנהל איזור",
