@@ -11,3 +11,10 @@ select
     STATDES      as "סטטוס פרויקט",
     SOURCE_DB  as "חברה"
 from {{ ref('DIM_PROJECTS') }}
+where coalesce(projtypedes, '') not in (
+        'ניהול',
+        'לא פרוייקטאלי',
+        'בדק ואחריות'
+    )
+and STATDES in ('בביצוע', 'הסתיים')
+and SOURCE_DB = 'BLDUP'
