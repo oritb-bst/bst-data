@@ -9,4 +9,4 @@ select
 	SOURCE_DB            as "חברה"
 from {{ ref('PURCHASE_ORDERS') }} t
 
-{{ join_valid_projects_buildup('t.PROJECT_NAME') }}
+{{ join_valid_projects_buildup('t.PROJECT_NAME', 't.SOURCE_DB') }}
