@@ -58,3 +58,10 @@ models:
       silver:
         views:
           +materialized: view
+
+    Buildup:
+      +materialized: table
+
+      silver:
+        views:
+          +materialized: view
