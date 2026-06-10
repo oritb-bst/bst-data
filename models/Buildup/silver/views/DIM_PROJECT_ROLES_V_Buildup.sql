@@ -1,3 +1,4 @@
+--ZCBS_PROJPOSITIONS_SUBFORM
 select
   	t.DOCNO as "מספר פרויקט",
 	DOC   as "פרויקט_ID",
