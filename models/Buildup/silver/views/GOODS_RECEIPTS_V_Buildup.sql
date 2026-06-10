@@ -6,7 +6,7 @@ select
     PRICE_AFTER_DIS_GR as "מחיר קבלת סחורה מספק אחרי הנחה",
     STATUS_GR          as "סטטוס קבלת סחורה מספק",
     DOCUMENT_NAME      as "מספר תעודה",
-    SOURCE_DB          as "חברה"
+    t.SOURCE_DB        as "חברה"
 from {{ ref('GOODS_RECEIPTS') }} t
 
 {{ join_valid_projects_buildup('t.PROJECT_NAME', 't.SOURCE_DB') }}
