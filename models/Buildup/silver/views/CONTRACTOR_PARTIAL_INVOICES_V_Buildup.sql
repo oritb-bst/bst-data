@@ -14,4 +14,4 @@ select
 	SOURCE_DB                as "חברה"
 from {{ ref('CONTRACTOR_PARTIAL_INVOICES') }} t
 
-{{ join_valid_projects_buildup('t.PROJECT_NAME') }}
+{{ join_valid_projects_buildup('t.PROJECT_NAME', 't.SOURCE_DB') }}
