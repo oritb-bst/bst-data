@@ -3,4 +3,4 @@ select
     SUP_DES,
     SUP_TYPE,
     SOURCE_DB
-from {{ ref('DIM_SUPPLIERS_BUILDUP_STG') }}
+from {{ ref('DIM_SUPPLIERS_STG_Buildup') }}
