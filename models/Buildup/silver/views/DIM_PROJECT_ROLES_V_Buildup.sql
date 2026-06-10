@@ -7,6 +7,6 @@ select
     BLDUP_CONTRACT_CONTROLLER_POSITIONCODE as "מספר בקר התקשרויות בילדאפ",
     BLDUP_CONTRACT_CONTROLLER_USERNAME     as "בקר התקשרויות בילדאפ",
     t.SOURCE_DB                              as "חברה"
-from {{ ref('ZCBS_PROJPOSITIONS_Buildup') }} t
+from {{ ref('DIM_PROJECT_ROLES_Buildup') }} t
 
 {{ join_valid_projects_buildup('t.DOCNO', 't.SOURCE_DB') }}
