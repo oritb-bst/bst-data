@@ -23,7 +23,7 @@ SELECT DISTINCT
     c.SUPDES     AS SUP_DES,       -- תיאור אמיתי מהמימד
     'קבלן' AS SUP_TYPE,      -- סוג נקבע לפי מקור הטבלה
     m.SOURCE_DB                    -- מקור רשומה
-FROM {{ ref('MED_DOCUMENTS_P_J') }} m
+FROM {{ ref('MED_PORDERS_J') }} m
 LEFT JOIN {{ ref('SUPPLIERS_J') }} c
        ON m.SUPNAME = c.SUPNAME
 WHERE m.STATDES NOT IN ('מבוטלת', 'טיוטא')
