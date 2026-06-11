@@ -62,5 +62,5 @@ sources:
       - name: PORDERS
       - name: DOCUMENTS_P
       - name: ACCOUNTS
-      - name: ACCFNCITEMS2
+      - name: ACCFNCITEMS2_SUBFORM
       - name: MED_PORDERITEMS_SUBFORM

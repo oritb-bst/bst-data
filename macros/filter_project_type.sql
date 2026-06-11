@@ -12,6 +12,7 @@
         'לא פרוייקטאלי',
         'בדק ואחריות'
     )
+    and source_db = 'BST'
 
 ) p
     on {{ project_column }} = p.docno
