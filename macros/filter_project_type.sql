@@ -1,3 +1,6 @@
+-- מצרף לכל מודל רק את אוכלוסיית הפרויקטים התקפה של 
+--  ללא סוגי פרויקט מוחרגים
+
 {% macro join_valid_projects(project_column, join_type='inner') %}
 
 {{ join_type }} join (
