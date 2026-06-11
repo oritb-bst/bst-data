@@ -11,5 +11,7 @@ select
     MED_TYPE_DESC   as "תיאור סוג חוזה",
     STATUS_CON      as "סטטוס חוזה",
     PORD_ID         as "חוזה_ID",
-	SOURCE_DB       as "חברה"
-from {{ ref('CONTRACTOR_CONTRACTS') }}
+	t.SOURCE_DB     as "חברה"
+from {{ ref('CONTRACTOR_CONTRACTS') }} t
+
+{{ join_valid_projects_buildup('t.PROJECT_NAME', 't.SOURCE_DB') }}

@@ -15,4 +15,4 @@ SELECT
     ORD               as PORD_ID,
 	SOURCE_DB 
 FROM {{ ref('MED_PORDERS_J') }}
-WHERE STATDES NOT IN ('מבוטלת', 'טיוטא')
+WHERE STATDES IN ('מאושר', 'ממתין לאישור')
