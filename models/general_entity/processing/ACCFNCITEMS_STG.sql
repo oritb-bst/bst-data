@@ -26,8 +26,8 @@ SELECT
     ACCOUNT        as ACCOUNT_ID,
     BALDATE,
     DETAILS        as ACCOUNT_DETAILS,
-    DEBIT          as ACCOUNT_DEBIT,
-    CREDIT         as ACCOUNT_CREDIT,
+    DEBIT/1000     as ACCOUNT_DEBIT,
+    CREDIT/1000    as ACCOUNT_CREDIT,
     SOURCE_DB,
     date_text,
 
