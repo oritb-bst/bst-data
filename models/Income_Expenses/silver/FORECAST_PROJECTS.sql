@@ -6,6 +6,8 @@ select
     status_description, 
     forecast_revenue,   
     forecast_expense,    
+    total_purchase_orders_amount,
+    total_site_management_expenses,
     id,   
     LOAD_TS,
     SOURCE_DB

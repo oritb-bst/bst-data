@@ -8,6 +8,8 @@ select
     forecast_expense as "הוצאות",    
     id as "תחזית הוצאות ID",   
     LOAD_TS,
+    total_purchase_orders_amount as "סך הזמנות רכש",
+    total_site_management_expenses as "סהכ הוצ ניהול אתר",
     t.SOURCE_DB  as "חברה",
     p.projtypedes as "סוג פרויקט אחרי סינון"
 from {{ ref('FORECAST_PROJECTS') }} t
