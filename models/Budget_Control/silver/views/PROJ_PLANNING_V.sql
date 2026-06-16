@@ -10,5 +10,7 @@ select
 	MATERIAL_COST          as "עלות חומר לפעילות",
     BUD_SUBCHAPTER_NAME    as "מספר תת פרק",
     BUD_SUBCHAPTER_DES     as "תיאור תת פרק",
-    SOURCE_DB              as "חברה"
-from {{ ref('PROJ_PLANNING') }}
+    t.SOURCE_DB              as "חברה"
+from {{ ref('PROJ_PLANNING') }} t
+
+{{ join_bst_projects_budget_control('t.PROJECT_ID', 't.SOURCE_DB') }}
