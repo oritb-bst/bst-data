@@ -15,6 +15,7 @@ SELECT
     sub.value:EPREVFORECAST::FLOAT           AS EPREVFORECAST,
     sub.value:ORIGBUDGET::FLOAT              AS ORIGBUDGET,
     sub.value:DOC::NUMBER(38,0)              AS DOC,
+    item.value:CONDATE::date                 AS CONDATE, --שדה של האבא
     SOURCE_DB::STRING                        AS SOURCE_DB
 
 FROM {{ source('json', 'BUD_FORECAST_SUBFORM') }},
