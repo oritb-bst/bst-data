@@ -9,12 +9,11 @@ select
     execution_department_expense  as "הוצאות ניהול אגף ביצוע",
     generators_management_expense as "הוצאות ניהול גנרטורים",
     cranes_management_expense     as "הוצאות ניהול מנופים",
-    t.SOURCE_DB                   as "חברה",
+    a.SOURCE_DB                   as "חברה",
     p.projtypedes                 as "סוג פרויקט אחרי סינון"
     
-from {{ ref('FORECAST_ADDITIONAL_EXPENSES_STG') }} t
+from {{ ref('FORECAST_ADDITIONAL_EXPENSES_STG') }} a
 
-{{ join_valid_projects('t.project_doc_no') }}
-where t.SOURCE_DB = 'BST'
+{{ join_valid_projects('a.project_doc_no', 'a.SOURCE_DB') }}
 
 

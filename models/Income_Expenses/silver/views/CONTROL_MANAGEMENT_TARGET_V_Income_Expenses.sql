@@ -6,7 +6,7 @@ select
     TARGET_MANAGEMENT_EXPENSES as "יעד הנהלה הוצאות",
     TARGET_MANAGEMENT_REVENUES as "יעד הנהלה הכנסות",
     p.projtypedes as "סוג פרויקט אחרי סינון"
-from {{ ref('CONTROL_MANAGEMENT_TARGET') }} t
+from {{ ref('CONTROL_MANAGEMENT_TARGET') }} a
 
-{{ join_valid_projects('t.POCKET_NUMBER') }}
-where p.SOURCE_DB = 'BST'
+{{ join_valid_projects('a.POCKET_NUMBER') }}
+

@@ -4,7 +4,6 @@ select
     EXPENSE_DATE  as "Date",
     EXPENSE_AMOUNT as "סכום הוצאות",
     p.projtypedes as "סוג פרויקט אחרי סינון"
-from {{ ref('EXPENSES') }} t
+from {{ ref('EXPENSES') }} a
 
-{{ join_valid_projects('t.PROJECT_NUMBER') }}
-where p.SOURCE_DB = 'BST'
+{{ join_valid_projects('a.PROJECT_NUMBER') }}
