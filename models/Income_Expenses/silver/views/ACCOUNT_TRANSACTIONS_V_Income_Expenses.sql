@@ -21,6 +21,6 @@ INNER JOIN {{ ref('ACCOUNTS') }} a
     ON t.account_id = a.account_id
    AND t.source_db = a.source_db
 
-{{ join_valid_projects('a.project_docno') }}
+{{ join_valid_projects('a.project_docno', 'a.source_db') }}
 
-WHERE a.account_type_name = 'הכנסות'  AND  t.SOURCE_DB = 'BST'
+WHERE a.account_type_name = 'הכנסות' 
