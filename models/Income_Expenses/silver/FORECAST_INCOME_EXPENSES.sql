@@ -6,7 +6,7 @@ select
     forecast_expense_new,
     a.SOURCE_DB  as "חברה",
     p.projtypedes as "סוג פרויקט אחרי סינון"
-from {{ ref('FORECAST_INCOME_EXPENSES') }} a
+from {{ ref('FORECAST_INCOME_EXPENSES_STG') }} a
 
 
 {{ join_valid_projects('a.project_doc_no', 'a.SOURCE_DB') }}
