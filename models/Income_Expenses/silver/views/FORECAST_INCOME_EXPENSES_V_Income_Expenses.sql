@@ -3,9 +3,9 @@ select
     project_doc_no as "מספר פרויקט",   
     forecast_revenue_new,
     forecast_expense_new,
-    t.SOURCE_DB  as "חברה",
+    a.SOURCE_DB  as "חברה",
     p.projtypedes as "סוג פרויקט אחרי סינון"
-from {{ ref('FORECAST_INCOME_EXPENSES') }} t
+from {{ ref('FORECAST_INCOME_EXPENSES') }} a
 
-{{ join_valid_projects('t.project_doc_no') }}
-where t.SOURCE_DB = 'BST'
+
+{{ join_valid_projects('a.project_doc_no', 'a.SOURCE_DB') }}

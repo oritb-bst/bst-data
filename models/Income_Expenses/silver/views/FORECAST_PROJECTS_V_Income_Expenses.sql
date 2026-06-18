@@ -8,10 +8,11 @@ select
     forecast_expense as "הוצאות",    
     id as "תחזית הוצאות ID",   
     LOAD_TS,
-    t.SOURCE_DB  as "חברה",
+    total_purchase_orders_amount as "סך הזמנות רכש",
+    total_site_management_expenses as "סהכ הוצ ניהול אתר",
+    a.SOURCE_DB  as "חברה",
     p.projtypedes as "סוג פרויקט אחרי סינון"
-from {{ ref('FORECAST_PROJECTS') }} t
+from {{ ref('FORECAST_PROJECTS') }} a
 
-{{ join_valid_projects('t.project_doc_no') }}
-where t.SOURCE_DB = 'BST'
+{{ join_valid_projects('a.project_doc_no', 'a.SOURCE_DB') }}
 

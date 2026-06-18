@@ -47,6 +47,7 @@ sources:
       - name: BUD_FORCASTCONDITION_SUBFORM
       - name: BUD_FORECAST_SUBFORM
       - name: BUD_TOPCHAP
+      - name: BUD_TOPCHAPDET_SUBFORM
       - name: CUSTOMERS
       - name: DOCUMENTS_p
       - name: CINVOICES
@@ -64,3 +65,4 @@ sources:
       - name: ACCOUNTS
       - name: ACCFNCITEMS2_SUBFORM
       - name: MED_PORDERITEMS_SUBFORM
+      - name: BST_FOREXSUBA_SUBFORM

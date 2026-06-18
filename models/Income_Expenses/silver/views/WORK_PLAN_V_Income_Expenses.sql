@@ -5,8 +5,6 @@ SELECT
 	REVENUE as "תוכנית עבודה הכנסות",
 	EXPENSE as "תוכנית עבודה הוצאות",
     p.projtypedes as "סוג פרויקט אחרי סינון"
-from {{ ref('WORK_PLAN') }} t
+from {{ ref('WORK_PLAN') }} a
 
-{{ join_valid_projects('t.PROJECT_NUMBER') }}
-where p.SOURCE_DB = 'BST'
-
+{{ join_valid_projects('a.PROJECT_NUMBER') }}

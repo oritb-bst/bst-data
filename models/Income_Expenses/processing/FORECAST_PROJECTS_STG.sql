@@ -7,6 +7,8 @@ select
     (EARNCAST/1000) ::INTEGER AS forecast_revenue,
     (TOTEXPENSE/1000) ::INTEGER AS forecast_expense,
     FOREX as id,
+    TOTPRICE as total_purchase_orders_amount,
+    TOTMAN as total_site_management_expenses,
     LOAD_TS,
     SOURCE_DB
 from {{ ref('FORECAST_PROJECTS_J') }}
