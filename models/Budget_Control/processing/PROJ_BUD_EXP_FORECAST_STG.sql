@@ -15,5 +15,6 @@ select
 	EPREVFORECAST  as PREVIOUS_FORECAST,
     ORIGBUDGET     as ORIGINAL_BUDGET,
     DOC            as PROJECT_ID,
+    CONDATE        as BUD_CONTROL_DATE,
 	SOURCE_DB
 from {{ ref ('BUD_FORECAST_J') }}

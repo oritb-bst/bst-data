@@ -16,5 +16,9 @@ select
 	PREVIOUS_FORECAST     as "אומדן קודם (הוצאות)",
     ORIGINAL_BUDGET       as "תקציב הוצאות מקורי",
     PROJECT_ID            as "פרויקט_ID",
-	SOURCE_DB             as "חברה"
-from {{ ref('PROJ_BUD_EXP_FORECAST') }}
+    BUD_CONTROL_DATE      as "Date",
+	t.SOURCE_DB           as "חברה"
+from {{ ref('PROJ_BUD_EXP_FORECAST') }} t
+
+{{ join_bst_projects_budget_control('t.PROJECT_ID', 't.SOURCE_DB') }}
+
