@@ -1,6 +1,6 @@
 SELECT
     DOC_PROJECT as "מספר פרויקט",
-    INVOICE_DATE  as "Date",
+    DATE_TRUNC('MONTH', INVOICE_DATE) AS "Date",
     INVOICES_ACTUALLY_NEW,
     INVOICES_ACTUALLY_EXPENSE_NEW ,
     a.SOURCE_DB  as "חברה",
