@@ -9,7 +9,7 @@ select
 	SUBMISSION_TOTAL_PRICE as "סך הכל מחיר הגשה",
 	MATERIAL_COST          as "עלות חומר לפעילות",
 --    BUD_SUBCHAPTER_NAME    as "מספר תת פרק",
-    coalesce(SUB_CHAPTER_NAME, 'ללא') as "מספר תת פרק",
+    coalesce(BUD_SUBCHAPTER_NAME, 'ללא') as "מספר תת פרק",
     BUD_SUBCHAPTER_DES     as "תיאור תת פרק",
     t.SOURCE_DB              as "חברה"
 from {{ ref('PROJ_PLANNING') }} t
