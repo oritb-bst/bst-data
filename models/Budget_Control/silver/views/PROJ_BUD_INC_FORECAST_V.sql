@@ -2,7 +2,8 @@
 select 
     FORECAST_ID                   as "צפי לגמר",
 	BUD_CONTROL_PERIOD_ID         as "בקרה תקציבית_ID",
-	SUB_CHAPTER_NAME              as "מספר תת פרק",
+--	SUB_CHAPTER_NAME              as "מספר תת פרק",
+    coalesce(SUB_CHAPTER_NAME, 'ללא') as "מספר תת פרק",
 	SUB_CHAPTER_DES               as "תיאור תת פרק",
 	REVENUE_FORECAST_TO_COMPLETE  as "אומדן לגמר (הכנסות)",
     CUSTOMER_ACCOUNT              as "חשבון מזמין שוטף",
