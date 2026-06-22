@@ -10,7 +10,7 @@ select
     BSA_APARTSUM as "מספר יחידות דיור",
     STATDES      as "סטטוס פרויקט",
     SOURCE_DB  as "חברה"
-from {{ ref('DIM_PROJECTS') }}
+from {{ ref('DIM_PROJECTS') }} d
 where coalesce(projtypedes, '') not in (
         'ניהול',
         'לא פרוייקטאלי',
@@ -18,3 +18,10 @@ where coalesce(projtypedes, '') not in (
     )
 and STATDES in ('בביצוע', 'הסתיים')
 and SOURCE_DB = 'BLDUP'
+
+  -- החרגת פרויקטים מהאקסל
+  and not exists (
+      select 1
+      from {{ source('csv', 'EXCLUDED_PROJECTS_BLDUP') }} e
+      where trim(to_varchar(e.docno)) = trim(to_varchar(d.docno))
+  )
