@@ -4,8 +4,8 @@ select
     project_doc_no as "מספר פרויקט",   
     forecast_revenue_new,
     forecast_expense_new,
-    a.SOURCE_DB  as "חברה",
-    p.projtypedes as "סוג פרויקט אחרי סינון"
+    --a.SOURCE_DB  as "חברה",
+    --p.projtypedes as "סוג פרויקט אחרי סינון"
 from {{ ref('FORECAST_INCOME_EXPENSES_STG') }} a
 
 
