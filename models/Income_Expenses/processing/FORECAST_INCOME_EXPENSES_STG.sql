@@ -6,5 +6,7 @@ select
     PROJDOCNO as project_doc_no,
     forecast_revenue_new,
     forecast_expense_new,
-    SOURCE_DB
-from {{ source('bronze', 'FORECAST_INCOME_EXPENSES') }}
+    a.SOURCE_DB
+from {{ source('bronze', 'FORECAST_INCOME_EXPENSES') }} a
+
+{{ join_valid_projects('a.PROJDOCNO', 'a.SOURCE_DB') }}

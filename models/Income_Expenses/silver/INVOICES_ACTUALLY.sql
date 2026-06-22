@@ -8,4 +8,4 @@ SELECT
     --p.projtypedes as "סוג פרויקט אחרי סינון"
 from {{ ref('INVOICES_ACTUALLY_STG') }} a
 
-{{ join_valid_projects('a.DOC_PROJECT', 'a.SOURCE_DB') }}
+
