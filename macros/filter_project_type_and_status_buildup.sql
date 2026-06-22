@@ -7,16 +7,23 @@
 {{ join_type }} join (
 
     select distinct
-        docno,
-        source_db
-    from {{ ref('DIM_PROJECTS') }}
+        d.docno,
+        d.source_db
+    from {{ ref('DIM_PROJECTS') }} d
+
+    left join {{ source('csv', 'excluded_projects_bldup') }} e --אקסל עם מספרי פרויקט לא להצגה
+        on to_varchar(d.docno) = to_varchar(e.docno)
+
     where coalesce(projtypedes, '') not in (
         'ניהול',
         'לא פרוייקטאלי',
         'בדק ואחריות'
     )
-      and statdes in ('בביצוע', 'הסתיים')
-      and source_db = 'BLDUP'
+      and d.statdes in ('בביצוע', 'הסתיים')
+      and d.source_db = 'BLDUP'
+
+      -- החרגת פרויקטים מהאקסל
+      and e.docno is null
 
 ) p
     on {{ project_column }} = p.docno
