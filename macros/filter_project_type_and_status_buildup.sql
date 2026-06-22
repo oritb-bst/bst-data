@@ -11,7 +11,7 @@
         d.source_db
     from {{ ref('DIM_PROJECTS') }} d
 
-    left join {{ source('csv', 'excluded_projects_bldup') }} e --אקסל עם מספרי פרויקט לא להצגה
+    left join {{ source('csv', 'EXCLUDED_PROJECTS_BLDUP') }} e --אקסל עם מספרי פרויקט לא להצגה
         on to_varchar(d.docno) = to_varchar(e.docno)
 
     where coalesce(projtypedes, '') not in (
