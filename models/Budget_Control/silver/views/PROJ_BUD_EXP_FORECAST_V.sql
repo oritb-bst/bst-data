@@ -18,6 +18,8 @@ select
     ORIGINAL_BUDGET       as "תקציב הוצאות מקורי",
     PROJECT_ID            as "פרויקט_ID",
     BUD_CONTROL_DATE      as "Date",
+    TOPIC_NAME            as "מספר נושא",
+    TOPIC_DES             as "תיאור נושא",
 	t.SOURCE_DB           as "חברה"
 from {{ ref('PROJ_BUD_EXP_FORECAST') }} t
 
