@@ -9,5 +9,6 @@ select
     BSA_SIZESUM,
     BSA_APARTSUM,
     STATDES,
+    BUD_STARTORDERDATE,
     SOURCE_DB
 from {{ ref('DIM_PROJECTS_STG') }}
