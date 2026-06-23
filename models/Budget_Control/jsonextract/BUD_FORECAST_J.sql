@@ -16,6 +16,8 @@ SELECT
     sub.value:ORIGBUDGET::FLOAT              AS ORIGBUDGET,
     sub.value:DOC::NUMBER(38,0)              AS DOC,
     item.value:CONDATE::date                 AS CONDATE, --שדה של האבא
+    sub.value:TOPICNAME::STRING              AS TOPICNAME,
+    sub.value:TOPICDES::STRING               AS TOPICDES,
     SOURCE_DB::STRING                        AS SOURCE_DB
 
 FROM {{ source('json', 'BUD_FORECAST_SUBFORM') }},
