@@ -8,7 +8,8 @@ SELECT
     item.value:STATDES::string          AS STATDES,
     SOURCE_DB::string                   AS SOURCE_DB,
     item.value:BSA_SIZESUM::float       AS BSA_SIZESUM,
-    item.value:BSA_APARTSUM::number     AS BSA_APARTSUM
+    item.value:BSA_APARTSUM::number     AS BSA_APARTSUM,
+    item.value:BUD_STARTORDERDATE::date AS BUD_STARTORDERDATE
 
 FROM {{ source('json', 'DIM_PROJECTS') }},
 LATERAL FLATTEN(input => DATA) item
