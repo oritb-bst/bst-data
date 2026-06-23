@@ -17,7 +17,7 @@ select
          when subchapter_num between 90 and 95 then 'כלליות'
          when subchapter_num = 96 then 'אגף ביצוע'
          when subchapter_num between 1 and 95 or subchapter_num = 99 then 'ישירות' else 'לא מסווג'
-    end as "SUBCHAPTER_src",
+    end as "מקור",
 
     SUB_CHAPTER_NAME_FOR_BUD_CONTROL as "מספר תת פרק - בקרה תקציבית",
     SUB_CHAPTER_DES_FOR_BUD_CONTROL  as "תיאור תת פרק - בקרה תקציבית",
