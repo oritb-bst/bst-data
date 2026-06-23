@@ -9,6 +9,7 @@ select
     BSA_SIZESUM as "סך הכל מטר רבוע לפרויקט",
     BSA_APARTSUM as "מספר יחידות דיור",
     STATDES      as "סטטוס פרויקט",
+    BUD_STARTORDERDATE as "תאריך צו תחילת עבודה",
     SOURCE_DB  as "חברה"
 from {{ ref('DIM_PROJECTS') }}
 where DOC in ('510197','528815','539220','579697','589607')
