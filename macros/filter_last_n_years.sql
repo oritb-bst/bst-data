@@ -1,6 +1,6 @@
--- סינון על 4 השנים האחרונות
+-- סינון על 4 השנים האחרונות כולל שנה נוכחית
 
-{% macro filter_last_n_years(date_field, years=4) %}
+{% macro filter_last_n_years(date_field, years=3) %}
     {{ date_field }} >= {{ dbt.dateadd(
         datepart="year",
         interval=-years,
