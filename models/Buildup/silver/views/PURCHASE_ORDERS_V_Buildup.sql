@@ -10,3 +10,5 @@ select
 from {{ ref('PURCHASE_ORDERS') }} t
 
 {{ join_valid_projects_buildup('t.PROJECT_NAME', 't.SOURCE_DB') }}
+
+where {{ filter_last_n_years('t.CURDATE') }} --סינון שנים
