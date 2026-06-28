@@ -19,6 +19,13 @@
     )
       and trim(docno) like 'PR%'
       and source_db = 'BST'
+      and docno not in (
+        'PR23000005',
+        'PR25000011',
+        'PR23000002',
+        'PR24000012',
+        'PR21000019'
+      )
 
 ) p
     on {{ project_column }} = p.docno
