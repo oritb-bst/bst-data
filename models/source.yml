@@ -35,6 +35,7 @@ sources:
       - name: EXPENSES
       - name: WORK_PLAN
       - name: EXCLUDED_PROJECTS_BLDUP
+      - name: EXCLUDED_PROJECTS_BST
 
   - name: json
     database: BRONZE_UAT
