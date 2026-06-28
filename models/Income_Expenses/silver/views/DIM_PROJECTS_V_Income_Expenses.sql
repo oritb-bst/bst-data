@@ -8,6 +8,7 @@ select
     a.PROJTYPEDES as "תאור סוג פרויקט",
     BSA_SIZESUM as "סך הכל מטר רבוע לפרויקט",
     BSA_APARTSUM as "מספר יחידות דיור",
+    STATDES      as "סטטוס פרויקט",
     a.SOURCE_DB  as "חברה"
 from {{ ref('DIM_PROJECTS') }} a
 

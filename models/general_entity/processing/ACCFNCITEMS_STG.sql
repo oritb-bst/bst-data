@@ -31,19 +31,24 @@ SELECT
     SOURCE_DB,
     date_text,
 
-    CASE 
-        WHEN date_text IS NULL THEN 1
-        ELSE 0
+    CASE
+    WHEN DETAILS ILIKE 'PQ%' THEN 0
+    WHEN date_text IS NULL THEN 1
+    ELSE 0
     END AS missing_date_flag,
 
-    TRY_TO_DATE(
-        '01.' || 
+    CASE
+    WHEN DETAILS ILIKE 'PQ%' THEN DATE_TRUNC('MONTH', BALDATE)
+
+    ELSE TRY_TO_DATE(
+        '01.' ||
         REGEXP_REPLACE(
             REPLACE(date_text, '/', '.'),
             '\\.(\\d{2})$',
             '.20\\1'
         ),
         'DD.MM.YYYY'
-    ) AS execution_date
+    )
+END AS execution_date
 
 FROM base
