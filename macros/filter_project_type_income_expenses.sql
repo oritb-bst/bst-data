@@ -8,24 +8,23 @@
 {{ join_type }} join (
 
     select distinct
-        docno,
+        d.docno,
         source_db,
         projtypedes
-    from {{ ref('DIM_PROJECTS') }}
+    from {{ ref('DIM_PROJECTS') }} d
+
+    left join {{ source('csv', 'EXCLUDED_PROJECTS_BST') }} e --אקסל עם מספרי פרויקט לא להצגה
+        on to_varchar(d.docno) = to_varchar(e.docno)
+
     where coalesce(projtypedes, '') not in (
         'ניהול',
         'לא פרוייקטאלי',
         'בדק ואחריות'
     )
-      and trim(docno) like 'PR%'
+      and trim(d.docno) like 'PR%'
       and source_db = 'BST'
-      and docno not in (
-        'PR23000005',
-        'PR25000011',
-        'PR23000002',
-        'PR24000012',
-        'PR21000019'
-      )
+      -- החרגת פרויקטים מהאקסל
+      and e.docno is null
 
 ) p
     on {{ project_column }} = p.docno
