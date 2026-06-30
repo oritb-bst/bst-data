@@ -10,6 +10,7 @@ WITH base AS (
         DEBIT,
         CREDIT,
         SOURCE_DB,
+        STORNOFLAG,
 
         CASE 
             WHEN source_db = 'BST' THEN 
@@ -29,6 +30,7 @@ SELECT
     DEBIT/1000     as ACCOUNT_DEBIT,
     CREDIT/1000    as ACCOUNT_CREDIT,
     SOURCE_DB,
+    STORNOFLAG,
     date_text,
 
     CASE
