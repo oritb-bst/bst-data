@@ -25,4 +25,4 @@ INNER JOIN {{ ref('ACCOUNTS') }} a
 {{ join_valid_projects('a.project_docno', 'a.source_db') }}
 
 WHERE a.account_type_name = 'הכנסות'  
-    AND t.stornoflag <> 'Y'
+    and t.stornoflag IS DISTINCT FROM 'Y'
