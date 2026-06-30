@@ -13,7 +13,8 @@ SELECT
     t.account_credit                                     AS "זכות",
     t.execution_date                                     AS "Date",
     t.missing_date_flag                                  AS "דגל תאריך חסר",
-    t.source_db                                          AS "חברה"
+    t.source_db                                          AS "חברה",
+    t.stornoflag                                         AS "stornoflag"
 
 FROM {{ ref('ACCFNCITEMS') }} t
 
@@ -23,4 +24,5 @@ INNER JOIN {{ ref('ACCOUNTS') }} a
 
 {{ join_valid_projects('a.project_docno', 'a.source_db') }}
 
-WHERE a.account_type_name = 'הכנסות' 
+WHERE a.account_type_name = 'הכנסות'  
+    AND t.stornoflag <> 'Y'
