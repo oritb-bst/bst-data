@@ -14,7 +14,8 @@ SELECT
     t.execution_date                                     AS "Date",
     t.missing_date_flag                                  AS "דגל תאריך חסר",
     t.source_db                                          AS "חברה",
-    t.stornoflag                                         AS "stornoflag"
+    t.stornoflag                                         AS "stornoflag",
+    t.fncnum                                             AS "מספר תנועה"
 
 FROM {{ ref('ACCFNCITEMS') }} t
 
