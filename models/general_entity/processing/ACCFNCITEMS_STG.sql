@@ -11,6 +11,7 @@ WITH base AS (
         CREDIT,
         SOURCE_DB,
         STORNOFLAG,
+        FNCNUM,
 
         CASE 
             WHEN source_db = 'BST' THEN 
@@ -26,6 +27,7 @@ WITH base AS (
 SELECT
     ACCOUNT        as ACCOUNT_ID,
     BALDATE,
+    FNCNUM,
     DETAILS        as ACCOUNT_DETAILS,
     DEBIT/1000     as ACCOUNT_DEBIT,
     CREDIT/1000    as ACCOUNT_CREDIT,
