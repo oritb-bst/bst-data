@@ -68,3 +68,10 @@ sources:
       - name: ACCFNCITEMS2_SUBFORM
       - name: MED_PORDERITEMS_SUBFORM
       - name: BST_FOREXSUBA_SUBFORM
+
+
+  - name: txt
+    database: BRONZE_UAT
+    schema: TXT_FILES
+    tables:
+      - name: PROJECT_ACTUAL_EXPENSES
