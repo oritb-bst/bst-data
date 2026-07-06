@@ -1,5 +1,5 @@
 select    
-    id                            as "תחזית פרויקט ID",
+    id                            as "תחזית הוצאות ID",
     project_doc_no                as "מספר פרויקט",  
     concrete_material_expense     as "הוצאות חומרים בטון",
     steel_material_expense        as "הוצאות חומרים ברזל",
