@@ -1,5 +1,5 @@
 SELECT
-    item.value:FOREX::NUMBER(13,0)                    AS FOREX,
+    item.value:FOREX::string                    AS FOREX,
     item.value:PROJDOCNO::string                      AS PROJDOCNO,
     item.value:BST_FOREXSUBA_SUBFORM:MANAGE1::FLOAT   AS MANAGE1,
     item.value:BST_FOREXSUBA_SUBFORM:MATERIAL1::FLOAT AS MATERIAL1,
