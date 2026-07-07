@@ -1,5 +1,5 @@
 SELECT
-    sub.value:FORECAST::NUMBER(38,0)     AS FORECAST,
+    sub.value:FORECAST::string     AS FORECAST,
     sub.value:ORDNAME::STRING            AS ORDNAME,
     sub.value:SUPNAME::STRING            AS SUPNAME,
     sub.value:SUPDES::STRING             AS SUPDES,
