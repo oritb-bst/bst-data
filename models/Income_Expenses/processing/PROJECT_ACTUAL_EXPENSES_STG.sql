@@ -103,7 +103,15 @@ END AS "הוצאות בפועל כמות ניהול אתר",
     WHEN "סוג תעודה" IN ('PPC')
     THEN "כמות בתעודה"
     ELSE 0
- END AS "הוצאות בפועל כמות קבלנים"
+ END AS "הוצאות בפועל כמות קבלנים",
+
+
+ CASE
+    WHEN "סוג תעודה" <> 'PPC'
+         AND "משאב" = 999999
+    THEN 1
+    ELSE 0
+ END AS Project_Expenses_Exclude_Flag
 
 FROM {{ source('txt', 'PROJECT_ACTUAL_EXPENSES') }}
 
