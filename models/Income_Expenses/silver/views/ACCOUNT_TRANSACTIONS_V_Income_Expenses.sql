@@ -11,6 +11,8 @@ SELECT
     t.account_details                                    AS "פרטים",
     t.account_debit                                      AS "חובה",
     t.account_credit                                     AS "זכות",
+    t.debit                                              AS "חובה במליוני שח",
+    t.credit                                             AS "זכות במליוני שח",
     t.execution_date                                     AS "Date",
     t.missing_date_flag                                  AS "דגל תאריך חסר",
     t.source_db                                          AS "חברה",

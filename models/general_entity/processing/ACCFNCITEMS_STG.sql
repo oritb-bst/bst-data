@@ -31,6 +31,8 @@ SELECT
     DETAILS        as ACCOUNT_DETAILS,
     DEBIT/1000     as ACCOUNT_DEBIT,
     CREDIT/1000    as ACCOUNT_CREDIT,
+    DEBIT,
+    CREDIT,
     SOURCE_DB,
     STORNOFLAG,
     date_text,
