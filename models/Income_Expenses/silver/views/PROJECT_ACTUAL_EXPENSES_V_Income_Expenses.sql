@@ -1,24 +1,24 @@
 SELECT
-    a.SOURCE_DB  as "חברה",
-    a."תאריך בקרה",
-    a."פרויקט" AS "מספר פרויקט",
-    a."תאור פרויקט",
-    a."תת פרק",
-    a."תאור תת פרק",
-    a."משאב",
-    a."תאור משאב",
-    a."סוג תעודה",
-    a."תאור תעודה",
-    a."מס' ספק",
-    a."שם ספק",
-    a."מספר תעודה",
-    a."תאריך/חודש ביצוע" AS "Date",
-    a."מק'ט",
-    a."תאור מוצר",
-    a."כמות בתעודה",
-    a."יח' מפעל",
-    a."מחיר יח'",
-    a."סכום",
+    a.source_db AS "חברה",
+    a.Control_Date AS "תאריך בקרה",
+    a.Project AS "מספר פרויקט",
+    a.Project_Desc AS "תאור פרויקט",
+    a.Sub_Chapter AS "תת פרק",
+    a.Sub_Chapter_Desc AS "תאור תת פרק",
+    a.Resource AS "משאב",
+    a.Resource_Desc AS "תאור משאב",
+    a.Doc_Type AS "סוג תעודה",
+    a.Doc_Desc AS "תאור תעודה",
+    a.Supplier_No AS "מס' ספק",
+    a.Supplier_Name AS "שם ספק",
+    a.Doc_No AS "מספר תעודה",
+    a.Exec_Month_Date AS "Date",
+    a.Part_No AS "מק'ט",
+    a.Part_Desc AS "תאור מוצר",
+    a.Doc_Quant AS "כמות בתעודה",
+    a.Factory_Unit AS "יח' מפעל",
+    a.Unit_Price AS "מחיר יח'",
+    a.Amount AS "סכום",
     a."הוצאות בפועל בטון",
     a."הוצאות בפועל ברזל",
     a."הוצאות בפועל ניהול שונות",
@@ -31,11 +31,10 @@ SELECT
     a."הוצאות בפועל כמות קבלנים",
     a."הוצאות בפועל כמות ניהול אתר",
     a.Project_Expenses_Exclude_Flag,
+    a.Control_Month,
+    a.Entity_Name,
     p.projtypedes AS "סוג פרויקט אחרי סינון"
-    
 
 FROM {{ ref('PROJECT_ACTUAL_EXPENSES_STG') }} a
 
-{{ join_valid_projects('a."פרויקט"', 'a.source_db') }}
-
-
+{{ join_valid_projects('a.Project', 'a.source_db') }}
