@@ -11,8 +11,8 @@ SELECT
     t.account_details                                    AS "פרטים",
     t.account_debit                                      AS "חובה",
     t.account_credit                                     AS "זכות",
-    t.debit                                              AS "חובה במליוני שח",
-    t.credit                                             AS "זכות במליוני שח",
+    t.account_debit/1000                                 AS "חובה באלפי שח",
+    t.account_credit/1000                                AS "זכות באלפי שח",
     t.execution_date                                     AS "Date",
     t.missing_date_flag                                  AS "דגל תאריך חסר",
     t.source_db                                          AS "חברה",
@@ -24,6 +24,7 @@ FROM {{ ref('ACCFNCITEMS') }} t
 INNER JOIN {{ ref('ACCOUNTS') }} a
     ON t.account_id = a.account_id
    AND t.source_db = a.source_db
+
 
 {{ join_valid_projects('a.project_docno', 'a.source_db') }}
 
