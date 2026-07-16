@@ -5,7 +5,8 @@ SELECT
     sub.value:DEBIT::FLOAT AS debit,
     sub.value:CREDIT::FLOAT AS credit,
     sub.value:STORNOFLAG::STRING AS stornoflag,
-    sub.value:FNCNUM::STRING AS fncnum,   
+    sub.value:FNCNUM::STRING AS fncnum,
+    sub.value:FNCDATE::DATE AS FNCDATE,
     source_db::STRING AS source_db,
 
 FROM {{ source('json', 'ACCFNCITEMS2_SUBFORM') }},

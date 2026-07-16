@@ -12,6 +12,7 @@ WITH base AS (
         SOURCE_DB,
         STORNOFLAG,
         FNCNUM,
+        FNCDATE,
  
         CASE
             WHEN source_db = 'BST' THEN
@@ -33,6 +34,7 @@ SELECT
     CREDIT         as ACCOUNT_CREDIT,
     SOURCE_DB,
     STORNOFLAG,
+    FNCDATE,
     date_text,
  
     CASE
