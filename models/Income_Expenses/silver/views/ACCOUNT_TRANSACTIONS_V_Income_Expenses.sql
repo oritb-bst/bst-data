@@ -17,7 +17,8 @@ SELECT
     t.missing_date_flag                                  AS "דגל תאריך חסר",
     t.source_db                                          AS "חברה",
     t.stornoflag                                         AS "stornoflag",
-    t.fncnum                                             AS "מספר תנועה"
+    t.fncnum                                             AS "מספר תנועה",
+    t.fncdate                                            AS "תאריך ערך"
 
 FROM {{ ref('ACCFNCITEMS') }} t
 
