@@ -68,6 +68,7 @@ sources:
       - name: ACCFNCITEMS2_SUBFORM
       - name: MED_PORDERITEMS_SUBFORM
       - name: BST_FOREXSUBA_SUBFORM
+      - name: MED_DOCUMENTS_D
 
 
   - name: txt
