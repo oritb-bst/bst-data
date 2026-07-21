@@ -11,7 +11,7 @@ SELECT
         'Asia/Jerusalem',
         CURRENT_TIMESTAMP()
     ) ,
-    'DD/MM/YYYY HH24:MI'
+    'HH24:MI DD/MM/YYYY'
 )AS LAST_REFRESH_IL
 
 
