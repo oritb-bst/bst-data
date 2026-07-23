@@ -17,6 +17,6 @@
       )
 
 ) p
-    on {{ project_column }} = p.doc
+    on {{ project_column }} = p.docno
 
 {% endmacro %}
