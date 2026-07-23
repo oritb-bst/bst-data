@@ -1,22 +1,22 @@
 -- מקרו שמצרף רק את חמשת הפרויקטים הרלוונטיים של מירי
--- BST לפי מספר פרויקט וחברה
+-- לפי מספר פרויקט
 
 {% macro join_bst_projects_without_sourceDB_budget_control(project_column, join_type='inner') %}
 
 {{ join_type }} join (
 
     select distinct
-        doc
+        docno
     from {{ ref('DIM_PROJECTS') }}
-    where doc in (
-          510197,
-          528815,
-          539220,
-          579697,
-          589607
+    where docno in (
+          PR25000009,
+          PR25000012,
+          PR26000004,
+          PR26000006,
+          PR25000004
       )
 
 ) p
-    on {{ project_column }} = p.doc
+    on {{ project_column }} = p.docno
 
 {% endmacro %}
