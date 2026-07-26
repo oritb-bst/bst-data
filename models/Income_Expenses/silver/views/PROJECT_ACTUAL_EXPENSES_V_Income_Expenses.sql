@@ -37,4 +37,7 @@ SELECT
 
 FROM {{ ref('PROJECT_ACTUAL_EXPENSES_STG') }} a
 
+
 {{ join_valid_projects('a.Project', 'a.source_db') }}
+
+WHERE Doc_Type<>'CO'
