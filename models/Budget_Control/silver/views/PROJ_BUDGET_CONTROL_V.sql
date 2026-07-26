@@ -6,7 +6,7 @@ select
     BUD_CONTROL_MONTH     as "חודש בקרה",
     BUD_CONTROL_DATE      as "Date",
     CURVERSION            as "מהדורה נוכחית",
-    IS_CLOSED             as "תקציב סגור",
+    IS_CLOSED             as "דגל תקציב סגור",
     t.SOURCE_DB           as "חברה"
 from {{ ref('PROJ_BUDGET_CONTROL') }} t
 
