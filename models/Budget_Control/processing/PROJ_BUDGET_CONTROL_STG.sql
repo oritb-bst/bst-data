@@ -20,27 +20,24 @@ WITH budget_periods AS (
         CONMONTH AS BUD_CONTROL_MONTH,
         CONDATE  AS BUD_CONTROL_DATE,
         CASE
-        WHEN TRIM(CLOSED) = 'Y' THEN 1
-        ELSE 0 END AS IS_CLOSED,
+            WHEN TRIM(CLOSED) = 'Y' THEN 1
+            ELSE 0 END AS IS_CLOSED,
         CURVERSION,
         SOURCE_DB,
-        -- התאריך האחרון שבו התקציב היה סגור
-        MAX(
-            CASE
-                WHEN TRIM(CLOSED) = 'Y'
-                THEN CONDATE END) OVER (PARTITION BY DOC) AS LATEST_CLOSED_DATE
-FROM {{ ref('BUD_CONTROLPERIODS_Z_J') }}
-),
-
-final AS (
-    SELECT
-        *,
-        CASE
-            WHEN IS_CLOSED = 1 AND CONDATE = LATEST_CLOSED_DATE
-            THEN 1 ELSE 0
-        END AS IS_LATEST_CLOSED_BUDGET
-FROM budget_periods
+        MAX(CASE
+            WHEN TRIM(CLOSED) = 'Y' THEN CONDATE END) OVER (PARTITION BY DOC) AS LATEST_CLOSED_DATE
+    FROM {{ ref('BUD_CONTROLPERIODS_Z_J') }}
 )
 
-SELECT *
-FROM final
+SELECT
+    BUD_CONTROL_PERIOD_ID,
+    PROJECT_ID,
+    PROJECT_NAME,
+    BUD_CONTROL_MONTH,
+    BUD_CONTROL_DATE,
+    IS_CLOSED,
+    CURVERSION,
+    SOURCE_DB,
+    CASE
+        WHEN IS_CLOSED = 1 AND BUD_CONTROL_DATE = LATEST_CLOSED_DATE THEN 1 ELSE 0 END AS IS_LATEST_CLOSED_BUDGET
+FROM budget_periods
