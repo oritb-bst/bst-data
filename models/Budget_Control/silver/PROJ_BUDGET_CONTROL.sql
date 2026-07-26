@@ -5,6 +5,7 @@ select
     PROJECT_NAME,
     BUD_CONTROL_MONTH,
     BUD_CONTROL_DATE,
+    IS_CLOSED,
     CURVERSION,
     SOURCE_DB
 from {{ ref('PROJ_BUDGET_CONTROL_STG') }}
