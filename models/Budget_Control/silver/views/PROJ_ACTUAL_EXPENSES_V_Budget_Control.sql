@@ -8,7 +8,7 @@ SELECT
     a.Resource AS "מספר משאב",
     a.Resource_Desc AS "תיאור משאב",
     a.Doc_Type AS "סוג תעודה",
-    a.Doc_Desc AS "תאור תעודה",
+    a.Doc_Desc AS "תיאור תעודה",
     a.Supplier_No AS "מס' ספק",
     a.Supplier_Name AS "שם ספק",
     a.Doc_No AS "מספר תעודה",
