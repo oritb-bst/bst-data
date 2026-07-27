@@ -3,7 +3,7 @@ SELECT
     a.Control_Date AS "תאריך בקרה",
     a.Project AS "מספר פרויקט",
     a.Project_Desc AS "תיאור פרויקט",
-    a.Sub_Chapter AS "תת פרק",
+    a.Sub_Chapter AS "מספר תת פרק",
     a.Sub_Chapter_Desc AS "תיאור תת פרק",
     a.Resource AS "מספר משאב",
     a.Resource_Desc AS "תיאור משאב",
