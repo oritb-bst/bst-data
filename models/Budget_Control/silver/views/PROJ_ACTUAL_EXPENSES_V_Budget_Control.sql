@@ -37,3 +37,5 @@ SELECT
 FROM {{ ref('PROJECT_ACTUAL_EXPENSES_STG') }} a
 
 {{ join_bst_projects_without_sourceDB_budget_control('a.Project') }}
+
+WHERE Doc_Type<>'CO'
