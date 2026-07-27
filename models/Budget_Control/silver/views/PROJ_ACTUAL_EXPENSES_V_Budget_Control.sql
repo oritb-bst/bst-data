@@ -12,7 +12,7 @@ SELECT
     a.Supplier_No AS "מס' ספק",
     a.Supplier_Name AS "שם ספק",
     a.Doc_No AS "מספר תעודה",
-    a.Exec_Month_Date AS "Date",
+    a.Exec_Month_Date AS "תאריך/חודש ביצוע",
     a.Part_No AS "מק'ט",
     a.Part_Desc AS "תאור מוצר",
     a.Doc_Quant AS "כמות בתעודה",
