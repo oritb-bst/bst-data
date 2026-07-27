@@ -13,5 +13,5 @@ select
     WHEN TRIM(CLOSED) = 'Y' AND CONDATE = MAX(
         CASE WHEN TRIM(CLOSED) = 'Y'
         THEN CONDATE END) OVER (PARTITION BY DOC)
-        THEN '1' ELSE '0' END AS IS_LATEST_CLOSED_BUDGET
+        THEN '1' ELSE '0' END AS IS_LATEST_CLOSED_BUDGET --דגל שמסמן את החודש תקציב אחרון שסגור
 FROM {{ ref('BUD_CONTROLPERIODS_Z_J') }}
