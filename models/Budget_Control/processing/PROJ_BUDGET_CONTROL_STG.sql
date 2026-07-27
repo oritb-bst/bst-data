@@ -4,9 +4,14 @@ select
     DOCNO    as PROJECT_NAME,
     CONMONTH as BUD_CONTROL_MONTH,
     CONDATE  as BUD_CONTROL_DATE,
-    CASE
-    WHEN TRIM(CLOSED) = 'Y' THEN '1'
-    ELSE '0' END AS IS_CLOSED, --דגל האם התקציב סגור
+    CASE 
+    WHEN TRIM(CLOSED) = 'Y' THEN '1' 
+    ELSE '0' END as IS_CLOSED, --דגל האם התקציב סגור
     CURVERSION,
-    SOURCE_DB
-from {{ ref('BUD_CONTROLPERIODS_Z_J') }}
+    SOURCE_DB,
+    CASE
+    WHEN TRIM(CLOSED) = 'Y' AND CONDATE = MAX(
+        CASE WHEN TRIM(CLOSED) = 'Y'
+        THEN CONDATE END) OVER (PARTITION BY DOC)
+        THEN '1' ELSE '0' END AS IS_LATEST_CLOSED_BUDGET
+FROM {{ ref('BUD_CONTROLPERIODS_Z_J') }}
