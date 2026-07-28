@@ -11,4 +11,4 @@ select
     GUARANTEE_START_DATE,
     GUARANTEE_END_DATE,
     SOURCE_DB
-from {{ ref('MEDR_GUARANTEES_STG') }}
+from {{ ref('GUARANTEES_STG') }}
