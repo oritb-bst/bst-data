@@ -10,5 +10,6 @@ select
     EXCHSUM       as REVALUED_GUARANTEE_AMOUNT,
     SDATE         as GUARANTEE_START_DATE,
     EXPDATE       as GUARANTEE_END_DATE,
+    CDES          as GUARANTEED_ENTITY_NAME, --שם הנערב
     SOURCE_DB
 from {{ ref('MEDR_GUARANTEES_J') }}
