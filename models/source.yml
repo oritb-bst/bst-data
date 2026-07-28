@@ -69,6 +69,7 @@ sources:
       - name: MED_PORDERITEMS_SUBFORM
       - name: BST_FOREXSUBA_SUBFORM
       - name: MED_DOCUMENTS_D
+      - name: MEDR_GUARANTEES
 
 
   - name: txt
