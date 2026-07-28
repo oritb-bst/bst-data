@@ -11,4 +11,4 @@ select
     GUARANTEE_START_DATE      as "תאריך תחילת ערבות",
     GUARANTEE_END_DATE        as "תאריך תוקף מעודכן",
     SOURCE_DB                 as "חברה"
-from {{ ref('MEDR_GUARANTEES') }}
+from {{ ref('GUARANTEES') }}
