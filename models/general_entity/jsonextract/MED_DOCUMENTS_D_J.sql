@@ -1,4 +1,7 @@
+--חשבון חלקי מזמין (MED_DOCUMENTS_D) 
+
 SELECT
+    item.value:DOC::number                AS DOC,
     item.value:MED_EXEMONTH::string       AS MED_EXEMONTH,
     item.value:DOCNO::string              AS DOCNO,
     item.value:ORDNAME::string            AS ORDNAME,

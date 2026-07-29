@@ -8,6 +8,6 @@ select
     TARGET_MANAGEMENT_REVENUES as "יעד הנהלה הכנסות באלפי שח",
     TARGET_MANAGEMENT_EXPENSES*1000 as "יעד הנהלה הוצאות",
     TARGET_MANAGEMENT_REVENUES*1000 as "יעד הנהלה הכנסות"
-from {{ ref('CONTROL_MANAGEMENT_TARGET') }} t
+from {{ ref('CONTROL_MANAGEMENT_TARGET_STG') }} t
 
 {{ join_bst_projects_without_sourceDB_budget_control('t.POCKET_NUMBER') }}

@@ -12,7 +12,7 @@ select
     STATUS_CON      as "סטטוס חוזה",
     PORD_ID         as "חוזה_ID",
 	t.SOURCE_DB     as "חברה"
-from {{ ref('CONTRACTOR_CONTRACTS') }} t
+from {{ ref('CONTRACTOR_CONTRACTS_STG') }} t
 
 {{ join_valid_projects_buildup('t.PROJECT_NAME', 't.SOURCE_DB') }}
 

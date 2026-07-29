@@ -20,9 +20,9 @@ SELECT
     t.fncnum                                             AS "מספר תנועה",
     t.fncdate                                            AS "תאריך ערך"
 
-FROM {{ ref('ACCFNCITEMS') }} t
+FROM {{ ref('ACCFNCITEMS_STG') }} t
 
-INNER JOIN {{ ref('ACCOUNTS') }} a
+INNER JOIN {{ ref('ACCOUNTS_STG') }} a
     ON t.account_id = a.account_id
    AND t.source_db = a.source_db
 

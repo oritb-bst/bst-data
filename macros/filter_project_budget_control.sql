@@ -8,7 +8,7 @@
     select distinct
         doc,
         source_db
-    from {{ ref('DIM_PROJECTS') }}
+    from {{ ref('DIM_PROJECTS_STG') }}
     where source_db = 'BST'
       and doc in (
           510197,

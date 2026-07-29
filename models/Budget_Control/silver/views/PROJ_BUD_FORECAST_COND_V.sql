@@ -13,6 +13,6 @@ select
     CONTRACTOR_MANUAL_DEDUCTION_ACTUAL    as "קיזוז ידני – קבלן",
     CONTRACTOR_MANUAL_DEDUCTION_FUTURE    as "קיזוז ידני עתידי",
 	t.SOURCE_DB                             as "חברה"
-from {{ ref('PROJ_BUD_FORECAST_COND') }} t
+from {{ ref('PROJ_BUD_FORECAST_COND_STG') }} t
 
 {{ join_bst_projects_budget_control('t.PROJECT_ID', 't.SOURCE_DB') }}

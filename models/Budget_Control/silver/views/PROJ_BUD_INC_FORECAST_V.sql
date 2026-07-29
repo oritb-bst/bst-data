@@ -13,6 +13,6 @@ select
     PROJECT_ID                    as "פרויקט_ID",
     BUD_CONTROL_DATE              as "Date",
 	t.SOURCE_DB                   as "חברה"
-from {{ ref('PROJ_BUD_INC_FORECAST') }} t
+from {{ ref('PROJ_BUD_INC_FORECAST_STG') }} t
 
 {{ join_bst_projects_budget_control('t.PROJECT_ID', 't.SOURCE_DB') }}

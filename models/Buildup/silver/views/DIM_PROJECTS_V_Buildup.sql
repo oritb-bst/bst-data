@@ -10,7 +10,7 @@ select
     BSA_APARTSUM as "מספר יחידות דיור",
     STATDES      as "סטטוס פרויקט",
     SOURCE_DB  as "חברה"
-from {{ ref('DIM_PROJECTS') }} d
+from {{ ref('DIM_PROJECTS_STG') }} d
 where coalesce(projtypedes, '') not in (
         'ניהול',
         'לא פרוייקטאלי',

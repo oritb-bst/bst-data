@@ -6,4 +6,4 @@ select
     id AS id_INVOICES,
     SOURCE_DB  as "חברה"
 
-from {{ ref('INVOICES') }}
+from {{ ref('INVOICES_STG') }}

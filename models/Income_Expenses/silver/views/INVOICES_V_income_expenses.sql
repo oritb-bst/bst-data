@@ -7,6 +7,6 @@ select
     a.SOURCE_DB  as "חברה",
     p.projtypedes as "סוג פרויקט אחרי סינון"
 
-from {{ ref('INVOICES') }} a
+from {{ ref('INVOICES_STG') }} a
 
 {{ join_valid_projects('a.DOC_PROJECT', 'a.SOURCE_DB') }}

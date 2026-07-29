@@ -4,7 +4,7 @@ with subchapters as (
     select
         *,
         try_to_number(regexp_substr(trim(SUB_CHAPTER_NAME), '^[0-9]+')) as subchapter_num
-    from {{ ref('DIM_SUBCHAPTERS') }}
+    from {{ ref('DIM_SUBCHAPTERS_STG') }}
     where SOURCE_DB = 'BST'
 )
 

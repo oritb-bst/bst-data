@@ -1,8 +1,0 @@
-select
-  	DOCNO,
-	DOC,
-	POSITIONCODE,
-	POSITIONDES,
-    USERNAME,
-    SOURCE_DB
-from {{ ref('ZCBS_PROJPOSITIONS_STG') }}

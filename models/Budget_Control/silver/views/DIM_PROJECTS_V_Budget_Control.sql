@@ -11,6 +11,6 @@ select
     STATDES      as "סטטוס פרויקט",
     BUD_STARTORDERDATE as "תאריך צו תחילת עבודה",
     SOURCE_DB  as "חברה"
-from {{ ref('DIM_PROJECTS') }}
+from {{ ref('DIM_PROJECTS_STG') }}
 where DOC in ('510197','528815','539220','579697','589607')
 and SOURCE_DB = 'BST'

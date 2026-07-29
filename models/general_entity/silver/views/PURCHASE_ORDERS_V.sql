@@ -7,4 +7,4 @@ select
 	STATUS_PORD          as "סטטוס הזמנת רכש",
     PORDER_NAME          as "מספר הזמנת רכש",
 	SOURCE_DB            as "חברה"
-from {{ ref('PURCHASE_ORDERS') }}
+from {{ ref('PURCHASE_ORDERS_STG') }}

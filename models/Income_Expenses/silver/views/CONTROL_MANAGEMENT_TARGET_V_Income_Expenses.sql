@@ -8,7 +8,7 @@ select
     TARGET_MANAGEMENT_EXPENSES*1000 as "יעד הנהלה הוצאות",
     TARGET_MANAGEMENT_REVENUES*1000 as "יעד הנהלה הכנסות",
     p.projtypedes as "סוג פרויקט אחרי סינון"
-from {{ ref('CONTROL_MANAGEMENT_TARGET') }} a
+from {{ ref('CONTROL_MANAGEMENT_TARGET_STG') }} a
 
 {{ join_valid_projects('a.POCKET_NUMBER') }}
 
