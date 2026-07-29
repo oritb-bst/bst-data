@@ -12,4 +12,4 @@ select
     STATUS_CON      as "סטטוס חוזה",
     PORD_ID         as "חוזה_ID",
 	SOURCE_DB       as "חברה"
-from {{ ref('CONTRACTOR_CONTRACTS') }}
+from {{ ref('CONTRACTOR_CONTRACTS_STG') }}

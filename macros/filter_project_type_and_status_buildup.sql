@@ -9,7 +9,7 @@
     select distinct
         d.docno,
         d.source_db
-    from {{ ref('DIM_PROJECTS') }} d
+    from {{ ref('DIM_PROJECTS_STG') }} d
 
     left join {{ source('csv', 'EXCLUDED_PROJECTS_BLDUP') }} e --אקסל עם מספרי פרויקט לא להצגה
         on to_varchar(d.docno) = to_varchar(e.docno)

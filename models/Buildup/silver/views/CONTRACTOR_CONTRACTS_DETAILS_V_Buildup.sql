@@ -7,5 +7,5 @@ SELECT
     TOTAL_PRICE           as "סך הכל מחיר",
     PORD_ID               as "חוזה_ID",
 	SOURCE_DB             as "חברה"
-FROM {{ ref('CONTRACTOR_CONTRACTS_DETAILS') }}
+FROM {{ ref('CONTRACTOR_CONTRACTS_DETAILS_STG') }}
 WHERE SOURCE_DB='BLDUP'

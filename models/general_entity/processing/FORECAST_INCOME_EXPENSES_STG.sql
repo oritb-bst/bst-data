@@ -10,3 +10,6 @@ select
 from {{ ref('FORECAST_INCOME_EXPENSES_J') }} a
 
 {{ join_valid_projects('a.PROJDOCNO', 'a.SOURCE_DB') }}
+
+
+

@@ -7,4 +7,4 @@ select
     STATUS_GR          as "סטטוס קבלת סחורה מספק",
     DOCUMENT_NAME      as "מספר תעודה",
     SOURCE_DB          as "חברה"
-from {{ ref('GOODS_RECEIPTS') }}
+from {{ ref('GOODS_RECEIPTS_STG') }}

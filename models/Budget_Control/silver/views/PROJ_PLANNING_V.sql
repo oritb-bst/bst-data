@@ -12,6 +12,6 @@ select
     coalesce(BUD_SUBCHAPTER_NAME, 'ללא') as "מספר תת פרק",
     BUD_SUBCHAPTER_DES     as "תיאור תת פרק",
     t.SOURCE_DB              as "חברה"
-from {{ ref('PROJ_PLANNING') }} t
+from {{ ref('PROJ_PLANNING_STG') }} t
 
 {{ join_bst_projects_budget_control('t.PROJECT_ID', 't.SOURCE_DB') }}

@@ -1,3 +1,4 @@
+--גיבוי, לא למחוק, לא הבנתי לאיזה מטרה זה משמש אותנו
 select
     TO_DATE('01/' || FORECAST_PROJECTS.FORDATE , 'DD/MM/YY') ::DATE AS forecast_month,
     PROJDOCNO as project_doc_no,
@@ -9,3 +10,5 @@ select
     FOREX as id,
     LOAD_TS
 from {{ source('bronze', 'FORECAST_PROJECTS') }}
+
+

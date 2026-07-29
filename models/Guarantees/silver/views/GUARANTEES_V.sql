@@ -12,4 +12,4 @@ select
     GUARANTEE_END_DATE        as "תאריך תוקף מעודכן",
     GUARANTEED_ENTITY_NAME    as "שם הנערב",
     SOURCE_DB                 as "חברה"
-from {{ ref('GUARANTEES') }}
+from {{ ref('GUARANTEES_STG') }}

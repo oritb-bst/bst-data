@@ -7,7 +7,7 @@
 
     select distinct
         docno
-    from {{ ref('DIM_PROJECTS') }}
+    from {{ ref('DIM_PROJECTS_STG') }}
     where docno in (
           'PR25000009',
           'PR25000012',

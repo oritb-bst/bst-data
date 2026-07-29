@@ -6,4 +6,4 @@ select
     SUP_TYPE_CODE as "סוג ספק",
     SUP_TYPE_DES  as "תיאור סוג ספק",
 	SOURCE_DB as "חברה"
-from {{ ref('DIM_SUPPLIERS') }}
+from {{ ref('DIM_SUPPLIERS_STG') }}
