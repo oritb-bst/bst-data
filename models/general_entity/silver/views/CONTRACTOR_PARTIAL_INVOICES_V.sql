@@ -12,4 +12,4 @@ select
     SUP_PAYMENT_NUMBER       as "מספר תשלום ספק",
     IS_INVOICED              as "חויבה",
 	SOURCE_DB                as "חברה"
-from {{ ref('CONTRACTOR_PARTIAL_INVOICES') }}
+from {{ ref('CONTRACTOR_PARTIAL_INVOICES_STG') }}

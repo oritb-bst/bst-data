@@ -5,6 +5,6 @@ SELECT
 	REVENUE as "תוכנית עבודה הכנסות",
 	EXPENSE as "תוכנית עבודה הוצאות",
     p.projtypedes as "סוג פרויקט אחרי סינון"
-from {{ ref('WORK_PLAN') }} a
+from {{ ref('WORK_PLAN_STG') }} a
 
 {{ join_valid_projects('a.PROJECT_NUMBER') }}

@@ -11,4 +11,4 @@ select
     STATDES      as "סטטוס פרויקט",
     BUD_STARTORDERDATE as "תאריך צו תחילת עבודה",
     SOURCE_DB  as "חברה"
-from {{ ref('DIM_PROJECTS') }}
+from {{ ref('DIM_PROJECTS_STG') }}

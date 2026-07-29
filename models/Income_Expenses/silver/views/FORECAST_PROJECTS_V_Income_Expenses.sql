@@ -12,7 +12,7 @@ select
     total_site_management_expenses as "סהכ הוצ ניהול אתר",
     a.SOURCE_DB  as "חברה",
     p.projtypedes as "סוג פרויקט אחרי סינון"
-from {{ ref('FORECAST_PROJECTS') }} a
+from {{ ref('FORECAST_PROJECTS_STG') }} a
 
 {{ join_valid_projects('a.project_doc_no', 'a.SOURCE_DB') }}
 

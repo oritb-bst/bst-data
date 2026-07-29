@@ -21,7 +21,7 @@ select
     TOPIC_NAME            as "מספר נושא",
     TOPIC_DES             as "תיאור נושא",
 	t.SOURCE_DB           as "חברה"
-from {{ ref('PROJ_BUD_EXP_FORECAST') }} t
+from {{ ref('PROJ_BUD_EXP_FORECAST_STG') }} t
 
 {{ join_bst_projects_budget_control('t.PROJECT_ID', 't.SOURCE_DB') }}
 

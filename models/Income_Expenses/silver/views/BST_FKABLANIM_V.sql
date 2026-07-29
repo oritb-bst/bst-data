@@ -15,4 +15,4 @@ select
 	pay_date as  "תאריך ת. תשלום",
     SOURCE_DB  as "חברה"
     
-from {{ ref('BST_FKABLANIM') }}
+from {{ ref('BST_FKABLANIM_STG') }}
