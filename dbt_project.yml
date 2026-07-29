@@ -65,3 +65,10 @@ models:
       silver:
         views:
           +materialized: view
+
+    Guarantees:
+      +materialized: table
+
+      silver:
+        views:
+          +materialized: view

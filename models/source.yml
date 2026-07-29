@@ -70,6 +70,7 @@ sources:
       - name: BST_FOREXSUBA_SUBFORM
       - name: MED_DOCUMENTS_D
       - name: MEDR_DOCAPPROVE_SUBFORM
+      - name: MEDR_GUARANTEES
 
 
   - name: txt
