@@ -12,6 +12,6 @@ select
     GUARANTEE_END_DATE        as "תאריך תוקף מעודכן",
     GUARANTEED_ENTITY_NAME    as "שם הנערב",
     GUARANTEE_TYPE_NAME       as "מספר סוג ערבות",
-    STATDES                   as "סטטוס ערבות",
+    GUARANTEE_STATUS          as "סטטוס ערבות",
     SOURCE_DB                 as "חברה"
 from {{ ref('GUARANTEES_STG') }}
