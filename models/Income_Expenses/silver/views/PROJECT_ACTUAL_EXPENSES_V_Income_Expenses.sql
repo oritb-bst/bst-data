@@ -41,3 +41,43 @@ FROM {{ ref('PROJECT_ACTUAL_EXPENSES_STG') }} a
 {{ join_valid_projects('a.Project', 'a.source_db') }}
 
 WHERE Doc_Type<>'CO'
+
+UNION ALL
+
+SELECT
+    SOURCE_DB AS "חברה",
+    NULL AS "תאריך בקרה",
+    PROJECT AS "מספר פרויקט",
+    NULL AS "תאור פרויקט",
+    NULL AS "תת פרק",
+    NULL AS "תאור תת פרק",
+    NULL AS "משאב",
+    NULL AS "תאור משאב",
+    EXPENSES_TYPE AS "סוג תעודה",
+    EXPENSES_DESCRIPTION AS "תאור תעודה",
+    NULL AS "מס' ספק",
+    NULL AS "שם ספק",
+    NULL AS "מספר תעודה",
+    EXEC_MONTH_DATE AS "Date",
+    NULL AS "מק'ט",
+    NULL AS "תאור מוצר",
+    NULL AS "כמות בתעודה",
+    NULL AS "יח' מפעל",
+    NULL AS "מחיר יח'",
+    NULL AS "סכום",
+    "הוצאות בפועל בטון",
+    "הוצאות בפועל ברזל",
+    "הוצאות בפועל ניהול שונות",
+    "הוצאות בפועל קבלנים",
+    "הוצאות בפועל ניהול אתר",
+    "הוצאות בפועל רכש",
+    "הוצאות בפועל כמות בטון",
+    "הוצאות בפועל כמות ברזל",
+    "הוצאות בפועל כמות ניהול שונות",
+    "הוצאות בפועל כמות קבלנים",
+    "הוצאות בפועל כמות ניהול אתר",
+    NULL AS Project_Expenses_Exclude_Flag,
+    NULL AS Control_Month,
+    NULL AS Entity_Name,
+    NULL AS "סוג פרויקט אחרי סינון"
+FROM {{ ref('MANUAL_EXPENSES_STG') }}
