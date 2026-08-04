@@ -50,13 +50,16 @@ SELECT
     Exec_Month_Date AS "Date",
     NULL AS "מק'ט",
     NULL AS "תאור מוצר",
+    EXPENSES_QTY AS "כמות בתעודה",
     NULL AS "יח' מפעל",
     NULL AS "מחיר יח'",
-    EXPENSES_TYPE AS "סוג הוצאה",
     EXPENSES_AMOUNT AS "סכום",
-    EXPENSES_QTY AS "כמות בתעודה",
+    EXPENSES_TYPE AS "סוג הוצאה",
     0 AS Project_Expenses_Exclude_Flag,
     NULL AS Entity_Name,
     NULL AS "סוג פרויקט אחרי סינון"
 
 FROM {{ ref('MANUAL_EXPENSES_STG') }}
+
+
+  
