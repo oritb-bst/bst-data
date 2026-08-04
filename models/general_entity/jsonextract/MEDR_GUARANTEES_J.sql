@@ -10,7 +10,9 @@ SELECT
     item.value:SDATE::date            AS SDATE,
     item.value:EXPDATE::date          AS EXPDATE,
     item.value:CDES::string           AS CDES,
-    SOURCE_DB::string                 AS SOURCE_DB
+    item.value:GUARANTYPENAME::varchar AS GUARANTYPENAME,
+    item.value:STATDES::string         AS STATDES,
+    SOURCE_DB::string                  AS SOURCE_DB
 
 FROM {{ source('json', 'MEDR_GUARANTEES') }},
 LATERAL FLATTEN(input => DATA) item

@@ -11,5 +11,7 @@ select
     SDATE         as GUARANTEE_START_DATE,
     EXPDATE       as GUARANTEE_END_DATE,
     CDES          as GUARANTEED_ENTITY_NAME, --שם הנערב
+    GUARANTYPENAME as GUARANTEE_TYPE_NAME,
+    STATDES        as GUARANTEE_STATUS,
     SOURCE_DB
 from {{ ref('MEDR_GUARANTEES_J') }}
