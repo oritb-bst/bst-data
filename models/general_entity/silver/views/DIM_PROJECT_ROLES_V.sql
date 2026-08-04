@@ -1,6 +1,6 @@
 select
-  	DOCNO as "מספר פרויקט",
-	DOC,
+  	PROJECT_NAME as "מספר פרויקט",
+	PROJECT_ID,
 	POSITIONCODE as "קוד תפקיד",
 	POSITIONDES as "תיאור תפקיד",
     USERNAME as "שם עובד",
