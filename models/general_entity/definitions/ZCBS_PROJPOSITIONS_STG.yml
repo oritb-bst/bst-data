@@ -1,7 +1,7 @@
   models:
   - name: ZCBS_PROJPOSITIONS_STG
     columns:
-      - name: DOC
+      - name: PROJECT_ID
         data_tests:
           - not_null:
              config:
