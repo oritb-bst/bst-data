@@ -11,7 +11,7 @@ SELECT
     "סטטוס",
     "מספר חשבון חלקי",
     "חברה",
-    'MED_DOCUMENTS' as "Source"
+    'MED_DOCUMENTS' as    "מקור הוצאה"
 
 FROM {{ ref('MED_DOCUMENTS_D_V_Income_Expenses') }} 
 
@@ -33,7 +33,7 @@ SELECT
     NULL AS "סטטוס",
     NULL AS "מספר חשבון חלקי",
     "חברה",
-    'ACCOUNT_TRANSACTIONS' as "Source"
+    'ACCOUNT_TRANSACTIONS' as    "מקור הוצאה"
 
 FROM {{ ref('ACCOUNT_TRANSACTIONS_V_Income_Expenses') }}
 
