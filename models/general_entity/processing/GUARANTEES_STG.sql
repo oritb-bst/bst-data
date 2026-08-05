@@ -13,5 +13,7 @@ select
     CDES          as GUARANTEED_ENTITY_NAME, --שם הנערב
     GUARANTYPENAME as GUARANTEE_TYPE_NAME,
     STATDES        as GUARANTEE_STATUS,
+    case when GUARANTYPENAME in (4,6,13,15,20) then 'מזמין'
+         when GUARANTYPENAME in (2,3,21) then 'קבלן' else 'אחר' end as GUARANTEE_PARTY,
     SOURCE_DB
 from {{ ref('MEDR_GUARANTEES_J') }}
