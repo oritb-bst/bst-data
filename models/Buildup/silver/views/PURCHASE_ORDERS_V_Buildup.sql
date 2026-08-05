@@ -9,6 +9,8 @@ select
 	t.SOURCE_DB          as "חברה"
 from {{ ref('PURCHASE_ORDERS_STG') }} t
 
-{{ join_valid_projects_buildup('t.PROJECT_NAME', 't.SOURCE_DB') }}
+{{ join_valid_projects_buildup('t.PROJECT_NAME', 't.SOURCE_DB') }} --סטטוס פרויקט
 
 where {{ filter_last_n_years('t.CURDATE') }} --סינון שנים
+
+and STATUS_PORD not in ('מבוטלת', 'נדחתה') --סטטוס הזמנת רכש
