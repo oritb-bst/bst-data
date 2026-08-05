@@ -2,13 +2,12 @@
 --מודול מזמין
 SELECT
     TRY_TO_DATE('01/' || MED_EXEMONTH, 'DD/MM/YY') AS execution_date,
-    DOCNO as PROJECT_DOCNO,
+    PROJDOCNO as PROJECT_DOCNO,
     DOC,
     ORDNAME,
     CUSTNAME,
     DISPRICE,
-    MED_APPQPRICE,
-    EXPECTPAY ,
+    EXPECTPAY,
     STATDES,
     BOOKNUM,
     SOURCE_DB
