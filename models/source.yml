@@ -37,6 +37,7 @@ sources:
       - name: EXCLUDED_PROJECTS_BLDUP
       - name: EXCLUDED_PROJECTS_BST
       - name: MANUAL_EXPENSES
+      - name: GUARANTEES
 
   - name: json
     database: BRONZE_UAT
