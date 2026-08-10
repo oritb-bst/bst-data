@@ -7,8 +7,7 @@ select
     TO_DATE(UDATE)           as CHANGE_DATE, --תאריך שינוי
     DOCNO                    as GUARANTEE_NAME, --מספר ערבות
     SOURCE_DB,
-    case
-        when TRY_TO_NUMBER(NEWVALUE) < TRY_TO_NUMBER(PREVVALUE) then 1 else 0 end as IS_DECREASE
+    case when TRY_TO_NUMBER(NEWVALUE) < TRY_TO_NUMBER(PREVVALUE) then 1 else 0 end as IS_DECREASE
 from {{ ref('MEDR_GUARANTCHNGLOG_J') }}
 where CHNGTYPE = 'סכום ערבות'
   and TRY_TO_NUMBER(PREVVALUE) <> 0.00
