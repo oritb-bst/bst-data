@@ -9,5 +9,5 @@ select
     SOURCE_DB
 from {{ ref('MEDR_GUARANTCHNGLOG_J') }}
 where CHNGTYPE = 'סכום ערבות'
-and PREVVALUE <> 0
+and PREVVALUE <> 0.00
 and STATDES = 'מאושרת'
