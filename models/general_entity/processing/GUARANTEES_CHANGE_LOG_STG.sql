@@ -1,12 +1,14 @@
---MEDR_GUARANTCHNGLOG_SUBFORM
+-- MEDR_GUARANTCHNGLOG_SUBFORM
 select
-    CHNGTYPE  as CHANGE_TYPE, --סוג שינוי
-    PREVVALUE as PREV_VALUE, --ערך ישן
-    NEWVALUE  as NEW_VALUE, --ערך חדש
-    STATDES   as STAT_IN_CHANGE, --סטטוס בזמן שינוי
-    UDATE     as CHANGE_DATE, --תאריך שינוי
-    DOCNO     as GUARANTEE_NAME, --מספר ערבות
-    SOURCE_DB
+    CHNGTYPE                 as CHANGE_TYPE, --סוג שינוי
+    TRY_TO_NUMBER(PREVVALUE) as PREV_VALUE, --ערך ישן
+    TRY_TO_NUMBER(NEWVALUE)  as NEW_VALUE, --ערך חדש
+    STATDES                  as STAT_IN_CHANGE, --סטטוס בזמן שינוי
+    TO_DATE(UDATE)           as CHANGE_DATE, --תאריך שינוי
+    DOCNO                    as GUARANTEE_NAME, --מספר ערבות
+    SOURCE_DB,
+    case
+        when TRY_TO_NUMBER(NEWVALUE) < TRY_TO_NUMBER(PREVVALUE) then 1 else 0 end as IS_DECREASE
 from {{ ref('MEDR_GUARANTCHNGLOG_J') }}
 where CHNGTYPE = 'סכום ערבות'
-and PREVVALUE <> 0.00
+  and TRY_TO_NUMBER(PREVVALUE) <> 0.00
