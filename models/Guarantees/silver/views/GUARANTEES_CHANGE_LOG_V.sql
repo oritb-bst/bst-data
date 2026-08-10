@@ -5,6 +5,6 @@ select
     NEW_VALUE      as "ערך חדש",
     STAT_IN_CHANGE as "סטטוס בזמן שינוי",
     CHANGE_DATE    as "תאריך שינוי",
-    GUARANTEE_NAME as "מספר ערבות", --מספר ערבות
+    GUARANTEE_NAME as "מספר ערבות",
     SOURCE_DB      as "חברה"
 from {{ ref('GUARANTEES_CHANGE_LOG_STG') }}
