@@ -14,5 +14,6 @@ select
     GUARANTEE_TYPE_NAME       as "מספר סוג ערבות",
     GUARANTEE_STATUS          as "סטטוס ערבות",
     GUARANTEE_PARTY           as "צד הערבות", --מזמין/קבלן
+    GUARANTEE_NAME            as "מספר ערבות במערכת",
     SOURCE_DB                 as "חברה"
 from {{ ref('GUARANTEES_STG') }}
