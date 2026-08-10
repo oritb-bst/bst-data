@@ -73,6 +73,7 @@ sources:
       - name: MED_DOCUMENTS_D
       - name: MEDR_DOCAPPROVE_SUBFORM
       - name: MEDR_GUARANTEES
+      - name: MEDR_GUARANTCHNGLOG_SUBFORM
 
 
   - name: txt

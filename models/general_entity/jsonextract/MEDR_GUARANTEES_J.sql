@@ -12,6 +12,7 @@ SELECT
     item.value:CDES::string           AS CDES,
     item.value:GUARANTYPENAME::varchar AS GUARANTYPENAME,
     item.value:STATDES::string         AS STATDES,
+    item.value:DOCNO::varchar          AS DOCNO,
     SOURCE_DB::string                  AS SOURCE_DB
 
 FROM {{ source('json', 'MEDR_GUARANTEES') }},
