@@ -6,5 +6,6 @@ select
     STAT_IN_CHANGE as "סטטוס בזמן שינוי",
     CHANGE_DATE    as "תאריך שינוי",
     GUARANTEE_NAME as "מספר ערבות",
+    IS_DECREASE    as "דגל הקטנה",
     SOURCE_DB      as "חברה"
 from {{ ref('GUARANTEES_CHANGE_LOG_STG') }}
