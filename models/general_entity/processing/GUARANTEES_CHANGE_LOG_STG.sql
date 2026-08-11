@@ -1,3 +1,4 @@
+--הטבלה הזאת לטובת בדיקה האם היתה הקטנה בסכום הערבות לערבויות מאושרות
 -- MEDR_GUARANTCHNGLOG_SUBFORM
 select
     CHNGTYPE                 as CHANGE_TYPE, --סוג שינוי
