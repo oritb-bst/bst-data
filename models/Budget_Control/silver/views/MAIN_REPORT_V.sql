@@ -193,6 +193,19 @@ left join final_table_temp r
         "Date",
         "חברה",
         "מקור",
+        case "מקור"
+            when 'סך הכנסות' then 1
+            when 'סך הוצ ישירות' then 2
+            when 'סך הוצ כלליות' then 3
+            when 'בצ"מ' then 4
+            when 'בדק ואחריות' then 5
+            when 'רווח גולמי' then 6
+            when 'אחוז רווח גולמי מההכנסות' then 7
+            when 'העמסת אגף ביצוע' then 8
+            when 'רווח (הפסד)' then 9
+            when 'אחוז רווחיות' then 10
+            else 99
+        end as "סדר מקור",
         "אפס",
         "מעודכן",
         "אומדן קודם",
