@@ -330,5 +330,16 @@ left join final_table_temp r
     from calc_changes
 )
 
-select *
+select 
+    "פרויקט_ID",
+    "Date",
+    "חברה",
+    "מקור" as "מקור-דוח",
+    "סדר מקור",
+    "כותרת",
+    "תת כותרת",
+    "ערך",
+    "סדר כותרת",
+    "סדר תת כותרת"
 from final_long
+where "מקור" <> 'לא מסווג'
