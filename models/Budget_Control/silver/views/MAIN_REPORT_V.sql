@@ -332,3 +332,4 @@ left join final_table_temp r
 
 select *
 from final_long
+where "מקור" <> 'לא מסווג'
