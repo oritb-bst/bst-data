@@ -7,8 +7,7 @@ with joined_data as (
         case when cc."מקור" = 'אגף ביצוע' then 'העמסת אגף ביצוע'
              when cc."מקור" = 'תיקוני בדק ואחריות' then 'בדק ואחריות' 
              when cc."מקור" = 'כלליות' then 'סך הוצ כלליות' 
-             when cc."מקור" = 'ישירות' then 'סך הוצ ישירות'
-             else coalesce(cc."מקור", 'לא מסווג') end as "מקור",
+             when cc."מקור" = 'ישירות' then 'סך הוצ ישירות' end as "מקור",
         t.FORECAST_TO_COMPLETE as "אומדן לגמר (הוצאות)",
         t.CURRENT_BUDGET       as "תקציב הוצאות עדכני",
         t.PREVIOUS_FORECAST    as "אומדן קודם (הוצאות)",
