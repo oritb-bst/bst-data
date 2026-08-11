@@ -264,7 +264,7 @@ left join final_table_temp r
         'אומדן קודם' as "תת כותרת",
         "אומדן קודם" as "ערך",
         2 as "סדר כותרת",
-        1 as "סדר תת כותרת"
+        3 as "סדר תת כותרת"
     from calc_changes
 
     union all
@@ -279,7 +279,7 @@ left join final_table_temp r
         'שינוי' as "תת כותרת",
         "שינוי מאומדן קודם" as "ערך",
         2 as "סדר כותרת",
-        2 as "סדר תת כותרת"
+        4 as "סדר תת כותרת"
     from calc_changes
 
     union all
@@ -294,7 +294,7 @@ left join final_table_temp r
         'אומדן נוכחי' as "תת כותרת",
         "אומדן נוכחי" as "ערך",
         2 as "סדר כותרת",
-        3 as "סדר תת כותרת"
+        5 as "סדר תת כותרת"
     from calc_changes
 
     union all
@@ -312,7 +312,7 @@ left join final_table_temp r
         'שינוי' as "תת כותרת",
         "שינוי ממעודכן" as "ערך",
         3 as "סדר כותרת",
-        1 as "סדר תת כותרת"
+        6 as "סדר תת כותרת"
     from calc_changes
 
     union all
@@ -327,7 +327,7 @@ left join final_table_temp r
         '%' as "תת כותרת",
         "אחוז שינוי ממעודכן" as "ערך",
         3 as "סדר כותרת",
-        2 as "סדר תת כותרת"
+        7 as "סדר תת כותרת"
     from calc_changes
 )
 
