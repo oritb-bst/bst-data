@@ -215,6 +215,18 @@ left join final_table_temp r
     from all_rows
 )
 
+-- יעדי הנהלה
+,management_targets as (
+
+    select
+        "חודש",
+        "פרויקט_ID",
+        "מספר פרויקט",
+        "מקור",
+        "יעד ההנהלה"
+    from {{ source('csv', 'MANAGEMENT_TARGET') }}
+)
+
 --טבלה סופית עם מיון
 ,final_long as (
     -- =====================
@@ -248,6 +260,29 @@ left join final_table_temp r
         2 as "סדר תת כותרת"
     from calc_changes
 
+    
+    union all
+
+-- =====================
+-- יעד הנהלה
+-- =====================
+select
+    c."פרויקט_ID",
+    c."Date",
+    c."חברה",
+    c."מקור",
+    c."סדר מקור",
+    'יעד ההנהלה' as "כותרת",
+    ' ' as "תת כותרת",
+    mt."יעד ההנהלה" as "ערך",
+    2 as "סדר כותרת",
+    3 as "סדר תת כותרת"
+from calc_changes c
+left join management_targets mt
+    on c."פרויקט_ID" = mt."פרויקט_ID"
+    and date_trunc('month', c."Date") = mt."חודש"
+    and c."מקור" = mt."מקור"
+
     union all
 
     -- =====================
@@ -262,8 +297,8 @@ left join final_table_temp r
         'תחזית לגמר פרויקט' as "כותרת",
         'אומדן קודם' as "תת כותרת",
         "אומדן קודם" as "ערך",
-        2 as "סדר כותרת",
-        3 as "סדר תת כותרת"
+        3 as "סדר כותרת",
+        4 as "סדר תת כותרת"
     from calc_changes
 
     union all
@@ -277,8 +312,8 @@ left join final_table_temp r
         'תחזית לגמר פרויקט' as "כותרת",
         'שינוי' as "תת כותרת",
         "שינוי מאומדן קודם" as "ערך",
-        2 as "סדר כותרת",
-        4 as "סדר תת כותרת"
+        3 as "סדר כותרת",
+        5 as "סדר תת כותרת"
     from calc_changes
 
     union all
@@ -292,8 +327,8 @@ left join final_table_temp r
         'תחזית לגמר פרויקט' as "כותרת",
         'אומדן נוכחי' as "תת כותרת",
         "אומדן נוכחי" as "ערך",
-        2 as "סדר כותרת",
-        5 as "סדר תת כותרת"
+        3 as "סדר כותרת",
+        6 as "סדר תת כותרת"
     from calc_changes
 
     union all
@@ -310,8 +345,8 @@ left join final_table_temp r
         'לעומת תקציב מעודכן' as "כותרת",
         'שינוי' as "תת כותרת",
         "שינוי ממעודכן" as "ערך",
-        3 as "סדר כותרת",
-        6 as "סדר תת כותרת"
+        4 as "סדר כותרת",
+        7 as "סדר תת כותרת"
     from calc_changes
 
     union all
@@ -325,8 +360,8 @@ left join final_table_temp r
         'לעומת תקציב מעודכן' as "כותרת",
         '%' as "תת כותרת",
         "אחוז שינוי ממעודכן" as "ערך",
-        3 as "סדר כותרת",
-        7 as "סדר תת כותרת"
+        4 as "סדר כותרת",
+        8 as "סדר תת כותרת"
     from calc_changes
 )
 

@@ -39,6 +39,7 @@ sources:
       - name: MANUAL_EXPENSES
       - name: GUARANTEES
       - name: REVENUE_RECOGNITION
+      - name: MANAGEMENT_TARGET
 
   - name: json
     database: BRONZE_UAT
