@@ -6,6 +6,11 @@ with subchapters as (
         try_to_number(regexp_substr(trim(SUB_CHAPTER_NAME), '^[0-9]+')) as subchapter_num
     from {{ ref('DIM_SUBCHAPTERS_STG') }}
     where SOURCE_DB = 'BST'
+
+     qualify row_number() over (
+        partition by SUB_CHAPTER_NAME, SOURCE_DB
+        order by SUB_CHAPTER_DES_FOR_BUD_CONTROL
+    ) = 1
 )
 
 select
