@@ -38,6 +38,7 @@ sources:
       - name: EXCLUDED_PROJECTS_BST
       - name: MANUAL_EXPENSES
       - name: GUARANTEES
+      - name: REVENUE_RECOGNITION
 
   - name: json
     database: BRONZE_UAT
