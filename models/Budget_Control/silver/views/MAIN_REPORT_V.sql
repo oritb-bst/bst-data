@@ -219,7 +219,6 @@ left join final_table_temp r
 ,management_targets as (
 
     select
-        "חודש",
         "פרויקט_ID",
         "מספר פרויקט",
         "מקור",
@@ -264,7 +263,7 @@ left join final_table_temp r
     union all
 
 -- =====================
--- יעד הנהלה
+-- יעד הנהלה (ברמת פרויקט ולא חודש)
 -- =====================
 select
     c."פרויקט_ID",
@@ -280,7 +279,7 @@ select
 from calc_changes c
 left join management_targets mt
     on c."פרויקט_ID" = mt."פרויקט_ID"
-    and date_trunc('month', c."Date") = mt."חודש"
+--    and date_trunc('month', c."Date") = mt."חודש"
     and c."מקור" = mt."מקור"
 
     union all
