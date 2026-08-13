@@ -11,7 +11,7 @@ SELECT
     item.value:BSA_APARTSUM::number     AS BSA_APARTSUM,
     item.value:BUD_STARTORDERDATE::date AS BUD_STARTORDERDATE, --תאריך צו תחילת עבודה
     item.value:BUD_ASTARTDATE::date     AS BUD_ASTARTDATE, --תאריך התחלה בפועל
-    item.value:BUD_CONTDURATION::date   AS BUD_CONTDURATION, --משך בחודשים חוזי
+    item.value:BUD_CONTDURATION::number AS BUD_CONTDURATION, --משך בחודשים חוזי
     item.value:BUD_CONTENDDATE::date    AS BUD_CONTENDDATE, --תאריך סיום ביצוע חוזי
 
 FROM {{ source('json', 'DIM_PROJECTS') }},
