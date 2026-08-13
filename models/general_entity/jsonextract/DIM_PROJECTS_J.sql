@@ -9,7 +9,10 @@ SELECT
     SOURCE_DB::string                   AS SOURCE_DB,
     item.value:BSA_SIZESUM::float       AS BSA_SIZESUM,
     item.value:BSA_APARTSUM::number     AS BSA_APARTSUM,
-    item.value:BUD_STARTORDERDATE::date AS BUD_STARTORDERDATE
+    item.value:BUD_STARTORDERDATE::date AS BUD_STARTORDERDATE, --תאריך צו תחילת עבודה
+    item.value:BUD_ASTARTDATE::date     AS BUD_ASTARTDATE, --תאריך התחלה בפועל
+    item.value:BUD_CONTDURATION::date   AS BUD_CONTDURATION, --משך בחודשים חוזי
+    item.value:BUD_CONTENDDATE::date    AS BUD_CONTENDDATE, --תאריך סיום ביצוע חוזי
 
 FROM {{ source('json', 'DIM_PROJECTS') }},
 LATERAL FLATTEN(input => DATA) item
