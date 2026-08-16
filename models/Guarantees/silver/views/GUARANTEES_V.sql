@@ -32,7 +32,7 @@ select
     d.LAST_DECREASE_DATE        as "תאריך הקטנה אחרון",
 
     case
-        when d.LAST_DECREASE_DATE is null then 1
+        when d.LAST_DECREASE_DATE is null then 0
         when d.LAST_DECREASE_DATE < dateadd(month, -3, current_date()) then 1 else 0 end as "לא היתה הקטנה ב-3 חודשים"
 from {{ ref('GUARANTEES_STG') }} g
 
