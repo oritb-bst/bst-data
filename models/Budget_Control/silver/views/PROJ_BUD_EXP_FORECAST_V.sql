@@ -11,6 +11,7 @@ select
 	SUB_TOPIC_NAME        as "מספר משאב",
 	SUB_TOPIC_DES         as "תיאור משאב",
 	ACTUAL_BUDGET_SPENT   as "ניצול בפועל",
+    ACTUAL_BUDGET_SPENT_K as "ניצול בפועל באלפי שח",
 	FORECAST_TO_COMPLETE  as "אומדן לגמר (הוצאות)",
     FORECAST_TO_COMPLETE_K  as "אומדן לגמר (הוצאות) באלפי שח",
 	CURRENT_BUDGET        as "תקציב הוצאות עדכני",
