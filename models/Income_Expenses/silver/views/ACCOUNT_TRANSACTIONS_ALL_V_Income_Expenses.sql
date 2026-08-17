@@ -7,7 +7,7 @@ SELECT
     a.account_type_name                                  AS "כותרת מאזן/רווח והפ.",
     a.project_docno                                      AS "מספר פרויקט",
     a.project_id                                         AS "פרויקט_ID",
-    t.baldate                                            AS "ת. למאזן",
+    t.baldate                                            AS  "Date", -- "ת. למאזן",
     t.fncdate                                            AS "תאריך ערך",
     t.account_details                                    AS "פרטים",
     t.account_debit                                      AS "חובה",
