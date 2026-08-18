@@ -13,3 +13,6 @@ select
     PORD_ID         as "חוזה_ID",
 	SOURCE_DB       as "חברה"
 from {{ ref('CONTRACTOR_CONTRACTS_STG') }}
+
+
+where {{ filter_last_n_years('CURDATE') }} --סינון שנים
