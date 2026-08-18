@@ -13,3 +13,5 @@ select
     IS_INVOICED              as "חויבה",
 	SOURCE_DB                as "חברה"
 from {{ ref('CONTRACTOR_PARTIAL_INVOICES_STG') }}
+
+where {{ filter_last_n_years('CURDATE') }} --סינון שנים
