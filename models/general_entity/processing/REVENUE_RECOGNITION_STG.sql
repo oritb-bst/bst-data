@@ -19,3 +19,5 @@ SELECT
 	"רווח_והפסד_צפוי_באחוזים",
 	"רווח_והפסד_מוכר",
 FROM {{ source('csv', 'REVENUE_RECOGNITION') }}
+
+WHERE NULLIF(TRIM("פרויקט"), '') IS NOT NULL
