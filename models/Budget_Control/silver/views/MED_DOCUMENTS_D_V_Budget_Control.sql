@@ -10,16 +10,12 @@ select
     d.STATDES        as "סטטוס חשבון",
     d.BOOKNUM        as "מספר חשבון חלקי",
     d.SOURCE_DB      as "חברה",
+    coalesce(nullif(d.EXPECTPAY, 0), d.DISPRICE) as "סכום תשלום",
 
-    pr.DOC           as "פרויקט_ID"
+    p."פרויקט_ID"
 
 from {{ ref('MED_DOCUMENTS_D_STG') }} d
 
-left join {{ ref('DIM_PROJECTS_STG') }} pr
-    on d.PROJECT_DOCNO = pr.DOCNO
-   and d.SOURCE_DB = pr.SOURCE_DB
-
-{{ join_bst_projects_budget_control(
-    'pr.DOC',
-    'd.SOURCE_DB'
-) }}
+inner join {{ ref('DIM_PROJECTS_V_Budget_Control') }} p
+    on d.PROJECT_DOCNO = p."מספר פרויקט"
+   and d.SOURCE_DB = p."חברה"
