@@ -13,7 +13,9 @@ select
     BUD_ASTARTDATE     as "תאריך התחלה בפועל",
     BUD_CONTDURATION   as "משך בחודשים חוזי",
     BUD_CONTENDDATE    as "תאריך סיום ביצוע חוזי",
-    SOURCE_DB  as "חברה"
+    BSA_DATE           as "שלד",
+    BSA_DATE1          as "סיום ומסירה",
+    SOURCE_DB          as "חברה"
 from {{ ref('DIM_PROJECTS_STG') }}
 where DOC in ('510197','528815','539220','579697','589607')
 and SOURCE_DB = 'BST'
