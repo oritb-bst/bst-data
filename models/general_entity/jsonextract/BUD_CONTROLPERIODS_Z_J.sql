@@ -7,6 +7,8 @@ SELECT
     SOURCE_DB::string                   AS SOURCE_DB,
     item.value:DOCNO::string            AS DOCNO,
     item.value:CLOSED::string           AS CLOSED,
+    item.value:BSA_DATE::date           AS BSA_DATE, --תאריך שלד
+    item.value:BSA_DATE1::date          AS BSA_DATE1, --תאריך סיום ומסירה
 
 FROM {{ source('json', 'BUD_CONTROLPERIODS_Z') }},
 LATERAL FLATTEN(input => DATA) item

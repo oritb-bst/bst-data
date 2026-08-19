@@ -13,8 +13,6 @@ SELECT
     item.value:BUD_ASTARTDATE::date     AS BUD_ASTARTDATE, --תאריך התחלה בפועל
     item.value:BUD_CONTDURATION::number AS BUD_CONTDURATION, --משך בחודשים חוזי
     item.value:BUD_CONTENDDATE::date    AS BUD_CONTENDDATE, --תאריך סיום ביצוע חוזי
-    item.value:BSA_DATE::date           AS BSA_DATE, --שלד
-    item.value:BSA_DATE1::date          AS BSA_DATE1, --סיום ומסירה
 
 FROM {{ source('json', 'DIM_PROJECTS') }},
 LATERAL FLATTEN(input => DATA) item
