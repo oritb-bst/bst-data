@@ -10,7 +10,7 @@ select
     d.STATDES        as "סטטוס חשבון",
     d.BOOKNUM        as "מספר חשבון חלקי",
     d.SOURCE_DB      as "חברה",
-    coalesce(nullif(d.EXPECTPAY, 0), d.DISPRICE) as "סכום תשלום",
+    coalesce(nullif(d.EXPECTPAY/1000, 0), d.DISPRICE/1000) as "סכום תשלום",
 
     p."פרויקט_ID"
 
