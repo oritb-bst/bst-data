@@ -6,20 +6,20 @@
 {{ join_type }} join (
 
     select distinct
-        doc,
+        docno,
         source_db
     from {{ ref('DIM_PROJECTS_STG') }}
     where source_db = 'BST'
-      and doc in (
-          510197,
-          528815,
-          539220,
-          579697,
-          589607
+      and docno in (
+          'PR25000009',
+          'PR25000012',
+          'PR26000004',
+          'PR26000006',
+          'PR25000004'
       )
 
 ) p
-    on {{ project_column }} = p.doc
+    on {{ project_column }} = p.docno
    and {{ company_column }} = p.source_db
 
 {% endmacro %}
