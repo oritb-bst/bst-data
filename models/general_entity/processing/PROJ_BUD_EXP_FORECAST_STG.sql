@@ -24,5 +24,6 @@ select
     CONDATE        as BUD_CONTROL_DATE,
     TOPICNAME      as TOPIC_NAME,
     TOPICDES       as TOPIC_DES,
+    DOCNO          as PROJECT_NAME,
 	SOURCE_DB
 from {{ ref ('BUD_FORECAST_J') }}

@@ -18,6 +18,7 @@ SELECT
     item.value:CONDATE::date                 AS CONDATE, --שדה של האבא
     sub.value:TOPICNAME::STRING              AS TOPICNAME,
     sub.value:TOPICDES::STRING               AS TOPICDES,
+    item.value:DOCNO::VARCHAR                AS DOCNO, --שדה של האבא
     SOURCE_DB::STRING                        AS SOURCE_DB
 
 FROM {{ source('json', 'BUD_FORECAST_SUBFORM') }},
