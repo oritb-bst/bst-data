@@ -7,7 +7,7 @@ select
     CUSTNAME       as "מס. לקוח",
     DISPRICE       as "סכום מוגש - מחיר אחרי הנחה",
     EXPECTPAY      as "סכום תשלום צפוי",
-    STATDES        as "סטטוס חשבון",
+    STATDES        as "סטטוס חשבון חלקי מזמין",
     BOOKNUM        as "מספר חשבון חלקי",
     t.SOURCE_DB      as "חברה",
     coalesce(nullif(EXPECTPAY/1000, 0), DISPRICE/1000) as "סכום תשלום",
