@@ -5,7 +5,7 @@ select
 	PARTIAL_INVOICE_NUM as "מספר חשבון",
 	CURDATE             as "Date",
     PRICE_AFTER_DISCOUNT_INV as "מחיר חשבון אחרי הנחה",
-    STATUS_INV               as "סטטוס חשבון",
+    STATUS_INV               as "סטטוס חשבון חלקי קבלן",
     IS_BILLABLE              as "לחיוב",
     IS_INVOICED_FLAG         as "דגל חויבה",
     SUP_INVOICE_NUMBER       as "חשבונית ספק",
