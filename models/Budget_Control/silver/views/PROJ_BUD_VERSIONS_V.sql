@@ -1,5 +1,6 @@
 --PROJVERSIONS
 select 
+    PROJECT_NAME as "מספר פרויקט",
     PROJECT_ID as "פרויקט_ID",
     VERSION_ID as "מספר מהדורה",
     VER_DATE   as "תאריך מהדורה",

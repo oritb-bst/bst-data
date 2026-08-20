@@ -1,5 +1,6 @@
 --BUD_FORECAST
 select 
+    PROJECT_NAME          as "מספר פרויקט",
     FORECAST_ID           as "צפי לגמר",
 	USER_ID               as "משתמש",
 	BUD_CONTROL_PERIOD_ID as "בקרה תקציבית_ID",
