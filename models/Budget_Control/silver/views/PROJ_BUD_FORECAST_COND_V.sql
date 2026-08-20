@@ -16,4 +16,4 @@ select
 	t.SOURCE_DB                             as "חברה"
 from {{ ref('PROJ_BUD_FORECAST_COND_STG') }} t
 
-{{ join_bst_projects_budget_control('t.PROJECT_NAME', 't.SOURCE_DB') }}
+{{ join_bst_projects_budget_control('PROJECT_NAME', 't.SOURCE_DB') }}
