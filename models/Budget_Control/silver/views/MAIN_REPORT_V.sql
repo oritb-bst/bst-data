@@ -18,7 +18,7 @@ with joined_data as (
         on coalesce(t.SUB_CHAPTER_NAME, 'ללא') = cc."מספר תת פרק"
         and t.SOURCE_DB = cc."חברה"
 
-    {{ join_bst_projects_budget_control('t.PROJECT_ID', 't.SOURCE_DB') }}
+    {{ join_bst_projects_budget_control('t.PROJECT_NAME', 't.SOURCE_DB') }}
 ),
 
 --הוצאות

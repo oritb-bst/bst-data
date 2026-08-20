@@ -15,5 +15,9 @@ select
     BUD_CONTENDDATE    as "תאריך סיום ביצוע חוזי",
     SOURCE_DB          as "חברה"
 from {{ ref('DIM_PROJECTS_STG') }}
-where DOC in ('510197','528815','539220','579697','589607')
+where DOCNO in ('PR25000009',
+                'PR25000012',
+                'PR26000004',
+                'PR26000006',
+                'PR25000004')
 and SOURCE_DB = 'BST'
