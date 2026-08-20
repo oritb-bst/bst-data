@@ -15,5 +15,6 @@ select
     RPREVFORECAST/1000  as PREVIOUS_REVENUE_FORECAST_K, --באלפי ש"ח
     DOC            as PROJECT_ID,
     CONDATE        as BUD_CONTROL_DATE,
+    DOCNO          as PROJECT_NAME,
 	SOURCE_DB
 from {{ ref ('BUD_FORECAST_R_J') }}

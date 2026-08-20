@@ -5,5 +5,6 @@ select
 	TEXT        as VER_DES,
 	BUD_ZERO    as IS_ZERO_EDITION,
 	BUD_EXECUTE as IS_EXECUTED,  
+    DOCNO       as PROJECT_NAME,
 	SOURCE_DB
 from {{ ref ('PROJVERSIONS_J') }}
