@@ -35,6 +35,8 @@ base AS (
         ON a.DOC = q.DOC
        AND a.SOURCE_DB = q.SOURCE_DB
 
+       
+
      {{ join_valid_projects('a.PROJECT_DOCNO', 'a.SOURCE_DB') }} 
 
 
@@ -74,6 +76,8 @@ SELECT
     SOURCE_DB AS "חברה"
 
 FROM base
+
+WHERE STATDES <> 'טיוטא'
 
 
 
