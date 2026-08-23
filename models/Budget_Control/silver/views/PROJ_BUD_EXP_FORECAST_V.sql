@@ -1,5 +1,6 @@
 --BUD_FORECAST
 select 
+    PROJECT_NAME          as "מספר פרויקט",
     FORECAST_ID           as "צפי לגמר",
 	USER_ID               as "משתמש",
 	BUD_CONTROL_PERIOD_ID as "בקרה תקציבית_ID",
@@ -29,5 +30,5 @@ select
 	t.SOURCE_DB           as "חברה"
 from {{ ref('PROJ_BUD_EXP_FORECAST_STG') }} t
 
-{{ join_bst_projects_budget_control('t.PROJECT_ID', 't.SOURCE_DB') }}
+{{ join_bst_projects_budget_control('PROJECT_NAME', 't.SOURCE_DB') }}
 

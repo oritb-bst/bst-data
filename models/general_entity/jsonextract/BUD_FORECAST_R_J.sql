@@ -9,7 +9,8 @@ SELECT
     sub.value:RPREVFORECAST::FLOAT        AS RPREVFORECAST,
     SOURCE_DB::STRING                     AS SOURCE_DB,
     sub.value:FORECAST::NUMBER(38,0)      AS FORECAST,
-    item.value:CONDATE::date              AS CONDATE, --שדה של האבא
+    item.value:CONDATE::DATE              AS CONDATE, --שדה של האבא
+    item.value:DOCNO::VARCHAR             AS DOCNO, --שדה של האבא
     sub.value:DOC::NUMBER(38,0)           AS DOC
 
 FROM {{ source('json', 'BUD_FORECAST_R_SUBFORM') }},

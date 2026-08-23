@@ -1,5 +1,6 @@
 --PROJACTS
 select 
+    PROJECT_NAME      as "מספר פרויקט",
     PROJPLAN_ID       as "תכנון פעילות",
 	PROJECT_ID        as "פרויקט_ID",
 	VERSION_ID        as "מספר מהדורה",
@@ -10,8 +11,8 @@ select
 	MATERIAL_COST          as "עלות חומר לפעילות",
 --    BUD_SUBCHAPTER_NAME    as "מספר תת פרק",
     coalesce(BUD_SUBCHAPTER_NAME, 'ללא') as "מספר תת פרק",
-    BUD_SUBCHAPTER_DES     as "תיאור תת פרק",
-    t.SOURCE_DB              as "חברה"
+    BUD_SUBCHAPTER_DES as "תיאור תת פרק",
+    t.SOURCE_DB        as "חברה"
 from {{ ref('PROJ_PLANNING_STG') }} t
 
-{{ join_bst_projects_budget_control('t.PROJECT_ID', 't.SOURCE_DB') }}
+{{ join_bst_projects_budget_control('PROJECT_NAME', 't.SOURCE_DB') }}

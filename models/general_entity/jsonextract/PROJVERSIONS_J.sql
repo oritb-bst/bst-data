@@ -4,9 +4,10 @@ SELECT
     sub.value:TEXT::STRING          AS TEXT,
     sub.value:BUD_ZERO::STRING      AS BUD_ZERO,
     sub.value:BUD_EXECUTE::STRING   AS BUD_EXECUTE,
+    sub.value:DOC::NUMBER(38,0)     AS DOC,
+    item.value:DOCNO::VARCHAR       AS DOCNO, --שדה של האבא
     SOURCE_DB::STRING               AS SOURCE_DB,
-    sub.value:DOC::NUMBER(38,0)     AS DOC
-
+    
 FROM {{ source('json', 'PROJVERSIONS_SUBFORM') }},
 LATERAL FLATTEN(INPUT => DATA) item,
 LATERAL FLATTEN(INPUT => item.value:PROJVERSIONS_SUBFORM) sub

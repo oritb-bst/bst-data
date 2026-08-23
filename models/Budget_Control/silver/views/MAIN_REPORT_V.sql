@@ -1,5 +1,6 @@
 with joined_data as (
     select
+        t.PROJECT_NAME      as "מספר פרויקט",
         t.PROJECT_ID        as "פרויקט_ID",
         t.BUD_CONTROL_DATE  as "Date",
         t.SOURCE_DB         as "חברה",
@@ -17,12 +18,13 @@ with joined_data as (
         on coalesce(t.SUB_CHAPTER_NAME, 'ללא') = cc."מספר תת פרק"
         and t.SOURCE_DB = cc."חברה"
 
-    {{ join_bst_projects_budget_control('t.PROJECT_ID', 't.SOURCE_DB') }}
+    {{ join_bst_projects_budget_control('PROJECT_NAME', 't.SOURCE_DB') }}
 ),
 
 --הוצאות
 expense_agg as (
     select
+        "מספר פרויקט",
         "פרויקט_ID",
         "Date",
         "חברה",
@@ -33,12 +35,17 @@ expense_agg as (
         sum("תקציב הוצאות מקורי באלפי שח")  as "תקציב הוצאות מקורי באלפי שח"
     from joined_data
     where "מקור" <> 'העמסת אגף ביצוע'
-    group by "פרויקט_ID", "Date", "חברה", "מקור"
+    group by "מספר פרויקט", 
+             "פרויקט_ID", 
+             "Date", 
+             "חברה", 
+             "מקור"
 ),
 
 -- חישוב העמסת אגף ביצוע
 execution_overhead_agg as (
     select
+        "מספר פרויקט",
         "פרויקט_ID",
         "Date",
         "חברה",
@@ -55,15 +62,16 @@ execution_overhead_agg as (
         sum(case when "מקור" in ('סך הוצ ישירות','סך הוצ כלליות','בדק ואחריות')
                 then "תקציב הוצאות מקורי באלפי שח" else 0 end) * 0.0125 as "תקציב הוצאות מקורי באלפי שח"
     from expense_agg
-    group by
-        "פרויקט_ID",
-        "Date",
-        "חברה"
+    group by "מספר פרויקט",
+             "פרויקט_ID",
+             "Date",
+             "חברה"
 ),
 
 --הכנסות
 revenue_agg as (
     select
+        "מספר פרויקט",
         "פרויקט_ID",
         "Date",
         "חברה",
@@ -72,7 +80,10 @@ revenue_agg as (
         sum("אומדן קודם (הכנסות) באלפי שח") as "אומדן קודם (הכנסות) באלפי שח",
         sum("תקציב הכנסות מקורי באלפי שח")  as "תקציב הכנסות מקורי באלפי שח"
     from {{ ref('PROJ_BUD_INC_FORECAST_V') }}
-    group by "פרויקט_ID", "Date","חברה"
+    group by "מספר פרויקט", 
+             "פרויקט_ID", 
+             "Date",
+             "חברה"
 ),
 
 --טבלה סופית הכנסות הוצאות
@@ -83,6 +94,7 @@ final_table_temp as(
 -- ==========================
 
 select
+    "מספר פרויקט",
     "פרויקט_ID",
     "Date",
     "חברה",
@@ -100,6 +112,7 @@ union all
 -- ==========================
 
 select
+    "מספר פרויקט",
     "פרויקט_ID",
     "Date",
     "חברה",
@@ -117,6 +130,7 @@ union all
 -- ==========================
 
 select
+    "מספר פרויקט",
     "פרויקט_ID",
     "Date",
     "חברה",
@@ -132,6 +146,7 @@ where "מקור" <> 'העמסת אגף ביצוע'
 --רווח גולמי
 gross_profit_agg as (
     select
+        "מספר פרויקט",
         "פרויקט_ID",
         "Date",
         "חברה",
@@ -153,6 +168,7 @@ gross_profit_agg as (
                     then -"אפס" else 0 end) as "אפס"
 from final_table_temp
     group by
+        "מספר פרויקט",
         "פרויקט_ID",
         "Date",
         "חברה"
@@ -161,6 +177,7 @@ from final_table_temp
 --אחוז רווח גולמי מההכנסות
 ,gross_profit_pct as (
     select
+        gp."מספר פרויקט",
         gp."פרויקט_ID",
         gp."Date",
         gp."חברה",
@@ -171,7 +188,8 @@ from final_table_temp
         gp."אפס" / nullif(r."אפס", 0) as "אפס"
     from gross_profit_agg gp
     left join final_table_temp r
-        on gp."פרויקט_ID" = r."פרויקט_ID"
+        on gp."מספר פרויקט" = r."מספר פרויקט"
+        and gp."פרויקט_ID" = r."פרויקט_ID"
         and gp."Date" = r."Date"
         and gp."חברה" = r."חברה"
         and r."מקור" = 'סך הכנסות'
@@ -180,6 +198,7 @@ from final_table_temp
 --רווח (הפסד) - רווח גולמי פחות ביצוע
 ,profit_loss as (
     select
+        gp."מספר פרויקט",
         gp."פרויקט_ID",
         gp."Date",
         gp."חברה",
@@ -190,7 +209,8 @@ from final_table_temp
         gp."אפס" - coalesce(eo."אפס", 0) as "אפס"
     from gross_profit_agg gp
 left join final_table_temp eo
-        on gp."פרויקט_ID" = eo."פרויקט_ID"
+        on gp."מספר פרויקט" = eo."מספר פרויקט"
+        and gp."פרויקט_ID" = eo."פרויקט_ID"
         and gp."Date" = eo."Date"
         and gp."חברה" = eo."חברה"
         and eo."מקור" = 'העמסת אגף ביצוע'
@@ -199,6 +219,7 @@ left join final_table_temp eo
 --שיעור רווחיות
 ,profitability_pct as (
     select
+        pl."מספר פרויקט",
         pl."פרויקט_ID",
         pl."Date",
         pl."חברה",
@@ -209,7 +230,8 @@ left join final_table_temp eo
         pl."אפס" / nullif(r."אפס", 0) as "אפס"
     from profit_loss pl
 left join final_table_temp r
-        on pl."פרויקט_ID" = r."פרויקט_ID"
+        on pl."מספר פרויקט" = r."מספר פרויקט"
+        and pl."פרויקט_ID" = r."פרויקט_ID"
         and pl."Date" = r."Date"
         and pl."חברה" = r."חברה"
         and r."מקור" = 'סך הכנסות'
@@ -230,6 +252,7 @@ left join final_table_temp r
 --טבלת חישובים (שינוי מאומדן, שינוי מתקציב, אחוז שינוי)
 ,calc_changes as (
     select
+        "מספר פרויקט",
         "פרויקט_ID",
         "Date",
         "חברה",
@@ -259,7 +282,6 @@ left join final_table_temp r
 
 -- יעדי הנהלה
 ,management_targets as (
-
     select
         "פרויקט_ID",
         "מספר פרויקט",
@@ -274,6 +296,7 @@ left join final_table_temp r
     -- תקציב
     -- =====================
     select
+        "מספר פרויקט",
         "פרויקט_ID",
         "Date",
         "חברה",
@@ -289,6 +312,7 @@ left join final_table_temp r
     union all
 
     select
+        "מספר פרויקט",
         "פרויקט_ID",
         "Date",
         "חברה",
@@ -308,6 +332,7 @@ left join final_table_temp r
 -- יעד הנהלה (ברמת פרויקט ולא חודש)
 -- =====================
 select
+    c."מספר פרויקט",
     c."פרויקט_ID",
     c."Date",
     c."חברה",
@@ -330,6 +355,7 @@ left join management_targets mt
     -- תחזית לגמר פרויקט
     -- =====================
     select
+        "מספר פרויקט",
         "פרויקט_ID",
         "Date",
         "חברה",
@@ -345,6 +371,7 @@ left join management_targets mt
     union all
 
     select
+        "מספר פרויקט",
         "פרויקט_ID",
         "Date",
         "חברה",
@@ -360,6 +387,7 @@ left join management_targets mt
     union all
 
     select
+        "מספר פרויקט",
         "פרויקט_ID",
         "Date",
         "חברה",
@@ -378,6 +406,7 @@ left join management_targets mt
     -- לעומת תקציב מעודכן
     -- =====================
     select
+        "מספר פרויקט",
         "פרויקט_ID",
         "Date",
         "חברה",
@@ -393,6 +422,7 @@ left join management_targets mt
     union all
 
     select
+        "מספר פרויקט",
         "פרויקט_ID",
         "Date",
         "חברה",
@@ -407,6 +437,7 @@ left join management_targets mt
 )
 
 select 
+    "מספר פרויקט",
     "פרויקט_ID",
     "Date",
     "חברה",
