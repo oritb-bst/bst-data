@@ -8,3 +8,5 @@ select
     DOCUMENT_NAME      as "מספר תעודה",
     SOURCE_DB          as "חברה"
 from {{ ref('GOODS_RECEIPTS_STG') }}
+
+where {{ filter_last_n_years('CURDATE') }} --סינון שנים

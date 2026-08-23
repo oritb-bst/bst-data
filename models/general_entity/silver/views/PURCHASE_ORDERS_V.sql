@@ -8,3 +8,5 @@ select
     PORDER_NAME          as "מספר הזמנת רכש",
 	SOURCE_DB            as "חברה"
 from {{ ref('PURCHASE_ORDERS_STG') }}
+
+where {{ filter_last_n_years('CURDATE') }} --סינון שנים
