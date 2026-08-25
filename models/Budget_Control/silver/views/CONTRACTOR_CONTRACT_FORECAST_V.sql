@@ -1,0 +1,10 @@
+--צפי חוזה קבלן
+select
+    ORIGINAL_CONTRACT_AMOUNT as "היקף חוזה מקורי",
+    UPDATED_CONTRACT_AMOUNT  as "היקף חוזה מעודכן",
+    CUMULATIVE_ACCOUNT as "חשבון מצטבר",
+    AMOUNT_INCREASE    as "סכום התייקרות",
+    BUD_CONTROL_DATE   as "Date",
+    PROJECT_NAME       as "מספר פרויקט",
+	SOURCE_DB          as "חברה"
+from {{ ref ('BUD_CONTFORECAST_STG') }}
