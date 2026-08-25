@@ -6,6 +6,8 @@ select
     DISPRICE  as PRICE_AFTER_DIS_GR,
     STATDES   as STATUS_GR,
     DOCNO     as DOCUMENT_NAME,
+    ORDNAME   as ORDER_NAME,
+    IVALL     as IS_INVOICED_FLAG,
     SOURCE_DB
 from {{ ref('DOCUMENTS_P_J') }}
 WHERE STATDES NOT IN ('מבוטלת')

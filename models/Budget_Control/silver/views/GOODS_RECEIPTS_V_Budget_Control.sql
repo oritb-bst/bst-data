@@ -6,6 +6,8 @@ select
     PRICE_AFTER_DIS_GR as "מחיר קבלת סחורה מספק אחרי הנחה",
     STATUS_GR          as "סטטוס קבלת סחורה מספק",
     DOCUMENT_NAME      as "מספר תעודה",
+    ORDER_NAME         as "מספר הזמנת רכש",
+    IS_INVOICED_FLAG   as "דגל קבלת סחורה חויבה",
     t.SOURCE_DB        as "חברה"
 from {{ ref('GOODS_RECEIPTS_STG') }} t
 
