@@ -76,6 +76,8 @@ sources:
       - name: MEDR_DOCAPPROVE_SUBFORM
       - name: MEDR_GUARANTEES
       - name: MEDR_GUARANTCHNGLOG_SUBFORM
+      - name: YINVOICES
+      - name: PINVOICES
 
 
   - name: txt
