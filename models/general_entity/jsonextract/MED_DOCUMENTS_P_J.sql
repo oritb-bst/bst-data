@@ -9,7 +9,8 @@ SELECT
     item.value:FLAG::varchar        as FLAG,
     item.value:IVALL::varchar       as IVALL,
     item.value:ZCBS_IVNUM::varchar  as ZCBS_IVNUM,
-    item.value:ZBST_IVNUM::varchar  as ZBST_IVNUM
+    item.value:ZBST_IVNUM::varchar  as ZBST_IVNUM,
+    item.value:DOCNO::string        as DOCNO
 
 FROM {{ source('json', 'MED_DOCUMENTS_P') }},
 lateral flatten(input => DATA) item
