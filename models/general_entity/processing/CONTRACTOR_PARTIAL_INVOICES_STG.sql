@@ -13,6 +13,7 @@ SELECT
     CASE WHEN IVALL = 'Y' THEN 'שולם'
          WHEN IVALL = 'N' THEN 'לא שולם'
     ELSE IVALL END as IS_INVOICED,
+    DOCNO     as PARTIAL_INVOICE_NAME, --מספר חשבון חלקי
 	SOURCE_DB
 FROM {{ ref('MED_DOCUMENTS_P_J') }}
 WHERE STATDES NOT IN ('מבוטלת')
