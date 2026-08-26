@@ -8,5 +8,7 @@ select
     AMOUNT_INCREASE    as "סכום התייקרות",
     BUD_CONTROL_DATE   as "Date",
     PROJECT_NAME       as "מספר פרויקט",
-	SOURCE_DB          as "חברה"
-from {{ ref ('BUD_CONTFORECAST_STG') }}
+	t.SOURCE_DB          as "חברה"
+from {{ ref ('BUD_CONTFORECAST_STG') }} t
+
+{{ join_bst_projects_budget_control('PROJECT_NAME', 't.SOURCE_DB') }}
