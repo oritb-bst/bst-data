@@ -1,3 +1,4 @@
+--תתי פרק
 WITH mapping AS (
     SELECT '991' AS COSTCNAME, 'התייקרות עתידית' AS NEW_DESC
     UNION ALL
