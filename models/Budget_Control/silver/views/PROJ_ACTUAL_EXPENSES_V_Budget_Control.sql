@@ -1,4 +1,4 @@
-SELECT
+SELECT --דוח שעמית מוציא
     a.source_db AS "חברה",
     a.Control_Date AS "תאריך בקרה",
     a.Project AS "מספר פרויקט",
@@ -12,6 +12,8 @@ SELECT
     a.Supplier_No AS "מספר ספק",
     a.Supplier_Name AS "שם ספק",
     a.Doc_No AS "מספר תעודה",
+    CASE WHEN a.Doc_No LIKE 'PO%' THEN a.Doc_No END AS "מספר הזמנת רכש",
+    CASE WHEN a.Doc_No LIKE 'GR%' THEN a.Doc_No END AS "מספר קבלת סחורה",
     a.Exec_Month_Date AS "תאריך/חודש ביצוע",
     a.Part_No AS "מק'ט",
     a.Part_Desc AS "תיאור מוצר",
