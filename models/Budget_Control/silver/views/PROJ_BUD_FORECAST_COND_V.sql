@@ -1,6 +1,7 @@
 --BUD_FORCASTCONDITION
 select
 	PROJECT_NAME                       as "מספר פרויקט",
+    BUD_CONTROL_DATE                   as "Date",
     BUD_CONTROL_PERIOD_ID              as "בקרה תקציבית_ID",
 	CUST_CUMULATIVE_INCREASE           as "מזמין - התייקרות מצטברת",
 	CUST_FORECASTED_INCREASE_TO_RECIVE as "התייקרות עתידית לקבל",
@@ -13,7 +14,7 @@ select
     CONTRACTOR_CONTRACT_DEDUCTION_FUTURE  as "ק.חוזי עתידי קבלן",
     CONTRACTOR_MANUAL_DEDUCTION_ACTUAL    as "קיזוז ידני – קבלן",
     CONTRACTOR_MANUAL_DEDUCTION_FUTURE    as "קיזוז ידני עתידי",
-	t.SOURCE_DB                             as "חברה"
+	t.SOURCE_DB                           as "חברה"
 from {{ ref('PROJ_BUD_FORECAST_COND_STG') }} t
 
 {{ join_bst_projects_budget_control('PROJECT_NAME', 't.SOURCE_DB') }}
