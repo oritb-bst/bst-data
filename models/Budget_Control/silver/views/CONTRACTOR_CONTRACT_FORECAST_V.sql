@@ -1,5 +1,7 @@
 --צפי חוזה קבלן
 select
+    SUP_NAME                 as "מספר ספק",
+    SUB_TOPIC_NAME           as "מספר משאב",
     ORIGINAL_CONTRACT_AMOUNT as "היקף חוזה מקורי",
     UPDATED_CONTRACT_AMOUNT  as "היקף חוזה מעודכן",
     CUMULATIVE_ACCOUNT as "חשבון מצטבר",
