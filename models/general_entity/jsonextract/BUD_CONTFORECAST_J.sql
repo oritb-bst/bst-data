@@ -1,5 +1,7 @@
 --צפי חוזה קבלן
 SELECT
+    sub.value:SUPNAME::VARCHAR     AS SUPNAME,
+    sub.value:SUBTOPICNAME::STRING AS SUBTOPICNAME,
     sub.value:ORIGCONTSUM::FLOAT   AS ORIGCONTSUM,
     sub.value:UPDACONTSUM::FLOAT   AS UPDACONTSUM,
     sub.value:ACCUMSUM::FLOAT      AS ACCUMSUM,
