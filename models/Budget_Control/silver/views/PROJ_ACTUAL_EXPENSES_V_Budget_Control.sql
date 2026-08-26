@@ -6,7 +6,7 @@ SELECT
     Project_Desc     AS "תיאור פרויקט",
     Sub_Chapter      AS "מספר תת פרק",
     Sub_Chapter_Desc AS "תיאור תת פרק",
-    'Resource'       AS "מספר משאב",
+    Resource         AS "מספר משאב",
     Resource_Desc    AS "תיאור משאב",
     Doc_Type         AS "סוג תעודה",
     Doc_Desc         AS "תיאור תעודה",
