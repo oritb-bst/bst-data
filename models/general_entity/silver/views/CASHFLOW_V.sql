@@ -3,7 +3,7 @@ SELECT
     b.PROJECT_DOCNO                          AS "מספר פרויקט",
     b.INVOICE_NAME                           AS "חשבונית",
     b.RECEIPT_NAME                           AS "קבלה",
-    b.INVOICE_DATE                           AS "תאריך חשבונית",
+    b.INVOICE_DATE                           AS "Date", --תאריך התקבול
     b.BALDATE                                AS "ת. למאזן",
     b.TOTPRICE                               AS "סה""כ קבלה",
     b.TOTPRICEIV                             AS "סכום החשבונית",
