@@ -11,7 +11,11 @@ SELECT
     sub.value:BUD_SUBCHAPTERDES::STRING  as BUD_SUBCHAPTERDES,
     sub.value:BUD_SUBCHAPTERNAME::STRING as BUD_SUBCHAPTERNAME,
     item.value:DOCNO::VARCHAR            as DOCNO, --שדה של האבא
-
+    sub.value:BIDS_ENTRY2::NUMBER(13,0)  as BIDS_ENTRY2,
+    sub.value:PRICE::FLOAT               as PRICE,
+    sub.value:MED_PROJACTCOST::FLOAT     as MED_PROJACTCOST,
+ 
 FROM {{ source('json', 'PROJACTS_SUBFORM') }},
 LATERAL FLATTEN(INPUT => DATA) item,
 LATERAL FLATTEN(INPUT => item.value:PROJACTS_SUBFORM) sub
+ 
