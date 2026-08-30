@@ -1,0 +1,15 @@
+--חשבוניות ספק
+select
+    IVNUM      as INVOICE_NAME,
+    PROJDOCNO  as PROJECT_NAME,
+    IVDATE     as INVOICE_DATE,
+    QPRICE     as QNT_BEFORE_DISCOUNT,
+    DISPRICE   as PRICE_BEFORE_DISCOUNT,
+    TOTPRICE   as INVOICE_TOTAL,
+    STORNOFLAG as IS_CANCELED,
+    SUPNAME    as SUP_NAME,
+    FINAL,
+    STATDES    as INVOICE_STATUS,
+    ORDNAME    as ORDER_NAME,
+    SOURCE_DB
+from {{ ref ('YINVOICES_J') }}

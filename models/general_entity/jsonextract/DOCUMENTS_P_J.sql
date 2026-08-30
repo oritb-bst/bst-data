@@ -5,6 +5,8 @@ SELECT
     item.value:DISPRICE::float          AS DISPRICE,
     item.value:STATDES::string          AS STATDES,
     item.value:DOCNO::string            AS DOCNO,
+    item.value:ORDNAME::string          AS ORDNAME,
+    item.value:IVALL::varchar           AS IVALL,
     SOURCE_DB::string                   AS SOURCE_DB
 
 FROM {{ source('json', 'DOCUMENTS_P') }},
