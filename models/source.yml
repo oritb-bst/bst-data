@@ -80,6 +80,7 @@ sources:
       - name: PINVOICES
       - name: BUD_CONTFORECAST_SUBFORM
       - name: COSTCENTERS4Q
+      - name: ZCBS_PAYMENTRECEIPT
 
 
   - name: txt
