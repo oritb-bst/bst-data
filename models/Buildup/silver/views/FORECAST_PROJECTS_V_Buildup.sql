@@ -4,7 +4,7 @@ select
     t.project_doc_no as "מספר פרויקט",   
     t.project_description as "תאור פרויקט",  
     t.order_name as "חוזה מזמין",    
-    t.status_description as "סטאטוס תחזית", 
+    t.status_description as "סטאטוס תחזית",  
     t.forecast_revenue as "הערכת הכנסות",   
     t.forecast_expense as "הערכת הוצאות",    
     t.total_purchase_orders_amount as "סך הזמנות רכש",
