@@ -1,4 +1,5 @@
 select
+    t.id as "תחזית הוצאות ID",  
     t.forecast_month as "חודש ביצוע",    
     t.project_doc_no as "מספר פרויקט",   
     t.project_description as "תאור פרויקט",  
