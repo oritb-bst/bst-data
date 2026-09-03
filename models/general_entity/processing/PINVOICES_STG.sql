@@ -1,4 +1,11 @@
+--טבלה עם מנגנון אינקרמנטלי
 --חשבוניות ספק מרכזות
+{{ config(
+    materialized='incremental',
+    unique_key=['INVOICE_NAME', 'SOURCE_DB'],
+    incremental_strategy='merge'
+) }}
+
 select
     IVNUM      as INVOICE_NAME,
     PROJDOCNO  as PROJECT_NAME,
@@ -15,4 +22,4 @@ select
     DEBIT,
     DOCNO,
     SOURCE_DB
-from {{ ref ('PINVOICES_J') }}
+from {{ ref ('PINVOICES_J_INC') }}
