@@ -3,7 +3,7 @@ select
     t.INVOICE_NAME as "מספר חשבנית",
     t.PROJECT_NAME as "פרויקט",
     d.PROJDES as "תאור פרויקט",
-    t.INVOICE_DATE as ",תאריך",
+    t.INVOICE_DATE as "תאריך",
     t.TOTPRICE as "סהכ לתשלום",
     t.CALPRICE as "סכום מחושב",
     t.DISPRICE as "סכום לפני מעמ",
