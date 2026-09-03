@@ -7,7 +7,7 @@ select
     coalesce(SUB_CHAPTER_NAME, 'ללא') as "מספר תת פרק",
 	SUB_CHAPTER_DES               as "תיאור תת פרק",
 	REVENUE_FORECAST_TO_COMPLETE  as "אומדן לגמר (הכנסות)",
-    REVENUE_FORECAST_TO_COMPLETE_K  as "אומדן לגמר (הכנסות) באלפי שח",
+    REVENUE_FORECAST_TO_COMPLETE_K as "אומדן לגמר (הכנסות) באלפי שח",
     CUSTOMER_ACCOUNT              as "חשבון מזמין שוטף",
     CUSTOMER_ACCOUNT_K            as "חשבון מזמין שוטף באלפי שח",
 	CURRENT_REVENUE_BUDGET        as "תקציב הכנסות עדכני",
