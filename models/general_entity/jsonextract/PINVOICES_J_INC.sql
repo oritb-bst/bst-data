@@ -1,3 +1,4 @@
+--בטבלה זו נעשית טעינה אינקרמנטלית - יש תנאי בטבלת ניהול רק שבוע אחרון
 --חשבוניות ספק מרכזות
 SELECT
     item.value:IVNUM::string         AS IVNUM,
@@ -18,3 +19,4 @@ SELECT
 
 FROM {{ source('json', 'PINVOICES') }},
 LATERAL FLATTEN(input => DATA) item
+
