@@ -12,8 +12,4 @@ SELECT
         CURRENT_TIMESTAMP()
     ) ,
     'HH24:MI DD/MM/YYYY'
-)AS LAST_REFRESH_IL
-
-
-
-    
+) AS LAST_REFRESH_IL
