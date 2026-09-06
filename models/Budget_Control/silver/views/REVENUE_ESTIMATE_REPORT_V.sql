@@ -302,7 +302,7 @@ base_result as (
         on b."חברה" = a."חברה"
         and b."מספר פרויקט" = a."מספר פרויקט"
         and b."חודש דוח" = a."חודש דוח"
-)
+),
 
 final_result as (
 select
@@ -335,7 +335,6 @@ from actual_escalation_summary
 
 select
     *,
-
     case
         when "מרכיבי אומדן הכנסות" = 'חוזה פאושלי' then 1
         when "מרכיבי אומדן הכנסות" = 'חוזה כמויות למדידה' then 2
