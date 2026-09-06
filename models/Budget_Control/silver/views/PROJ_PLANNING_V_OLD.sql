@@ -16,6 +16,6 @@ select
     PRICE_PER_UNIT     as "מחיר ליחידה",
     COST_PER_UNIT      as "עלות ליחידה",
     t.SOURCE_DB        as "חברה"
-from {{ ref('PROJ_PLANNING_STG_NEW') }} t
+from {{ ref('PROJ_PLANNING_STG_OLD') }} t
 
 {{ join_bst_projects_budget_control('PROJECT_NAME', 't.SOURCE_DB') }}
