@@ -1,6 +1,6 @@
 with project_planning as ( --פרויקטים >> מהדורות תכנון >> תכנון פרויקטלי
     select *
-    from {{ ref('PROJ_PLANNING_V_NEW') }}
+    from {{ ref('PROJ_PLANNING_V') }}
 ),
 
 project_versions as ( --מהדורות תכנון
