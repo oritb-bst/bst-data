@@ -27,7 +27,7 @@ FROM {{ ref('PROJECT_ACTUAL_EXPENSES_STG') }} a
 
 {{ join_valid_projects_project_managment('a.Project', 'a.source_db') }}
 
-WHERE Doc_Type<>'CO' 
+WHERE Doc_Type<>'CO' and  {{ filter_last_n_years('Exec_Month_Date') }} --סינון שנים
 
 UNION ALL
 
