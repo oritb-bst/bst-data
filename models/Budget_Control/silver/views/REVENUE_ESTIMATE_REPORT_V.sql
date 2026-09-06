@@ -336,7 +336,6 @@ from actual_escalation_summary
 select
     "חברה",
     "מספר פרויקט",
-    "פרויקט_ID",
     "חודש דוח" as "Date",
     "מרכיבי אומדן הכנסות",
     "אפס",
