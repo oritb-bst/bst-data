@@ -57,7 +57,7 @@ classified as (
             -- חוזה פאושלי
             when coalesce(pp."שם פעילות", '') like '%פאושל%' then 'חוזה פאושלי'
             -- חוזה למדידת כמויות
-            when pp."מספר פרק" not between 60 and 90
+            when try_to_number(pp."מספר תת פרק") not between 60 and 90
                 and coalesce(pp."מחיר ליחידה", 0) > 0
                 and coalesce(pp."עלות ליחידה", 0) > 0
                 and coalesce(pp."שם פעילות", '') not like '%פאושל%'
