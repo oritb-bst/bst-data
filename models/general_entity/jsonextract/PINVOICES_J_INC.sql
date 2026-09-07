@@ -13,8 +13,9 @@ SELECT
     item.value:FINAL::string         AS FINAL,
     item.value:STATDES::string       AS STATDES,
     item.value:ORDNAME::string       AS ORDNAME,
-    item.value:DEBIT::string        AS DEBIT,
-    item.value:DOCNO::string        AS DOCNO,    
+    item.value:DEBIT::string         AS DEBIT,
+    item.value:DOCNO::string         AS DOCNO,    
+    item.value:ZBST_UDATE::timestamp AS UDATE,
     SOURCE_DB::string                AS SOURCE_DB
 
 FROM {{ source('json', 'PINVOICES') }},

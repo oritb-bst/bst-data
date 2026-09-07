@@ -3,7 +3,8 @@
 {{ config(
     materialized='incremental',
     unique_key=['INVOICE_NAME', 'SOURCE_DB'],
-    incremental_strategy='merge'
+    incremental_strategy='merge',
+    on_schema_change='append_new_columns'
 ) }}
 
 select
@@ -21,5 +22,12 @@ select
     ORDNAME    as ORDER_NAME,
     DEBIT,
     DOCNO,
+    UDATE,
     SOURCE_DB
 from {{ ref ('PINVOICES_J_INC') }}
+
+/* 
+{% if is_incremental() %}
+where UDATE > (select max(UDATE) from {{ this }})
+{% endif %}
+*/
