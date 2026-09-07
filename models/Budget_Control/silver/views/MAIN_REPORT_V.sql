@@ -246,10 +246,10 @@ left join final_table_temp r
             when 'סך הוצ כלליות' then 3
             when 'בצ"מ' then 4
             when 'בדק ואחריות' then 5
-            when 'רווח גולמי' then 6
+            when 'רווח (הפסד) לפני אגף ביצוע' then 6
             when 'אחוז רווח גולמי מההכנסות' then 7
             when 'העמסת אגף ביצוע' then 8
-            when 'רווח (הפסד)' then 9
+            when 'רווח (הפסד) אחרי העמסת אגף ביצוע' then 9
             when 'שיעור רווחיות' then 10
             else 99
         end as "סדר מקור",
