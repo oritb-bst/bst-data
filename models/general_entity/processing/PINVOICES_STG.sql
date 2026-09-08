@@ -26,8 +26,7 @@ select
     SOURCE_DB
 from {{ ref ('PINVOICES_J_INC') }}
 
-/* 
+
 {% if is_incremental() %}
 where UDATE > (select max(UDATE) from {{ this }})
 {% endif %}
-*/
