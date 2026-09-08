@@ -4,6 +4,7 @@ with joined_data as (
         t.PROJECT_ID        as "פרויקט_ID",
         t.BUD_CONTROL_DATE  as "Date",
         t.SOURCE_DB         as "חברה",
+        coalesce(t.SUB_CHAPTER_NAME, 'ללא') as "מספר תת פרק",
         case when cc."מקור" = 'אגף ביצוע' then 'העמסת אגף ביצוע'
              when cc."מקור" = 'תיקוני בדק ואחריות' then 'בדק ואחריות' 
              when cc."מקור" = 'כלליות' then 'סך הוצ כלליות' 
@@ -25,7 +26,6 @@ with joined_data as (
 expense_agg as (
     select
         "מספר פרויקט",
-        "פרויקט_ID",
         "Date",
         "חברה",
         "מקור",
@@ -36,43 +36,35 @@ expense_agg as (
     from joined_data
     where "מקור" <> 'העמסת אגף ביצוע'
     group by "מספר פרויקט", 
-             "פרויקט_ID", 
              "Date", 
              "חברה", 
              "מקור"
 ),
 
--- חישוב העמסת אגף ביצוע
+-- העמסת אגף ביצוע
 execution_overhead_agg as (
     select
         "מספר פרויקט",
-        "פרויקט_ID",
         "Date",
         "חברה",
         'העמסת אגף ביצוע' as "מקור",
-        sum(case when "מקור" in ('סך הוצ ישירות','סך הוצ כלליות','בדק ואחריות')
-                then "אומדן לגמר (הוצאות) באלפי שח" else 0 end) * 0.0125 as "אומדן לגמר (הוצאות) באלפי שח",
+        sum("אומדן לגמר (הוצאות) באלפי שח") as "אומדן לגמר (הוצאות) באלפי שח",
+        sum("תקציב הוצאות עדכני באלפי שח")  as "תקציב הוצאות עדכני באלפי שח",
+        sum("אומדן קודם (הוצאות) באלפי שח") as "אומדן קודם (הוצאות) באלפי שח",
+        sum("תקציב הוצאות מקורי באלפי שח")  as "תקציב הוצאות מקורי באלפי שח"
+    from joined_data
+    where "מספר תת פרק" = '96'
 
-        sum(case when "מקור" in ('סך הוצ ישירות','סך הוצ כלליות','בדק ואחריות')
-                then "תקציב הוצאות עדכני באלפי שח" else 0 end) * 0.0125 as "תקציב הוצאות עדכני באלפי שח",
-
-        sum(case when "מקור" in ('סך הוצ ישירות','סך הוצ כלליות','בדק ואחריות')
-                then "אומדן קודם (הוצאות) באלפי שח" else 0 end) * 0.0125 as "אומדן קודם (הוצאות) באלפי שח",
-
-        sum(case when "מקור" in ('סך הוצ ישירות','סך הוצ כלליות','בדק ואחריות')
-                then "תקציב הוצאות מקורי באלפי שח" else 0 end) * 0.0125 as "תקציב הוצאות מקורי באלפי שח"
-    from expense_agg
-    group by "מספר פרויקט",
-             "פרויקט_ID",
-             "Date",
-             "חברה"
+    group by
+        "מספר פרויקט",
+        "Date",
+        "חברה"
 ),
 
 --הכנסות
 revenue_agg as (
     select
         "מספר פרויקט",
-        "פרויקט_ID",
         "Date",
         "חברה",
         sum("אומדן לגמר (הכנסות) באלפי שח") as "אומדן לגמר (הכנסות) באלפי שח",
@@ -81,7 +73,6 @@ revenue_agg as (
         sum("תקציב הכנסות מקורי באלפי שח")  as "תקציב הכנסות מקורי באלפי שח"
     from {{ ref('PROJ_BUD_INC_FORECAST_V') }}
     group by "מספר פרויקט", 
-             "פרויקט_ID", 
              "Date",
              "חברה"
 ),
@@ -95,7 +86,6 @@ final_table_temp as(
 
 select
     "מספר פרויקט",
-    "פרויקט_ID",
     "Date",
     "חברה",
     "מקור",
@@ -113,7 +103,6 @@ union all
 
 select
     "מספר פרויקט",
-    "פרויקט_ID",
     "Date",
     "חברה",
     "מקור",
@@ -131,7 +120,6 @@ union all
 
 select
     "מספר פרויקט",
-    "פרויקט_ID",
     "Date",
     "חברה",
     'סך הכנסות' as "מקור",
@@ -143,14 +131,13 @@ from revenue_agg
 where "מקור" <> 'העמסת אגף ביצוע'
 ),
 
---רווח גולמי
+-- לפני אגף ביצוע רווח גולמי  
 gross_profit_agg as (
     select
         "מספר פרויקט",
-        "פרויקט_ID",
         "Date",
         "חברה",
-        'רווח גולמי' as "מקור",
+        'רווח (הפסד) לפני אגף ביצוע' as "מקור",
         sum(case when "מקור" = 'סך הכנסות' then "אומדן נוכחי"
                  when "מקור" in ('סך הוצ ישירות', 'סך הוצ כלליות', 'בצ"מ', 'בדק ואחריות')
                     then -"אומדן נוכחי" else 0 end) as "אומדן נוכחי",
@@ -169,7 +156,6 @@ gross_profit_agg as (
 from final_table_temp
     group by
         "מספר פרויקט",
-        "פרויקט_ID",
         "Date",
         "חברה"
         )
@@ -178,7 +164,6 @@ from final_table_temp
 ,gross_profit_pct as (
     select
         gp."מספר פרויקט",
-        gp."פרויקט_ID",
         gp."Date",
         gp."חברה",
         'אחוז רווח גולמי מההכנסות' as "מקור",
@@ -189,20 +174,18 @@ from final_table_temp
     from gross_profit_agg gp
     left join final_table_temp r
         on gp."מספר פרויקט" = r."מספר פרויקט"
-        and gp."פרויקט_ID" = r."פרויקט_ID"
         and gp."Date" = r."Date"
         and gp."חברה" = r."חברה"
         and r."מקור" = 'סך הכנסות'
 )
 
---רווח (הפסד) - רווח גולמי פחות ביצוע
+--רווח (הפסד) אחרי העמסת אגף ביצוע - רווח גולמי לפני אגף ביצוע פחות ביצוע
 ,profit_loss as (
     select
         gp."מספר פרויקט",
-        gp."פרויקט_ID",
         gp."Date",
         gp."חברה",
-        'רווח (הפסד)' as "מקור",
+        'רווח (הפסד) אחרי העמסת אגף ביצוע' as "מקור",
         gp."אומדן נוכחי" - coalesce(eo."אומדן נוכחי", 0) as "אומדן נוכחי",
         gp."מעודכן" - coalesce(eo."מעודכן", 0) as "מעודכן",
         gp."אומדן קודם" - coalesce(eo."אומדן קודם", 0) as "אומדן קודם",
@@ -210,7 +193,6 @@ from final_table_temp
     from gross_profit_agg gp
 left join final_table_temp eo
         on gp."מספר פרויקט" = eo."מספר פרויקט"
-        and gp."פרויקט_ID" = eo."פרויקט_ID"
         and gp."Date" = eo."Date"
         and gp."חברה" = eo."חברה"
         and eo."מקור" = 'העמסת אגף ביצוע'
@@ -220,7 +202,6 @@ left join final_table_temp eo
 ,profitability_pct as (
     select
         pl."מספר פרויקט",
-        pl."פרויקט_ID",
         pl."Date",
         pl."חברה",
         'שיעור רווחיות' as "מקור",
@@ -231,7 +212,6 @@ left join final_table_temp eo
     from profit_loss pl
 left join final_table_temp r
         on pl."מספר פרויקט" = r."מספר פרויקט"
-        and pl."פרויקט_ID" = r."פרויקט_ID"
         and pl."Date" = r."Date"
         and pl."חברה" = r."חברה"
         and r."מקור" = 'סך הכנסות'
@@ -253,7 +233,6 @@ left join final_table_temp r
 ,calc_changes as (
     select
         "מספר פרויקט",
-        "פרויקט_ID",
         "Date",
         "חברה",
         "מקור",
@@ -263,10 +242,10 @@ left join final_table_temp r
             when 'סך הוצ כלליות' then 3
             when 'בצ"מ' then 4
             when 'בדק ואחריות' then 5
-            when 'רווח גולמי' then 6
+            when 'רווח (הפסד) לפני אגף ביצוע' then 6
             when 'אחוז רווח גולמי מההכנסות' then 7
             when 'העמסת אגף ביצוע' then 8
-            when 'רווח (הפסד)' then 9
+            when 'רווח (הפסד) אחרי העמסת אגף ביצוע' then 9
             when 'שיעור רווחיות' then 10
             else 99
         end as "סדר מקור",
@@ -283,7 +262,6 @@ left join final_table_temp r
 -- יעדי הנהלה
 ,management_targets as (
     select
-        "פרויקט_ID",
         "מספר פרויקט",
         "מקור",
         "יעד ההנהלה"
@@ -297,7 +275,6 @@ left join final_table_temp r
     -- =====================
     select
         "מספר פרויקט",
-        "פרויקט_ID",
         "Date",
         "חברה",
         "מקור",
@@ -313,7 +290,6 @@ left join final_table_temp r
 
     select
         "מספר פרויקט",
-        "פרויקט_ID",
         "Date",
         "חברה",
         "מקור",
@@ -333,7 +309,6 @@ left join final_table_temp r
 -- =====================
 select
     c."מספר פרויקט",
-    c."פרויקט_ID",
     c."Date",
     c."חברה",
     c."מקור",
@@ -345,7 +320,7 @@ select
     3 as "סדר תת כותרת"
 from calc_changes c
 left join management_targets mt
-    on c."פרויקט_ID" = mt."פרויקט_ID"
+    on c."מספר פרויקט" = mt."מספר פרויקט"
 --    and date_trunc('month', c."Date") = mt."חודש"
     and c."מקור" = mt."מקור"
 
@@ -356,7 +331,6 @@ left join management_targets mt
     -- =====================
     select
         "מספר פרויקט",
-        "פרויקט_ID",
         "Date",
         "חברה",
         "מקור",
@@ -372,7 +346,6 @@ left join management_targets mt
 
     select
         "מספר פרויקט",
-        "פרויקט_ID",
         "Date",
         "חברה",
         "מקור",
@@ -388,7 +361,6 @@ left join management_targets mt
 
     select
         "מספר פרויקט",
-        "פרויקט_ID",
         "Date",
         "חברה",
         "מקור",
@@ -407,7 +379,6 @@ left join management_targets mt
     -- =====================
     select
         "מספר פרויקט",
-        "פרויקט_ID",
         "Date",
         "חברה",
         "מקור",
@@ -423,7 +394,6 @@ left join management_targets mt
 
     select
         "מספר פרויקט",
-        "פרויקט_ID",
         "Date",
         "חברה",
         "מקור",
@@ -438,7 +408,6 @@ left join management_targets mt
 
 select 
     "מספר פרויקט",
-    "פרויקט_ID",
     "Date",
     "חברה",
     "מקור" as "מקור-דוח",
