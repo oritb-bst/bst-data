@@ -1,6 +1,6 @@
 --ויו לבילדאפ לפי בקשה של דודי
 select 
-    t.INVOICE_NAME as "מספר חשבנית",
+    t.INVOICE_NAME as "מספר חשבונית",
     t.PROJECT_NAME as "פרויקט",
     d.PROJDES as "תאור פרויקט",
     t.INVOICE_DATE as "תאריך",
