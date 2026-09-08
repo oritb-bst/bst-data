@@ -25,3 +25,8 @@ select
     UDATE,
     SOURCE_DB
 from {{ ref ('PINVOICES_J_INC') }}
+--חייבים שתהיה קצת חפיפה (גדול שווה ולא רק גדול) כי אם התנאי מחזיר 0 רשומות אז המרג' הופך ל
+--trancate+insert וכל טבלת ההיסטוריה נדרסת
+{% if is_incremental() %}
+where UDATE >= (select max(UDATE) from {{ this }})
+{% endif %}

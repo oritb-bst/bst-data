@@ -40,6 +40,8 @@ models:
 
     general_entity:
       +materialized: table
+      PINVOICES_STG:
+        +materialized: incremental
 
       silver:
         views:
