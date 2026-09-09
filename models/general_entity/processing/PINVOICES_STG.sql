@@ -7,6 +7,7 @@
     on_schema_change='append_new_columns'
 ) }}
 
+
 select
     IVNUM      as INVOICE_NAME,
     PROJDOCNO  as PROJECT_NAME,

@@ -1,0 +1,6 @@
+--מטבעות
+SELECT
+    CODE AS CURRENCY,
+    NAME AS CURRENCY_DES,
+    SOURCE_DB
+FROM {{ ref('CURRENCIES_J') }}
