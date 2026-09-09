@@ -8,5 +8,7 @@ select
     TOTAL_PRICE  as "מחיר כולל מעמ",
     CURDATE      as "Date",
     ORD_STATUS_DES as "סטטוס חוזה מזמין",
-    SOURCE_DB as "חברה"
-from {{ ref('MAZMIN_CONTRACTS_STG') }}
+    t.SOURCE_DB as "חברה"
+from {{ ref('MAZMIN_CONTRACTS_STG') }} t
+
+{{ join_bst_projects_budget_control('PROJECT_NAME', 't.SOURCE_DB') }}
