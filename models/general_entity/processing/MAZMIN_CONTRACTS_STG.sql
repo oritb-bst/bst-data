@@ -3,7 +3,7 @@ select
     DOCNO      as PROJECT_NAME,
     PROJ       as PROJECT_ID,
     CUSTNAME   as CUST_NAME,
-    MED_PAYDES as MED_PAY_DES,
+    PAYDES     as PAY_DES,
     MED_TYPE   as MED_TYPE,
     TOTPRICE   as TOTAL_PRICE,
     TOTPRICE / 1000 as TOTAL_PRICE_K,
