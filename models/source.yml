@@ -84,6 +84,7 @@ sources:
       - name: MED_APPTRANS_SUBFORM
       - name: MED_ORDERS
       - name: MED_OORDLINKING_SUBFORM
+      - name: CURRENCIES
 
 
   - name: txt
