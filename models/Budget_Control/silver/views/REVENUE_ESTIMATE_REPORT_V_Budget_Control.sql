@@ -15,7 +15,7 @@ income_forecast as ( --אומדן הכנסות
 
 partial_account as ( --חשבון חלקי מזמין >> חלוקה לסעיפים
     select *
-    from {{ ref('MAZMIN_PARTIAL_INVOICES_SECTIONS_V') }}
+    from {{ ref('MAZMIN_PARTIAL_INVOICES_SECTIONS_V_Budget_Control') }}
 ),
 
 
