@@ -3,11 +3,11 @@ select
     PROJECT_NAME as "מספר פרויקט",
     PROJECT_ID   as "פרויקט_ID",
     CUST_NAME    as "מספר לקוח",
-    MED_PAY_DES  as "תנאי תשלום",
+    PAY_DES      as "תנאי תשלום",
     MED_TYPE     as "סוג חוזה מזמין",
     TOTAL_PRICE  as "מחיר כולל מעמ",
     TOTAL_PRICE_K as "מחיר כולל מעמ באלפי שח",
-    CURDATE      as "Date",
+    CURDATE       as "Date",
     ORD_STATUS_DES as "סטטוס חוזה מזמין",
     t.SOURCE_DB as "חברה"
 from {{ ref('MAZMIN_CONTRACTS_STG') }} t
