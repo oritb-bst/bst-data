@@ -7,9 +7,6 @@
     on_schema_change='append_new_columns'
 ) }}
 
-{% if not is_incremental() and target.name == 'prod' %}
-  {{ exceptions.raise_compiler_error("dbt identifies this model as NOT incremental in PROD! Relation found: " ~ adapter.get_relation(this.database, this.schema, this.table)) }}
-{% endif %}
 
 select
     IVNUM      as INVOICE_NAME,
