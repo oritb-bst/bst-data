@@ -82,6 +82,8 @@ sources:
       - name: COSTCENTERS4Q
       - name: ZCBS_PAYMENTRECEIPT
       - name: MED_APPTRANS_SUBFORM
+      - name: MED_ORDERS
+      - name: MED_OORDLINKING_SUBFORM
 
 
   - name: txt
