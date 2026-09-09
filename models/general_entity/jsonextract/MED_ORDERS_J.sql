@@ -1,3 +1,4 @@
+--חוזים מזמין
 select
     item.value:DOCNO::string          as DOCNO,
     item.value:PROJ::string           as PROJ,
