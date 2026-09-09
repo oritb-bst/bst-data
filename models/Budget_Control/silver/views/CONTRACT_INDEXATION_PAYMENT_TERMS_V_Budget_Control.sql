@@ -9,7 +9,7 @@ with contracts as (
         "Date", 
         "סטטוס חוזה מזמין", 
         "חברה" 
-    from {{ ref('MAZMIN_CONTRACTS_V') }} 
+    from {{ ref('MAZMIN_CONTRACTS_V_Budget_Control') }} 
  
     where "סוג חוזה מזמין" = 'CO' 
       and coalesce("מחיר כולל מעמ באלפי שח", 0) > 0 
@@ -25,7 +25,7 @@ contract_escalation as (
         date_trunc('month', e."תאריך תחילת הצמדה") as "חודש בסיס", 
         e."שער בסיס" as "מדד בסיס", 
         e."חברה" 
-    from {{ ref('MAZMIN_CONTRACT_ESCALATION_V') }} e
+    from {{ ref('MAZMIN_CONTRACT_ESCALATION_V_Budget_Control') }} e
 
     left join {{ ref('DIM_CURRENCIES_V_Budget_Control') }} c
         on e."מטבע" = c."מטבע"
