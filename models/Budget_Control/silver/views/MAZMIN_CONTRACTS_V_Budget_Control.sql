@@ -8,7 +8,7 @@ select
     MED_TYPE     as "סוג חוזה מזמין",
     TOTAL_PRICE  as "מחיר כולל מעמ",
     TOTAL_PRICE_K  as "מחיר כולל מעמ באלפי שח",
-    CURDATE        as "Date",
+    CURDATE        as "תאריך חוזה מזמין",
     ORD_STATUS_DES as "סטטוס חוזה מזמין",
     CURRENCY       as "מטבע",
     CURRENCY_DES   as "סוג הצמדה",
