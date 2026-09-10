@@ -9,5 +9,13 @@ select
     TOTPRICE / 1000 as TOTAL_PRICE_K,
     CURDATE,
     ORDSTATUSDES as ORD_STATUS_DES,
-    SOURCE_DB
-from {{ ref('MED_ORDERS_J') }}
+    mo.ORDNAME   as ORD_NAME,
+    mc.CURRENCY,
+    mc.CURRENCY_DES,
+    mo.SOURCE_DB
+from {{ ref('MED_ORDERS_J') }} mo
+
+left join {{ ref('MAZMIN_CONTRACT_ESCALATION_STG') }} mc
+    on mo.DOCNO = mc.PROJECT_NAME
+   and mo.ORDNAME = mc.ORD_NAME
+   and mo.SOURCE_DB = mc.SOURCE_DB
