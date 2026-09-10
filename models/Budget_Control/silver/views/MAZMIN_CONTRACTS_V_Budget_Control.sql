@@ -12,6 +12,8 @@ select
     ORD_STATUS_DES as "סטטוס חוזה מזמין",
     CURRENCY       as "מטבע",
     CURRENCY_DES   as "סוג הצמדה",
+    to_char(ESCALATION_START_DATE, 'MM/YY') as "חודש בסיס",
+    BASE_RATE      as "מדד בסיס",
     t.SOURCE_DB    as "חברה"
 from {{ ref('MAZMIN_CONTRACTS_STG') }} t
 
