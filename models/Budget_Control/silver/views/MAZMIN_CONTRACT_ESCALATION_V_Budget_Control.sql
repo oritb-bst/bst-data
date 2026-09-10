@@ -9,5 +9,5 @@ select
 FROM {{ ref('MAZMIN_CONTRACT_ESCALATION_STG') }} e
 
 left join {{ ref('DIM_CURRENCIES_V_Budget_Control') }} c
-    on e."מטבע" = c."מטבע"
-   and e."חברה" = c."חברה"
+    on e.CURRENCY = c."מטבע"
+   and e.SOURCE_DB = c."חברה"
