@@ -85,6 +85,7 @@ sources:
       - name: MED_ORDERS
       - name: MED_OORDLINKING_SUBFORM
       - name: CURRENCIES
+      - name: CURRHIS_SUBFORM
 
 
   - name: txt
