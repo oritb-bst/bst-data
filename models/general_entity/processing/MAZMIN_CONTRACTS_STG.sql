@@ -12,6 +12,8 @@ select
     mo.ORDNAME   as ORD_NAME,
     mc.CURRENCY,
     mc.CURRENCY_DES,
+    mc.ESCALATION_START_DATE,
+    mc.BASE_RATE,
     mo.SOURCE_DB
 from {{ ref('MED_ORDERS_J') }} mo
 
