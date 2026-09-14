@@ -1,6 +1,7 @@
 SELECT
     item.value:PROJNO::varchar        AS PROJNO,
     item.value:PROJDES::varchar       AS PROJDES,
+    item.value:BANKCODE::varchar      AS BANKCODE,
     item.value:BANKNAME::varchar      AS BANKNAME,
     item.value:GUARANTYPEDES::varchar AS GUARANTYPEDES,
     item.value:BANKREF::varchar       AS BANKREF,
