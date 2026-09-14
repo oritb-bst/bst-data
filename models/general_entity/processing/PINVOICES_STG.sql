@@ -2,13 +2,18 @@
     materialized='table'
 ) }}
 
--- בדיקה דינמית שבודקת באופן אקטיבי אם הטבלה קיימת ב-Database וב-Schema הנוכחיים של הריצה
 {% set relation_exists = false %}
+
 {% if execute %}
-    {% set target_relation = adapter.get_relation(database=this.database, schema=this.schema, identifier=this.table) %}
-    {% if target_relation is not none %}
-        {% set relation_exists = true %}
-    {% endif %}
+  -- ניסיון בדיקה ישיר מול ה-DWH
+  {% set check_query %}
+    select count(*) from {{ this }} where 1=0
+  {% endset %}
+  
+  {% set results = run_query(check_query) %}
+  {% if results is not none %}
+    {% set relation_exists = true %}
+  {% endif %}
 {% endif %}
 
 with incoming_data as (
