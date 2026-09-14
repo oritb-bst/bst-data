@@ -14,6 +14,7 @@ with decrease_per_guarantee as (
 select
     g.PROJECT_NAME as "מספר פרויקט",
     g.PROJECT_DES  as "שם פרויקט",
+    g.BANK_CODE    as "קוד הבנק",
     g.BANK_NAME    as "שם בנק",
     g.GUARANTEE_TYPE_DES        as "תיאור סוג ערבות",
     g.BANK_GUARANTEE_REFERENCE  as "מספר הערבות בבנק",
