@@ -1,5 +1,15 @@
--- בדיקה האם טבלת היעד כבר קיימת במסד הנתונים
-{% set target_relation = adapter.get_relation(database=this.database, schema=this.schema, identifier=this.table) %}
+{{ config(
+    materialized='table'
+) }}
+
+-- בדיקה דינמית שבודקת באופן אקטיבי אם הטבלה קיימת ב-Database וב-Schema הנוכחיים של הריצה
+{% set relation_exists = false %}
+{% if execute %}
+    {% set target_relation = adapter.get_relation(database=this.database, schema=this.schema, identifier=this.table) %}
+    {% if target_relation is not none %}
+        {% set relation_exists = true %}
+    {% endif %}
+{% endif %}
 
 with incoming_data as (
     select
@@ -21,15 +31,14 @@ with incoming_data as (
         SOURCE_DB
     from {{ ref('PINVOICES_J_INC') }}
     
-    {% if target_relation is not none %}
-    -- אם הטבלה קיימת: קח רק נתונים מיום העדכון האחרון והלאה
+    {% if relation_exists %}
     where UDATE >= (select max(UDATE) from {{ this }})
     {% endif %}
 )
 
-{% if target_relation is not none %}
+{% if relation_exists %}
 
-, historical_data as (
+, historical_unmodified_data as (
     select h.*
     from {{ this }} h
     left join incoming_data i
@@ -38,14 +47,12 @@ with incoming_data as (
     where i.INVOICE_NAME is null
 )
 
--- איחוד ההיסטוריה שלא השתנתה עם הנתונים החדשים
-select * from historical_data
+select * from historical_unmodified_data
 union all
 select * from incoming_data
 
 {% else %}
 
--- בריצה הראשונה (כשהטבלה עוד לא קיימת): קח את כל הנתונים מ-incoming_data
 select * from incoming_data
 
 {% endif %}
