@@ -10,14 +10,14 @@ select
     CURDATE,
     ORDSTATUSDES as ORD_STATUS_DES,
     mo.ORDNAME   as ORD_NAME,
-    mc.CURRENCY,
-    mc.CURRENCY_DES,
+    mc.CURRENCY_LINKAGE,
+    mc.CURRENCY_LINKAGE_DES,
     mc.ESCALATION_START_DATE,
     mc.BASE_RATE,
     mo.SOURCE_DB
 from {{ ref('MED_ORDERS_J') }} mo
 
-left join {{ ref('MAZMIN_CONTRACT_ESCALATION_STG') }} mc
+left join {{ ref('MAZMIN_CONTRACT_ESCALATION_STG') }} mc --הצמדה לחוזה (מסך בן)
     on mo.DOCNO = mc.PROJECT_NAME
    and mo.ORDNAME = mc.ORD_NAME
    and mo.SOURCE_DB = mc.SOURCE_DB
