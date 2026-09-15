@@ -1,33 +1,63 @@
---טבלה עם מנגנון אינקרמנטלי
---חשבוניות ספק מרכזות
 {{ config(
-    materialized='incremental',
-    unique_key=['INVOICE_NAME', 'SOURCE_DB'],
-    incremental_strategy='merge',
-    on_schema_change='append_new_columns'
+    materialized='table'
 ) }}
 
+{% set relation_exists = false %}
 
-select
-    IVNUM      as INVOICE_NAME,
-    PROJDOCNO  as PROJECT_NAME,
-    IVDATE     as INVOICE_DATE,
-    QPRICE     as QNT_BEFORE_DISCOUNT,
-    DISPRICE,
-    TOTPRICE,
-    CALPRICE,
-    STORNOFLAG as IS_CANCELED,
-    SUPNAME,    
-    FINAL,
-    STATDES    as INVOICE_STATUS,
-    ORDNAME    as ORDER_NAME,
-    DEBIT,
-    DOCNO,
-    UDATE,
-    SOURCE_DB
-from {{ ref ('PINVOICES_J_INC') }}
---חייבים שתהיה קצת חפיפה (גדול שווה ולא רק גדול) כי אם התנאי מחזיר 0 רשומות אז המרג' הופך ל
---trancate+insert וכל טבלת ההיסטוריה נדרסת
-{% if is_incremental() %}
-where UDATE >= (select max(UDATE) from {{ this }})
+{% if execute %}
+  -- ניסיון בדיקה ישיר מול ה-DWH
+  {% set check_query %}
+    select count(*) from {{ this }} where 1=0
+  {% endset %}
+  
+  {% set results = run_query(check_query) %}
+  {% if results is not none %}
+    {% set relation_exists = true %}
+  {% endif %}
+{% endif %}
+
+with incoming_data as (
+    select
+        IVNUM      as INVOICE_NAME,
+        PROJDOCNO  as PROJECT_NAME,
+        IVDATE     as INVOICE_DATE,
+        QPRICE     as QNT_BEFORE_DISCOUNT,
+        DISPRICE,
+        TOTPRICE,
+        CALPRICE,
+        STORNOFLAG as IS_CANCELED,
+        SUPNAME,    
+        FINAL,
+        STATDES    as INVOICE_STATUS,
+        ORDNAME    as ORDER_NAME,
+        DEBIT,
+        DOCNO,
+        UDATE,
+        SOURCE_DB
+    from {{ ref('PINVOICES_J_INC') }}
+    
+    {% if relation_exists %}
+    where UDATE >= (select max(UDATE) from {{ this }})
+    {% endif %}
+)
+
+{% if relation_exists %}
+
+, historical_unmodified_data as (
+    select h.*
+    from {{ this }} h
+    left join incoming_data i
+        on h.INVOICE_NAME = i.INVOICE_NAME
+       and h.SOURCE_DB = i.SOURCE_DB
+    where i.INVOICE_NAME is null
+)
+
+select * from historical_unmodified_data
+union all
+select * from incoming_data
+
+{% else %}
+
+select * from incoming_data
+
 {% endif %}
