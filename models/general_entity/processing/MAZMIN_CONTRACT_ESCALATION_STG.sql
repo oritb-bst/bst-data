@@ -2,10 +2,10 @@
 select
     DOCNO   as PROJECT_NAME, --שדה של האבא
     ORDNAME as ORD_NAME, --שדה של האבא
-    e.CODE    as CURRENCY,
+    e.CODE    as CURRENCY_LINKAGE, --הצמדה (מדד בנייה וכו)
     STARTDATE as ESCALATION_START_DATE,
     BASEVALUE as BASE_RATE,
-    c.CURRENCY_DES, --תיאור מטבע מטבלת מטבעות
+    c.CURRENCY_DES as CURRENCY_LINKAGE_DES, --תיאור מטבע מטבלת מטבעות
     e.SOURCE_DB
 FROM {{ ref('MED_OORDLINKING_J') }} e
 

@@ -10,8 +10,8 @@ select
     TOTAL_PRICE_K  as "מחיר כולל מעמ באלפי שח",
     CURDATE        as "תאריך חוזה מזמין",
     ORD_STATUS_DES as "סטטוס חוזה מזמין",
-    CURRENCY       as "מטבע",
-    CURRENCY_DES   as "סוג הצמדה",
+    CURRENCY_LINKAGE     as "מטבע הצמדה",
+    CURRENCY_LINKAGE_DES as "תיאור מטבע הצמדה",
     to_char(ESCALATION_START_DATE, 'MM/YY') as "חודש בסיס",
     BASE_RATE      as "מדד בסיס",
     t.SOURCE_DB    as "חברה"
