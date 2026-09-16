@@ -4,6 +4,7 @@ select
 	SUP_NAME            as "מספר ספק",
 	PARTIAL_INVOICE_NUM as "מספר חשבון",
 	CURDATE             as "Date",
+    EXECUTION_MONTH     AS "חודש ביצוע",
     PRICE_AFTER_DISCOUNT_INV as "מחיר חשבון אחרי הנחה",
     STATUS_INV               as "סטטוס חשבון",
     IS_BILLABLE              as "לחיוב",
