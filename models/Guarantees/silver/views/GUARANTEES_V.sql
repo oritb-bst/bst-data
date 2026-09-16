@@ -29,6 +29,7 @@ select
     g.GUARANTEE_PARTY           as "צד הערבות",
     g.GUARANTEE_NAME            as "מספר ערבות",
     g.CREDIT_LIMIT              as "מסגרת בנק",
+    g.DEPOSIT                   as "סכום פקדון לבנק",
     g.SOURCE_DB                 as "חברה",
 
     d.LAST_DECREASE_DATE        as "תאריך הקטנה אחרון",
