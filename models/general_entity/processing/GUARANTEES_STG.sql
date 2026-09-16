@@ -18,8 +18,10 @@ select
     case when GUARANTYPENAME in (4,6,13,15,20) then 'מזמין'
          when GUARANTYPENAME in (2,3,21) then 'קבלן' else 'אחר' end as GUARANTEE_PARTY,
     b.CREDIT_LIMIT,
-    SOURCE_DB
+    b.DEPOSIT,
+    g.SOURCE_DB
 from {{ ref('MEDR_GUARANTEES_J') }} g
 
-left join {{ source('csv', 'BANK_CREDIT_LIMIT') }} b
+left join {{ source('csv', 'BANK_CREDITS_DEPOSITS') }} b
     on g.BANKCODE = b.BANK_CODE
+    and g.SOURCE_DB = b.SOURCE_DB
