@@ -40,7 +40,7 @@ sources:
       - name: GUARANTEES
       - name: REVENUE_RECOGNITION
       - name: MANAGEMENT_TARGET
-      - name: BANK_CREDIT_LIMIT
+      - name: BANK_CREDITS_DEPOSITS
 
   - name: json
     database: BRONZE_UAT
