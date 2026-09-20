@@ -5,23 +5,48 @@
     full_refresh=false
 ) }}
 
-select
-    IVNUM       as INVOICE_NAME,
-    PROJDOCNO   as PROJECT_NAME,
-    IVDATE      as INVOICE_DATE,
-    QPRICE      as QNT_BEFORE_DISCOUNT,
-    DISPRICE,
-    TOTPRICE,
-    CALPRICE,
-    STORNOFLAG  as IS_CANCELED,
-    SUPNAME,    
-    FINAL,
-    STATDES     as INVOICE_STATUS,
-    ORDNAME     as ORDER_NAME,
-    DEBIT,
-    DOCNO,
-    UDATE,
-    SOURCE_DB
-from {{ ref('PINVOICES_J_INC') }}
---לא צריך פה תנאים לפי תאריכי חתימה וכו כי הטבלת מקור מראש מגיעה מסוננת לפי תקופה רצויה
+{% if is_incremental() %}
 
+  -- הרצה שוטפת: MERGE רק של מנת הדלתא מול הטבלה הקיימת
+  select
+      IVNUM       as INVOICE_NAME,
+      PROJDOCNO   as PROJECT_NAME,
+      IVDATE      as INVOICE_DATE,
+      QPRICE      as QNT_BEFORE_DISCOUNT,
+      DISPRICE,
+      TOTPRICE,
+      CALPRICE,
+      STORNOFLAG  as IS_CANCELED,
+      SUPNAME,    
+      FINAL,
+      STATDES     as INVOICE_STATUS,
+      ORDNAME     as ORDER_NAME,
+      DEBIT,
+      DOCNO,
+      UDATE,
+      SOURCE_DB
+  from {{ ref('PINVOICES_J_INC') }}
+
+{% else %}
+
+  -- הרצה ראשונית / Full Refresh: בניית הטבלה מתוך מקור ההיסטוריה המלא
+  select
+      IVNUM       as INVOICE_NAME,
+      PROJDOCNO   as PROJECT_NAME,
+      IVDATE      as INVOICE_DATE,
+      QPRICE      as QNT_BEFORE_DISCOUNT,
+      DISPRICE,
+      TOTPRICE,
+      CALPRICE,
+      STORNOFLAG  as IS_CANCELED,
+      SUPNAME,    
+      FINAL,
+      STATDES     as INVOICE_STATUS,
+      ORDNAME     as ORDER_NAME,
+      DEBIT,
+      DOCNO,
+      UDATE,
+      SOURCE_DB
+  from {{ source('processing', 'PINVOICES_STG') }}
+
+{% endif %}
