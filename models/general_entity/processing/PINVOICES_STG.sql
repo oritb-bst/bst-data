@@ -1,5 +1,3 @@
-{# depends_on: {{ ref('PINVOICES_J_INC') }} #}
-
 {{ config(
     materialized='incremental',
     unique_key=['INVOICE_NAME', 'SOURCE_DB'],
