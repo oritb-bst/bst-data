@@ -35,7 +35,7 @@
 
 {% else %}
 
-  -- הרצה ראשונית: קריאה דינמית לפי הסביבה הפעילה (DEV / UAT / PROD)
+  -- הרצה ראשונית: קריאה מוגנת במירכאות לפי הסביבה הפעילה (DEV / UAT / PROD)
   select
       IVNUM       as INVOICE_NAME,
       PROJDOCNO   as PROJECT_NAME,
@@ -53,6 +53,6 @@
       DOCNO,      
       UDATE,      
       SOURCE_DB
-  from {{ target.database }}.{{ target.schema }}.PINVOICES_STG
+  from "{{ target.database }}"."{{ target.schema }}".PINVOICES_STG
 
 {% endif %}
