@@ -1,3 +1,5 @@
+-- depends_on: {{ ref('PINVOICES_J_INC') }}
+
 {{ config(
     materialized='incremental',
     unique_key=['INVOICE_NAME', 'SOURCE_DB'],
@@ -5,9 +7,13 @@
     full_refresh=false
 ) }}
 
-{% if is_incremental() %}
+{# בדיקה האם הטבלה קיימת פיזית ב-DWH #}
+{% set target_relation = adapter.get_relation(this.database, this.schema, this.table) %}
+{% set relation_exists = target_relation is not none %}
 
-  -- הרצה שוטפת: MERGE רק של מנת הדלתא מול הטבלה הקיימת
+{% if is_incremental() and relation_exists %}
+
+  -- הרצה שוטפת: מושכים מנת דלתא מ-PINVOICES_J_INC
   select
       IVNUM       as INVOICE_NAME,
       PROJDOCNO   as PROJECT_NAME,
@@ -21,15 +27,15 @@
       FINAL,
       STATDES     as INVOICE_STATUS,
       ORDNAME     as ORDER_NAME,
-      DEBIT,
-      DOCNO,
-      UDATE,
+      DEBIT,      
+      DOCNO,      
+      UDATE,      
       SOURCE_DB
   from {{ ref('PINVOICES_J_INC') }}
 
 {% else %}
 
-  -- הרצה ראשונית / Full Refresh: בניית הטבלה מתוך מקור ההיסטוריה המלא
+  -- הרצה ראשונית: קריאה דינמית לפי הסביבה הפעילה (DEV / UAT / PROD)
   select
       IVNUM       as INVOICE_NAME,
       PROJDOCNO   as PROJECT_NAME,
@@ -43,10 +49,10 @@
       FINAL,
       STATDES     as INVOICE_STATUS,
       ORDNAME     as ORDER_NAME,
-      DEBIT,
-      DOCNO,
-      UDATE,
+      DEBIT,      
+      DOCNO,      
+      UDATE,      
       SOURCE_DB
-  from {{ source('processing', 'PINVOICES_STG') }}
+  from {{ target.database }}.{{ target.schema }}.PINVOICES_STG
 
 {% endif %}
