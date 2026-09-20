@@ -7,7 +7,6 @@
 {% set relation_exists = false %}
 
 {% if execute %}
-  {# בדיקה ישירה מול ה-DWH האם טבלת היעד קיימת #}
   {% set check_query %}
     select count(*) from {{ this }} where 1=0
   {% endset %}
@@ -22,7 +21,6 @@
 
 {% if relation_exists %}
 
-  -- 1. הרצה שוטפת: הטבלה כבר קיימת ב-DWH
   with incoming_data as (
       select
           IVNUM       as INVOICE_NAME,
@@ -60,7 +58,6 @@
 
 {% else %}
 
-  -- 2. הרצה ראשונית: מירכאות כפולות מסביב ל-Database ול-Schema למניעת שגיאת BRONZE_UAT
   select
       IVNUM       as INVOICE_NAME,
       PROJDOCNO   as PROJECT_NAME,
@@ -78,6 +75,6 @@
       DOCNO,
       UDATE,
       SOURCE_DB
-  from "{{ this }}
+  from {{ adapter.quote(target.database) }}.{{ adapter.quote(target.schema) }}.PINVOICES_STG
 
 {% endif %}
