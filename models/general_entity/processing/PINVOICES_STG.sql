@@ -1,4 +1,4 @@
--- depends_on: {{ ref('PINVOICES_J_INC') }}
+{# depends_on: {{ ref('PINVOICES_J_INC') }} #}
 
 {{ config(
     materialized='incremental',
