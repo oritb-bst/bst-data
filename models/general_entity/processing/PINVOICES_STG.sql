@@ -53,6 +53,6 @@
       DOCNO,      
       UDATE,      
       SOURCE_DB
-  from "{{ target.database }}"."{{ target.schema }}".PINVOICES_STG
+     from {{ this }} 
 
 {% endif %}
