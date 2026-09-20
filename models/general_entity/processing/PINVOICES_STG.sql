@@ -1,4 +1,5 @@
 -- depends_on: {{ ref('PINVOICES_J_INC') }}
+
 {{ config(
     materialized='table'
 ) }}
@@ -21,9 +22,7 @@
 
 {% if relation_exists %}
 
-  -- ==========================================
   -- 1. הרצה שוטפת: הטבלה כבר קיימת ב-DWH
-  -- ==========================================
   with incoming_data as (
       select
           IVNUM       as INVOICE_NAME,
@@ -61,10 +60,7 @@
 
 {% else %}
 
-  -- ==========================================
-  -- 2. הרצה ראשונית / הטבלה לא קיימת ב-DWH
-  --    טעינה מלאה מטבלת ה-STG באותה ה-Schema
-  -- ==========================================
+  -- 2. הרצה ראשונית: מירכאות כפולות מסביב ל-Database ול-Schema למניעת שגיאת BRONZE_UAT
   select
       IVNUM       as INVOICE_NAME,
       PROJDOCNO   as PROJECT_NAME,
@@ -82,6 +78,6 @@
       DOCNO,
       UDATE,
       SOURCE_DB
-  from {{ this }}
+  from "{{ this }}
 
 {% endif %}
