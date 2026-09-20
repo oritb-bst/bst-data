@@ -1,58 +1,61 @@
--- depends_on: {{ ref('PINVOICES_J_INC') }}
 
 {{ config(
-    materialized='incremental',
-    unique_key=['INVOICE_NAME', 'SOURCE_DB'],
-    incremental_strategy='merge',
-    full_refresh=false
+    materialized='table'
 ) }}
 
-{# בדיקה האם הטבלה קיימת פיזית ב-DWH #}
-{% set target_relation = adapter.get_relation(this.database, this.schema, this.table) %}
-{% set relation_exists = target_relation is not none %}
+{% set relation_exists = false %}
 
-{% if is_incremental() and relation_exists %}
+{% if execute %}
+  -- ניסיון בדיקה ישיר מול ה-DWH
+  {% set check_query %}
+    select count(*) from {{ this }} where 1=0
+  {% endset %}
+  
+  {% set results = run_query(check_query) %}
+  {% if results is not none %}
+    {% set relation_exists = true %}
+  {% endif %}
+{% endif %}
 
-  -- הרצה שוטפת: מושכים מנת דלתא מ-PINVOICES_J_INC
-  select
-      IVNUM       as INVOICE_NAME,
-      PROJDOCNO   as PROJECT_NAME,
-      IVDATE      as INVOICE_DATE,
-      QPRICE      as QNT_BEFORE_DISCOUNT,
-      DISPRICE,
-      TOTPRICE,
-      CALPRICE,
-      STORNOFLAG  as IS_CANCELED,
-      SUPNAME,    
-      FINAL,
-      STATDES     as INVOICE_STATUS,
-      ORDNAME     as ORDER_NAME,
-      DEBIT,      
-      DOCNO,      
-      UDATE,      
-      SOURCE_DB
-  from {{ ref('PINVOICES_J_INC') }}
+with incoming_data as (
+    select
+        IVNUM      as INVOICE_NAME,
+        PROJDOCNO  as PROJECT_NAME,
+        IVDATE     as INVOICE_DATE,
+        QPRICE     as QNT_BEFORE_DISCOUNT,
+        DISPRICE,
+        TOTPRICE,
+        CALPRICE,
+        STORNOFLAG as IS_CANCELED,
+        SUPNAME,    
+        FINAL,
+        STATDES    as INVOICE_STATUS,
+        ORDNAME    as ORDER_NAME,
+        DEBIT,
+        DOCNO,
+        UDATE,
+        SOURCE_DB
+    from {{ ref('PINVOICES_J_INC') }}
+)
+
+{% if relation_exists %}
+
+, historical_unmodified_data as (
+    select h.*
+    from {{ this }} h
+    left join incoming_data i
+        on h.INVOICE_NAME = i.INVOICE_NAME
+       and h.SOURCE_DB = i.SOURCE_DB
+    where i.INVOICE_NAME is null
+)
+
+select * from historical_unmodified_data
+union all
+select * from incoming_data
 
 {% else %}
 
-  -- הרצה ראשונית: קריאה דינמית לפי הסביבה הפעילה (DEV / UAT / PROD)
-  select
-      IVNUM       as INVOICE_NAME,
-      PROJDOCNO   as PROJECT_NAME,
-      IVDATE      as INVOICE_DATE,
-      QPRICE      as QNT_BEFORE_DISCOUNT,
-      DISPRICE,
-      TOTPRICE,
-      CALPRICE,
-      STORNOFLAG  as IS_CANCELED,
-      SUPNAME,    
-      FINAL,
-      STATDES     as INVOICE_STATUS,
-      ORDNAME     as ORDER_NAME,
-      DEBIT,      
-      DOCNO,      
-      UDATE,      
-      SOURCE_DB
-  from {{ target.database }}.{{ target.schema }}.PINVOICES_STG
+select * from incoming_data
 
 {% endif %}
+
