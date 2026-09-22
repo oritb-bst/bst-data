@@ -1,3 +1,4 @@
+
 {{ config(
     materialized='table'
 ) }}
@@ -35,10 +36,6 @@ with incoming_data as (
         UDATE,
         SOURCE_DB
     from {{ ref('PINVOICES_J_INC') }}
-    
-    {% if relation_exists %}
-    where UDATE >= (select max(UDATE) from {{ this }})
-    {% endif %}
 )
 
 {% if relation_exists %}
@@ -61,3 +58,4 @@ select * from incoming_data
 select * from incoming_data
 
 {% endif %}
+
