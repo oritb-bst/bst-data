@@ -27,7 +27,18 @@ SELECT
     "רווח_והפסד_צפוי_בשח" AS "רווח והפסד צפוי באלפי שח",
 	"רווח_והפסד_צפוי_באחוזים",
 	"רווח_והפסד_מוכר" AS "רווח והפסד מוכר באלפי שח",
-    "רווח_והפסד_מוכר" * 1000 AS "רווח_והפסד_מוכר"
+    "רווח_והפסד_מוכר" * 1000 AS "רווח_והפסד_מוכר",
+
+   CASE
+    WHEN ROW_NUMBER() OVER (
+        PARTITION BY UPPER("חברה"), "פרויקט"
+        ORDER BY "תאריך"
+    ) = 1
+    THEN 1
+    ELSE 0
+   END AS FIRST_PROJECT_FLAG
+
+
 FROM {{ source('csv', 'REVENUE_RECOGNITION') }}
 
 WHERE NULLIF(TRIM("פרויקט"), '') IS NOT NULL
