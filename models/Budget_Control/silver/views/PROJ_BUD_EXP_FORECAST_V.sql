@@ -27,6 +27,7 @@ select
     BUD_CONTROL_DATE      as "Date",
     TOPIC_NAME            as "מספר נושא",
     TOPIC_DES             as "תיאור נושא",
+    FREE_COMMENT          as "הערה (הוצאות)",
 	t.SOURCE_DB           as "חברה"
 from {{ ref('PROJ_BUD_EXP_FORECAST_STG') }} t
 

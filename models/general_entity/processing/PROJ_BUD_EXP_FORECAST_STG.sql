@@ -59,5 +59,6 @@ select
     TOPICNAME as TOPIC_NAME,
     TOPICDES as TOPIC_DES,
     DOCNO as PROJECT_NAME,
+    BUD_REMARK as FREE_COMMENT,
     SOURCE_DB
 from overhead_calc
