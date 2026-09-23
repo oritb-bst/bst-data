@@ -16,5 +16,6 @@ select
     DOC            as PROJECT_ID,
     CONDATE        as BUD_CONTROL_DATE,
     DOCNO          as PROJECT_NAME,
+    BUD_REMARK     as FREE_COMMENT,
 	SOURCE_DB
 from {{ ref ('BUD_FORECAST_R_J') }}

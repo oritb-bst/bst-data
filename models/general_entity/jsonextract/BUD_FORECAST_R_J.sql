@@ -11,7 +11,8 @@ SELECT
     sub.value:FORECAST::NUMBER(38,0)      AS FORECAST,
     item.value:CONDATE::DATE              AS CONDATE, --שדה של האבא
     item.value:DOCNO::VARCHAR             AS DOCNO, --שדה של האבא
-    sub.value:DOC::NUMBER(38,0)           AS DOC
+    sub.value:DOC::NUMBER(38,0)           AS DOC,
+    sub.value:BUD_REMARK::STRING          AS BUD_REMARK
 
 FROM {{ source('json', 'BUD_FORECAST_R_SUBFORM') }},
 LATERAL FLATTEN(INPUT => DATA) item,
