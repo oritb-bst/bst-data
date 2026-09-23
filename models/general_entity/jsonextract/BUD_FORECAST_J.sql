@@ -19,6 +19,7 @@ SELECT
     sub.value:TOPICNAME::STRING              AS TOPICNAME,
     sub.value:TOPICDES::STRING               AS TOPICDES,
     item.value:DOCNO::VARCHAR                AS DOCNO, --שדה של האבא
+    sub.value:BUD_REMARK::STRING             AS BUD_REMARK,
     SOURCE_DB::STRING                        AS SOURCE_DB
 
 FROM {{ source('json', 'BUD_FORECAST_SUBFORM') }},
