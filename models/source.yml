@@ -87,6 +87,7 @@ sources:
       - name: MED_OORDLINKING_SUBFORM
       - name: CURRENCIES
       - name: CURRHIS_SUBFORM
+      - name: BUD_FORECASTTEXT_SUBFORM
 
 
   - name: txt
