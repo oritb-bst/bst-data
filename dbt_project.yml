@@ -72,3 +72,10 @@ models:
       silver:
         views:
           +materialized: view
+
+    Cashflow:
+      +materialized: table
+
+      silver:
+        views:
+          +materialized: view
