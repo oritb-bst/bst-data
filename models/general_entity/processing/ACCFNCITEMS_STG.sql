@@ -13,7 +13,7 @@ WITH base AS (
         STORNOFLAG,
         FNCNUM,
         FNCDATE,
- 
+        FNCPATNAME,
         CASE
             WHEN source_db = 'BST' THEN
                 REGEXP_SUBSTR(
@@ -35,6 +35,7 @@ SELECT
     SOURCE_DB,
     STORNOFLAG,
     FNCDATE,
+    FNCPATNAME,
     date_text,
  
     CASE
