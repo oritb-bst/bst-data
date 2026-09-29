@@ -17,3 +17,4 @@ SELECT
     FNCDATE,
 	SOURCE_DB 
 FROM {{ ref('ZCBS_PAYMENTRECEIPT_J') }}
+--where לסנן קבלות לא זמניות
