@@ -18,7 +18,8 @@ SELECT
     t.source_db                                          AS "חברה",
     t.stornoflag                                         AS "stornoflag",
     t.fncnum                                             AS "מספר תנועה",
-    t.fncdate                                            AS "תאריך ערך"
+    t.fncdate                                            AS "תאריך ערך",
+    t.fncpatname                                         AS "סוג תנועה",
 
 FROM {{ ref('ACCFNCITEMS_STG') }} t
 
