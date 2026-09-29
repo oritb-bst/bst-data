@@ -12,4 +12,4 @@ select
     d.SOURCE_DB          as "חברה"
 from {{ ref('DIM_PROJECTS_STG') }} d
 
-{{ join_valid_projects('d.DOCNO', 'd.SOURCE_DB') }}
+{{ join_valid_projects_project_managment('d.DOCNO', 'd.SOURCE_DB') }}
