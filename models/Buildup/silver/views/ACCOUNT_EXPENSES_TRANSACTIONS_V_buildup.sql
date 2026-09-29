@@ -14,7 +14,8 @@ SELECT
     t.account_credit                                     AS "זכות",
     t.source_db                                          AS "חברה",
     t.stornoflag                                         AS "stornoflag",
-    t.fncnum                                             AS "מספר תנועה"
+    t.fncnum                                             AS "מספר תנועה",
+    t.fncpatname                                         AS "סוג תנועה"
 FROM {{ ref('ACCFNCITEMS_STG') }} t
 
 INNER JOIN {{ ref('ACCOUNTS_STG') }} a
