@@ -1,14 +1,15 @@
---DOCUMENTS_p
 select
-    DOCNO as "מספר פרויקט",
-    DOC   as "פרויקט_ID",
-    PROJDES  as "שם פרויקט",
-    PROJMANG as "שם מנהל פרויקט",
-    PROJTYPECODE as "קוד סוג פרויקט",
-    PROJTYPEDES  as "תאור סוג פרויקט",
-    BSA_SIZESUM  as "סך הכל מטר רבוע לפרויקט",
-    BSA_APARTSUM as "מספר יחידות דיור",
-    STATDES      as "סטטוס פרויקט",
-    BUD_STARTORDERDATE as "תאריך צו תחילת עבודה",
-    SOURCE_DB  as "חברה"
-from {{ ref('DIM_PROJECTS_STG') }}
+    d.DOCNO              as "מספר פרויקט",
+    d.DOC                as "פרויקט_ID",
+    d.PROJDES            as "שם פרויקט",
+    d.PROJMANG           as "שם מנהל פרויקט",
+    d.PROJTYPECODE       as "קוד סוג פרויקט",
+    d.PROJTYPEDES        as "תאור סוג פרויקט",
+    d.BSA_SIZESUM        as "סך הכל מטר רבוע לפרויקט",
+    d.BSA_APARTSUM       as "מספר יחידות דיור",
+    d.STATDES            as "סטטוס פרויקט",
+    d.BUD_STARTORDERDATE as "תאריך צו תחילת עבודה",
+    d.SOURCE_DB          as "חברה"
+from {{ ref('DIM_PROJECTS_STG') }} d
+
+{{ join_valid_projects_project_managment('d.DOCNO', 'd.SOURCE_DB') }}
