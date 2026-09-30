@@ -30,6 +30,8 @@ overhead_calc as (
     from base
 )
 
+--אומדנים - אגף ביצוע חישוב רגיל מתת פרק
+--תקציבים - חישוב עם האחוז
 select
     BUD_FORECAST as FORECAST_ID,
     BUD_USER as USER_ID,
@@ -45,14 +47,14 @@ select
     EFORECAST as FORECAST_TO_COMPLETE,
     EFORECAST / 1000 as FORECAST_TO_COMPLETE_K,
     -- עבור BST ותת פרק 96 התקציב המעודכן מוחלף בחישוב 1.25%
-    case when o.SOURCE_DB = 'BST' and SUBCHAPTER_NUM = 96 then EXECUTION_OVERHEAD_CURRENT_BUDGET else EBUDGET end as CURRENT_BUDGET,
+    case when o.SOURCE_DB = 'BST' and SUBCHAPTER_NUM = 96 then EXECUTION_OVERHEAD_CURRENT_BUDGET        else EBUDGET        end as CURRENT_BUDGET,
     case when o.SOURCE_DB = 'BST' and SUBCHAPTER_NUM = 96 then EXECUTION_OVERHEAD_CURRENT_BUDGET / 1000 else EBUDGET / 1000 end as CURRENT_BUDGET_K,
     APPROVEDTOPAY as APPROVED_TO_PAY,
     APPROVEDTOPAY / 1000 as APPROVED_TO_PAY_K,
     EPREVFORECAST as PREVIOUS_FORECAST,
     EPREVFORECAST / 1000 as PREVIOUS_FORECAST_K,
     -- עבור BST ותת פרק 96 תקציב האפס מוחלף בחישוב 1.25%
-    case when o.SOURCE_DB = 'BST' and SUBCHAPTER_NUM = 96 then EXECUTION_OVERHEAD_ORIGINAL_BUDGET else ORIGBUDGET end as ORIGINAL_BUDGET,
+    case when o.SOURCE_DB = 'BST' and SUBCHAPTER_NUM = 96 then EXECUTION_OVERHEAD_ORIGINAL_BUDGET        else ORIGBUDGET        end as ORIGINAL_BUDGET,
     case when o.SOURCE_DB = 'BST' and SUBCHAPTER_NUM = 96 then EXECUTION_OVERHEAD_ORIGINAL_BUDGET / 1000 else ORIGBUDGET / 1000 end as ORIGINAL_BUDGET_K,
     DOC as PROJECT_ID,
     o.CONDATE as BUD_CONTROL_DATE,
