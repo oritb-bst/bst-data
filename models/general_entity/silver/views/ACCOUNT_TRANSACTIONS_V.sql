@@ -22,7 +22,7 @@ INNER JOIN {{ ref('ACCOUNTS_STG') }} a
    AND t.source_db = a.source_db
 
 
-{{ join_valid_projects('a.project_docno', 'a.source_db') }}
+{{ join_valid_projects_project_managment('a.project_docno', 'a.source_db') }}
 
 WHERE a.account_type_name IN ('עלות המכירות', 'הכנסות') 
     and t.stornoflag IS DISTINCT FROM 'Y'

@@ -7,6 +7,7 @@ SELECT
     sub.value:STORNOFLAG::STRING AS stornoflag,
     sub.value:FNCNUM::STRING AS fncnum,
     sub.value:FNCDATE::DATE AS FNCDATE,
+    sub.value:FNCPATNAME::STRING AS FNCPATNAME,
     source_db::STRING AS source_db,
 
 FROM {{ source('json', 'ACCFNCITEMS2_SUBFORM') }},
