@@ -18,7 +18,7 @@ select
     ORIGINAL_REVENUE_BUDGET_K     as "תקציב הכנסות מקורי באלפי שח",
     PROJECT_ID                    as "פרויקט_ID",
     BUD_CONTROL_DATE              as "Date",
-    FREE_COMMENT                  as "הערה (הכנסות)",
+    case when SUB_CHAPTER_NAME = '991' then null else FREE_COMMENT end as "הערה (הכנסות)",
 	t.SOURCE_DB                   as "חברה"
 from {{ ref('PROJ_BUD_INC_FORECAST_STG') }} t
 
