@@ -11,6 +11,7 @@ SELECT
     item.value:BUD_FORCASTCONDITION_SUBFORM:EFCMANREDUCTION::FLOAT       AS EFCMANREDUCTION,
     item.value:BUD_FORCASTCONDITION_SUBFORM:CPPCCONTDEDUCTION::FLOAT     AS CPPCCONTDEDUCTION,
     item.value:BUD_FORCASTCONDITION_SUBFORM:BSA_CONTDEDUCTION::FLOAT     AS BSA_CONTDEDUCTION,
+    item.value:BUD_FORCASTCONDITION_SUBFORM:BSA_CONTDEDUCTIONN::FLOAT    AS BSA_CONTDEDUCTIONN,
     item.value:DOCNO::VARCHAR                                            AS DOCNO, --שדה של האבא
     item.value:CONDATE::date                                             AS CONDATE, --שדה של האבא
     SOURCE_DB::STRING                                                    AS SOURCE_DB
