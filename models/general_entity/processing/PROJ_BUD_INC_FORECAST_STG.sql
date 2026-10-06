@@ -1,7 +1,8 @@
---פיתוח ספציפי להתייקרויות וקיזוזים לפרויקטים K
---K שער העיר ירושלים + גב ים העברית
---בחודשים 12/25-02/26
---לוקחים מטבלת תנאים מיוחדים במקום מהאומדנים
+-- פיתוח ספציפי להתייקרויות וקיזוזים לפרויקטים K
+-- K שער העיר ירושלים + גב ים העברית
+-- PR25000012 - דצמבר 2025
+-- PR25000009 - דצמבר 2025 + פברואר 2026
+-- לוקחים מטבלת תנאים מיוחדים במקום מהאומדנים
 
 with control_periods as ( -- רשימת תקופות בקרה ייחודית לכל פרויקט
     select distinct
@@ -82,18 +83,17 @@ forecast_calc as ( -- מחשבים את האומדן הנוכחי והאומדן
     select
         *,
         case
-            -- תת פרק 991:
-            -- בתקופות הבעייתיות, עבור שני הפרויקטים,
+            -- תת פרק 991 - התייקרויות
             -- התייקרות עתידית לקבל + מזמין-התייקרות מצטברת
-            when ((PROJECT_NAME = 'PR25000012'
-            and BUD_CONTROL_DATE >= '2025-12-01' and BUD_CONTROL_DATE < '2026-01-01') --חודש דצמבר
-            or (PROJECT_NAME = 'PR25000009'
-            and BUD_CONTROL_DATE >= '2025-12-01' and BUD_CONTROL_DATE < '2026-03-01')) --חודש דצמבר+פברואר
+            when PROJECT_NAME in ('PR25000012', 'PR25000009')
+            and BUD_CONTROL_DATE >= '2025-12-01' and BUD_CONTROL_DATE < '2026-01-01' --חודש דצמבר
+            --or (PROJECT_NAME = 'PR25000009'
+            --and BUD_CONTROL_DATE >= '2025-12-01' and BUD_CONTROL_DATE < '2026-03-01')) --חודש דצמבר+פברואר
+            --and BUD_CONTROL_DATE >= '2025-12-01' and BUD_CONTROL_DATE < '2026-01-01'))
             and SUBCHAPTER_NUM = 991
             then coalesce(CUSTOMER_FORECASTED_INCREASE_TO_RECEIVE, 0)
                + coalesce(CUSTOMER_CUMULATIVE_INCREASE, 0)
-            -- תת פרק 993:
-            -- בתקופות הבעייתיות, עבור שני הפרויקטים,
+            -- תת פרק 993 - קיזוזים
             -- קיזוז ידני עתידי מזמין + קיזוז חוזי עתידי מזמין + קיזוז חוזי מחש.מזמין
             -- הערך מוכפל ב-1- כי הקיזוזים צריכים להופיע במינוס
             -- 993 - PR25000012
@@ -116,15 +116,15 @@ forecast_calc as ( -- מחשבים את האומדן הנוכחי והאומדן
                 + coalesce(CUSTOMER_MANUAL_DEDUCTION_FUTURE, 0), 0), 0)
             else REVENUE_FORECAST_TO_COMPLETE_ORIGINAL
         end as REVENUE_FORECAST_TO_COMPLETE, --אומדן נוכחי
-
+        
         case -- כאן התנאי נבדק לפי PREV_BUD_CONTROL_DATE,
             -- אם התקופה הקודמת הייתה בתקופה הבעייתית
             -- ותת הפרק הוא 991,
             -- לוקחים את ערכי התנאים המיוחדים של התקופה הקודמת
-            when ((PROJECT_NAME = 'PR25000012'
-            and PREV_BUD_CONTROL_DATE >= '2025-12-01' and PREV_BUD_CONTROL_DATE <  '2026-01-01') --חודש דצמבר
-            or (PROJECT_NAME = 'PR25000009'
-            and PREV_BUD_CONTROL_DATE >= '2025-12-01' and PREV_BUD_CONTROL_DATE < '2026-03-01')) --חודש דצמבר+פברואר
+            when PROJECT_NAME in ('PR25000012', 'PR25000009')
+            and PREV_BUD_CONTROL_DATE >= '2025-12-01' and PREV_BUD_CONTROL_DATE <  '2026-01-01' --חודש דצמבר
+            --or (PROJECT_NAME = 'PR25000009'
+            --and PREV_BUD_CONTROL_DATE >= '2025-12-01' and PREV_BUD_CONTROL_DATE < '2026-03-01')) --חודש דצמבר+פברואר
             and SUBCHAPTER_NUM = 991
             then coalesce(PREV_CUSTOMER_FORECASTED_INCREASE_TO_RECEIVE, 0)
                + coalesce(PREV_CUSTOMER_CUMULATIVE_INCREASE, 0)
