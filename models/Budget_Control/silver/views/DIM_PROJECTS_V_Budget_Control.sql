@@ -1,6 +1,6 @@
 --DOCUMENTS_p
 select
-    DOCNO    as "מספר פרויקט",
+    t.DOCNO    as "מספר פרויקט",
     DOC      as "פרויקט_ID",
     PROJDES  as "שם פרויקט",
     PROJMANG as "שם מנהל פרויקט",
@@ -13,11 +13,7 @@ select
     BUD_ASTARTDATE     as "תאריך התחלה בפועל",
     BUD_CONTDURATION   as "משך בחודשים חוזי",
     BUD_CONTENDDATE    as "תאריך סיום ביצוע חוזי",
-    SOURCE_DB          as "חברה"
-from {{ ref('DIM_PROJECTS_STG') }}
-where DOCNO in ('PR25000009',
-                'PR25000012',
-                'PR26000004',
-                'PR26000006',
-                'PR25000004')
-and SOURCE_DB = 'BST'
+    t.SOURCE_DB        as "חברה"
+from {{ ref('DIM_PROJECTS_STG') }} t
+
+{{ join_bst_projects_budget_control('t.DOCNO', 't.SOURCE_DB') }}
