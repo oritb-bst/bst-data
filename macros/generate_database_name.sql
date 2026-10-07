@@ -2,9 +2,9 @@
 
     {%- set target_name = target.name | lower -%}
 
-    {% if target_name == 'dev' %}
+    {% if target_name == 'DEV' %}
         DEVELOPMENT
-    {% elif target_name == 'uat' %}
+    {% elif target_name == 'UAT' %}
        {# Non-dev, non-ci environments use folder-based database logic #}
        -- {%- set file_path = node.original_file_path | lower -%}
         {%- set file_path = node.path | lower -%}
