@@ -4,8 +4,13 @@
     {%- set target_name = target.name | lower -%}
     {%- set file_path = node.path | lower -%}
 
-    {# בדיקה אם אנחנו בסביבת UAT #}
-    {% if 'UAT' in target_db or target_name == 'uat' %}
+    {# 1. בדיקה אם אנחנו בסביבת DEV #}
+    {% if 'DEV' in target_db or 'DEV' in target_name %}
+
+        DEVELOPMENT
+
+    {# 2. בדיקה אם אנחנו בסביבת UAT #}
+    {% elif 'UAT' in target_db or target_name == 'UAT' %}
 
         {% if 'silver' in file_path or 'cashflow' in file_path %}
             SILVER_UAT
@@ -19,7 +24,7 @@
             {{ target.database }}
         {% endif %}
 
-    {# במידה ולא UAT - סביבת PROD #}
+    {# 3. במידה ולא DEV ולא UAT - סביבת PROD #}
     {% else %}
 
         {% if 'silver' in file_path or 'cashflow' in file_path %}
