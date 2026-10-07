@@ -1,10 +1,10 @@
--- פיתוח ספציפי להתייקרויות וקיזוזים לפרויקטים K
+-- פיתוח ספציפי להתייקרויות וקיזוזים לפרויקטים
 -- K שער העיר ירושלים + גב ים העברית
 -- PR25000012 - דצמבר 2025
 -- PR25000009 - דצמבר 2025 + פברואר 2026
 -- לוקחים מטבלת תנאים מיוחדים במקום מהאומדנים
 
-with control_periods as ( -- רשימת תקופות בקרה ייחודית לכל פרויקט
+with control_periods as ( --רשימת תקופות בקרה ייחודית לכל פרויקט
     select distinct
         DOC       as PROJECT_ID,
         DOCNO     as PROJECT_NAME,
@@ -13,7 +13,7 @@ with control_periods as ( -- רשימת תקופות בקרה ייחודית ל�
     from {{ ref('BUD_FORECAST_R_J') }}
 ),
 
-control_periods_with_prev as ( -- מוצאים את תקופת הבקרה הקודמת בפועל
+control_periods_with_prev as ( --מוצאים את תקופת הבקרה הקודמת בפועל
     select *,
            lag(BUD_CONTROL_DATE) over (partition by PROJECT_ID, SOURCE_DB order by BUD_CONTROL_DATE) as PREV_BUD_CONTROL_DATE
     from control_periods
@@ -40,8 +40,7 @@ revenue_forecast as ( --אומדן לגמר הכנסות
         DOCNO                  as PROJECT_NAME,
         BUD_REMARK             as FREE_COMMENT,
         SOURCE_DB,
-        -- חילוץ מספר תת הפרק כדי לזהות 991 / 993
-        try_to_number(regexp_substr(trim(SUBCHAPTERNAME), '^[0-9]+')) as SUBCHAPTER_NUM
+        try_to_number(regexp_substr(trim(SUBCHAPTERNAME), '^[0-9]+')) as SUBCHAPTER_NUM --חילוץ מספר תת הפרק כדי לזהות 991 / 993
     from {{ ref('BUD_FORECAST_R_J') }}
 ),
 
@@ -86,7 +85,7 @@ forecast_calc as ( -- מחשבים את האומדן הנוכחי והאומדן
             -- תת פרק 991 - התייקרויות
             -- התייקרות עתידית לקבל + מזמין-התייקרות מצטברת
             when PROJECT_NAME in ('PR25000012', 'PR25000009')
-            and BUD_CONTROL_DATE >= '2025-12-01' and BUD_CONTROL_DATE < '2026-01-01' --חודש דצמבר
+            and BUD_CONTROL_DATE = '2025-12-31' --חודש דצמבר
             --or (PROJECT_NAME = 'PR25000009'
             --and BUD_CONTROL_DATE >= '2025-12-01' and BUD_CONTROL_DATE < '2026-03-01')) --חודש דצמבר+פברואר
             --and BUD_CONTROL_DATE >= '2025-12-01' and BUD_CONTROL_DATE < '2026-01-01'))
@@ -98,7 +97,7 @@ forecast_calc as ( -- מחשבים את האומדן הנוכחי והאומדן
             -- הערך מוכפל ב-1- כי הקיזוזים צריכים להופיע במינוס
             -- 993 - PR25000012
             when PROJECT_NAME = 'PR25000012' 
-            and BUD_CONTROL_DATE >= '2025-12-01' and BUD_CONTROL_DATE < '2026-01-01' --חודש דצמבר
+            and BUD_CONTROL_DATE = '2025-12-31' --חודש דצמבר
             and SUBCHAPTER_NUM = 993
             then coalesce(-1 * nullif(
                  coalesce(CUSTOMER_CONTRACTUAL_DEDUCTION_CALCULATED, 0)
@@ -108,7 +107,7 @@ forecast_calc as ( -- מחשבים את האומדן הנוכחי והאומדן
 
             -- 993 - PR25000009
             when PROJECT_NAME = 'PR25000009'
-            and BUD_CONTROL_DATE >= '2025-12-01' and BUD_CONTROL_DATE < '2026-03-01' --חודש דצמבר+פברואר
+            and BUD_CONTROL_DATE in ('2025-12-31', '2026-02-28') --חודש דצמבר+פברואר
             and SUBCHAPTER_NUM = 993
             then coalesce(-1 * nullif(
                  coalesce(CUSTOMER_CONTRACTUAL_DEDUCTION_CALCULATED, 0)
@@ -122,7 +121,7 @@ forecast_calc as ( -- מחשבים את האומדן הנוכחי והאומדן
             -- ותת הפרק הוא 991,
             -- לוקחים את ערכי התנאים המיוחדים של התקופה הקודמת
             when PROJECT_NAME in ('PR25000012', 'PR25000009')
-            and PREV_BUD_CONTROL_DATE >= '2025-12-01' and PREV_BUD_CONTROL_DATE <  '2026-01-01' --חודש דצמבר
+            and PREV_BUD_CONTROL_DATE = '2025-12-31' --חודש דצמבר
             --or (PROJECT_NAME = 'PR25000009'
             --and PREV_BUD_CONTROL_DATE >= '2025-12-01' and PREV_BUD_CONTROL_DATE < '2026-03-01')) --חודש דצמבר+פברואר
             and SUBCHAPTER_NUM = 991
@@ -133,7 +132,7 @@ forecast_calc as ( -- מחשבים את האומדן הנוכחי והאומדן
             -- לוקחים את הקיזוזים מהתנאים המיוחדים של התקופה הקודמת
             -- בפרויקט PR25000012 מוסיפים גם קיזוז ידני של 5,982,000
             when PROJECT_NAME = 'PR25000012'
-            and PREV_BUD_CONTROL_DATE >= '2025-12-01' and PREV_BUD_CONTROL_DATE < '2026-01-01' --חודש דצמבר
+            and PREV_BUD_CONTROL_DATE = '2025-12-31' --חודש דצמבר
             and SUBCHAPTER_NUM = 993
             then coalesce(-1 * nullif(coalesce(PREV_CUSTOMER_CONTRACTUAL_DEDUCTION_CALCULATED, 0)
                + coalesce(PREV_CUSTOMER_CONTRACTUAL_DEDUCTION_FUTURE, 0)
@@ -141,7 +140,7 @@ forecast_calc as ( -- מחשבים את האומדן הנוכחי והאומדן
                - 5982000 --קיזוז שאי אפשר להוסיף בפריוריטי אז באופן ידני
             -- בפרויקט PR25000009 לוקחים את הקיזוזים מהתנאים המיוחדים
             when PROJECT_NAME = 'PR25000009'
-            and PREV_BUD_CONTROL_DATE >= '2025-12-01' and PREV_BUD_CONTROL_DATE < '2026-03-01' --חודש דצמבר+פברואר
+            and BUD_CONTROL_DATE in ('2025-12-31', '2026-02-28') --חודש דצמבר+פברואר
             and SUBCHAPTER_NUM = 993
             then coalesce(-1 * nullif(coalesce(PREV_CUSTOMER_CONTRACTUAL_DEDUCTION_CALCULATED, 0)
                + coalesce(PREV_CUSTOMER_CONTRACTUAL_DEDUCTION_FUTURE, 0)
