@@ -24,7 +24,7 @@
             {{ target.database }}
         {% endif %}
 
-    {# 3. במידה ולא DEV ולא UAT - סביבת PROD #}
+    {# 3. במידה ולא DEV ולא UAT - סביבת PROD #} 
     {% else %}
 
         {% if 'silver' in file_path or 'cashflow' in file_path %}
