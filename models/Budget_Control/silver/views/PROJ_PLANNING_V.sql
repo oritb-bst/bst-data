@@ -15,6 +15,7 @@ select
     CHAPTER_NAME       as "מספר פרק",
     PRICE_PER_UNIT     as "מחיר ליחידה",
     COST_PER_UNIT      as "עלות ליחידה",
+    QUANTITY           as "כמות",
     t.SOURCE_DB        as "חברה"
 from {{ ref('PROJ_PLANNING_STG') }} t
 
