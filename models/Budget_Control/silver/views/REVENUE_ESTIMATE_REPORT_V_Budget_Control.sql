@@ -44,6 +44,7 @@ classified as (
         pp."תיאור תת פרק",
         pp."מחיר ליחידה",
         pp."עלות ליחידה",
+        pp."כמות",
         pp."עלות חומר לפעילות",
         pp."סך הכל מחיר הגשה",
         case
@@ -52,21 +53,22 @@ classified as (
             -- קיזוזי מזמין
             when pp."מספר תת פרק" = '993' then 'קיזוז חוזי מזמין' --כולל: קיזוז מזמין, קיזוז מזמין מוסכם, קיזוז ביטוח
             when pp."מספר תת פרק" = '994' then 'קיזוז ידני מזמין' 
+            -- בונוס מוסכם ראשי
+            when pp."מספר תת פרק" = '97' and coalesce(pp."שם פעילות", '') like '%בונוס מוסכם%' then 'בונוס מוסכם'
+            -- חוזה למדידת כמויות
+            when try_to_number(pp."מספר תת פרק") not between 90 and 96
+                and coalesce(pp."מחיר ליחידה", 0) > 0
+                and coalesce(pp."עלות ליחידה", 0) > 0
+                and coalesce(pp."שם פעילות", '') not like '%פאושל%'
+                then 'חוזה כמויות למדידה'
             -- עבודות נוספות וחריגים
             -- כולל כרגע גם BIM
             when pp."מספר תת פרק" = '99' then 'עבודות נוספות וחריגים'
             -- שירותי קבלן ראשי
             when pp."מספר תת פרק" = '97' and coalesce(pp."שם פעילות", '') like '%שירותי קבלן ראשי%' then 'שירותי קבלן ראשי'
-            -- בונוס מוסכם ראשי
-            when pp."מספר תת פרק" = '97' and coalesce(pp."שם פעילות", '') like '%בונוס מוסכם%' then 'בונוס מוסכם'
             -- חוזה פאושלי
             when coalesce(pp."שם פעילות", '') like '%פאושל%' then 'חוזה פאושלי'
-            -- חוזה למדידת כמויות
-            when try_to_number(pp."מספר תת פרק") not between 60 and 90
-                and coalesce(pp."מחיר ליחידה", 0) > 0
-                and coalesce(pp."עלות ליחידה", 0) > 0
-                and coalesce(pp."שם פעילות", '') not like '%פאושל%'
-                then 'חוזה כמויות למדידה'
+
             else null end as "מרכיבי אומדן הכנסות"
     from project_planning pp
 
@@ -211,16 +213,16 @@ budget_control_by_month as (
         order by "Date" desc,"בקרה תקציבית_ID" desc) = 1
 ),
 
---10. גידול/קיטון בכמויות למדידה - סך הכל מחיק הגשה במהדורה נוכחית פחות סך הכל מחיר הגשה במהדורה 0
+--10. גידול/קיטון בכמויות למדידה - משווים את אותה פעילות בין מהדורה נוכחית למהדורה 0 ורק אם הכמות השתנתה מחשבים את ההפרש
 measurement_change_raw as (
     select
         r."חברה",
         r."מספר פרויקט",
         r."חודש דוח",
         bc."מהדורה נוכחית",
-        (sum(case when c."מספר מהדורה" = bc."מהדורה נוכחית" then coalesce(c."סך הכל מחיר הגשה", 0) else 0 end)
-            -
-         sum(case when c."דגל מהדורת 0" = 'Y' then coalesce(c."סך הכל מחיר הגשה", 0) else 0 end)) / 1000 as "אומדן נוכחי"
+        sum(case when coalesce(curr."כמות", 0) <> coalesce(v0."כמות", 0)
+                 then coalesce(curr."סך הכל מחיר הגשה", 0) - coalesce(v0."סך הכל מחיר הגשה", 0)
+                else 0 end) / 1000.0 as "אומדן נוכחי"
     from report_months r
 
     left join budget_control_by_month bc
@@ -228,9 +230,18 @@ measurement_change_raw as (
         and r."מספר פרויקט" = bc."מספר פרויקט"
         and r."חודש דוח" = bc."חודש דוח"
 
-    left join classified c
-        on  r."חברה" = c."חברה"
-        and r."מספר פרויקט" = c."מספר פרויקט"
+    -- מהדורה נוכחית
+    left join classified curr
+        on  r."חברה" = curr."חברה"
+        and r."מספר פרויקט" = curr."מספר פרויקט"
+        and curr."מספר מהדורה" = bc."מהדורה נוכחית"
+
+    -- אותה פעילות במהדורה 0
+    left join classified v0
+        on  curr."חברה" = v0."חברה"
+        and curr."מספר פרויקט" = v0."מספר פרויקט"
+        and curr."מספר פעילות" = v0."מספר פעילות"
+        and v0."דגל מהדורת 0" = 'Y'
 
     group by
         r."חברה",
@@ -341,17 +352,23 @@ base_result as (
         b."אפס",
         b."מעודכן",
         -- בהתייקרות על היתרה מורידים מהאומדן הקודם את ההתייקרות בפועל הקודמת
-        case when b."מרכיבי אומדן הכנסות" = 'התייקרות על היתרה' then coalesce(f."אומדן קודם", 0) - coalesce(a."אומדן קודם", 0)
-            else coalesce(f."אומדן קודם", 0) end as "אומדן קודם",
+        case when b."מרכיבי אומדן הכנסות" = 'התייקרות על היתרה'  then coalesce(f."אומדן קודם", 0) - coalesce(a."אומדן קודם", 0)
+             when b."מרכיבי אומדן הכנסות" = 'חוזה כמויות למדידה' then coalesce(f."אומדן קודם", 0) + coalesce(m."אומדן קודם", 0)
+        else coalesce(f."אומדן קודם", 0) end as "אומדן קודם",
         -- בהתייקרות על היתרה מורידים מהאומדן הנוכחי את ההתייקרות בפועל הנוכחית
-        case when b."מרכיבי אומדן הכנסות" = 'התייקרות על היתרה' then coalesce(f."אומדן נוכחי", 0) - coalesce(a."אומדן נוכחי", 0)
-            else coalesce(f."אומדן נוכחי", 0) end as "אומדן נוכחי",
+        case when b."מרכיבי אומדן הכנסות" = 'התייקרות על היתרה'  then coalesce(f."אומדן נוכחי", 0) - coalesce(a."אומדן נוכחי", 0)
+             when b."מרכיבי אומדן הכנסות" = 'חוזה כמויות למדידה' then coalesce(f."אומדן נוכחי", 0) + coalesce(m."אומדן נוכחי", 0)
+        else coalesce(f."אומדן נוכחי", 0) end as "אומדן נוכחי",
         -- שינוי = אומדן נוכחי נטו פחות אומדן קודם נטו
         case when b."מרכיבי אומדן הכנסות" = 'התייקרות על היתרה'
                 then (coalesce(f."אומדן נוכחי", 0) - coalesce(a."אומדן נוכחי", 0))
-                    -
-                    (coalesce(f."אומדן קודם", 0) - coalesce(a."אומדן קודם", 0))
-            else coalesce(f."אומדן נוכחי", 0) - coalesce(f."אומדן קודם", 0) end as "שינוי"
+                     -
+                     (coalesce(f."אומדן קודם", 0) - coalesce(a."אומדן קודם", 0))
+             when b."מרכיבי אומדן הכנסות" = 'חוזה כמויות למדידה'
+                then (coalesce(f."אומדן נוכחי", 0) + coalesce(m."אומדן נוכחי", 0))
+                     -
+                     (coalesce(f."אומדן קודם", 0) + coalesce(m."אומדן קודם", 0))
+         else coalesce(f."אומדן נוכחי", 0) - coalesce(f."אומדן קודם", 0) end as "שינוי"
     from budget_by_report_month b
 
     left join forecast_summary f
@@ -365,6 +382,12 @@ base_result as (
         on b."חברה" = a."חברה"
         and b."מספר פרויקט" = a."מספר פרויקט"
         and b."חודש דוח" = a."חודש דוח"
+
+        -- נדרש לצורך הוספת גידול/קיטון בכמויות לחוזה כמויות למדידה
+    left join measurement_change_summary m
+        on  b."חברה" = m."חברה"
+        and b."מספר פרויקט" = m."מספר פרויקט"
+        and b."חודש דוח" = m."חודש דוח"
 ),
 
 final_result as (
