@@ -12,6 +12,7 @@ SELECT
     sub.value:BIDS_ENTRY2::STRING        AS BIDS_ENTRY2,
     sub.value:PRICE::FLOAT               AS PRICE,
     sub.value:MED_PROJACTCOST::FLOAT     AS MED_PROJACTCOST,
+    sub.value:TQUANT::FLOAT              AS TQUANT,
     SOURCE_DB::STRING                    AS SOURCE_DB,
     -- DOC של האב
 --    item.value:DOCNO::NUMBER(13,0)       AS DOCNO,

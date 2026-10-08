@@ -13,5 +13,6 @@ select
     BIDS_ENTRY2        as CHAPTER_NAME,
     PRICE              as PRICE_PER_UNIT,
     MED_PROJACTCOST    as COST_PER_UNIT, 
+    TQUANT             as QUANTITY,
 	SOURCE_DB
 from {{ ref ('PROJACTS_J') }}
