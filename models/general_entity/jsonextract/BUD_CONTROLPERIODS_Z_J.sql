@@ -10,5 +10,5 @@ SELECT
     item.value:BSA_DATE::date           AS BSA_DATE, --תאריך שלד
     item.value:BSA_DATE1::date          AS BSA_DATE1, --תאריך סיום ומסירה
 
-FROM {{ source('json', 'BUD_CONTROLPERIODS_Z') }},
+FROM {{ source('json', 'BUD_FORECASTTEXT_SUBFORM') }},
 LATERAL FLATTEN(input => DATA) item

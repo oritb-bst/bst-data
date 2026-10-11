@@ -14,6 +14,6 @@ SELECT
     sub.value:DOC::NUMBER(38,0)           AS DOC,
     sub.value:BUD_REMARK::STRING          AS BUD_REMARK
 
-FROM {{ source('json', 'BUD_FORECAST_R_SUBFORM') }},
+FROM {{ source('json', 'BUD_FORECASTTEXT_SUBFORM') }},
 LATERAL FLATTEN(INPUT => DATA) item,
 LATERAL FLATTEN(INPUT => item.value:BUD_FORECAST_R_SUBFORM) sub
