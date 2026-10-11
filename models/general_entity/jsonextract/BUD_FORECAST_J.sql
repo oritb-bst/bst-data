@@ -22,6 +22,6 @@ SELECT
     sub.value:BUD_REMARK::STRING             AS BUD_REMARK,
     SOURCE_DB::STRING                        AS SOURCE_DB
 
-FROM {{ source('json', 'BUD_FORECAST_SUBFORM') }},
+FROM {{ source('json', 'BUD_FORECASTTEXT_SUBFORM') }},
 LATERAL FLATTEN(input => DATA) item,
 LATERAL FLATTEN(input => item.value:BUD_FORECAST_SUBFORM) sub
