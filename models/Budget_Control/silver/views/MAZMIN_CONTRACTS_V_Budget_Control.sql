@@ -17,7 +17,7 @@ select
     t.SOURCE_DB    as "חברה"
 from {{ ref('MAZMIN_CONTRACTS_STG') }} t
 
-{{ join_bst_projects_budget_control('PROJECT_NAME', 't.SOURCE_DB') }}
+{{ join_valid_projects('PROJECT_NAME', 't.SOURCE_DB') }}
 
 where MED_TYPE = 'CO' 
 and coalesce(TOTAL_PRICE, 0) > 0 
