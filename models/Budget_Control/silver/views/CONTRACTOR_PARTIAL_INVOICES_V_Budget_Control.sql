@@ -15,4 +15,4 @@ select
 	t.SOURCE_DB              as "חברה"
 from {{ ref('CONTRACTOR_PARTIAL_INVOICES_STG') }} t
 
-{{ join_bst_projects_budget_control('PROJECT_NAME', 't.SOURCE_DB') }}
+{{ join_valid_projects('PROJECT_NAME', 't.SOURCE_DB') }}
