@@ -13,7 +13,7 @@ income_forecast as ( --אומדן הכנסות
     from {{ ref('PROJ_BUD_INC_FORECAST_V') }}
 ),
 
-partial_account as ( --חשבון חלקי מזמין >> חלוקה לסעיפים
+partial_account as ( --חשבון חלקי מזמין >> סכומים מאושרים לחשבון חלקי >> חלוקה לסעיפים
     select *
     from {{ ref('MAZMIN_PARTIAL_INVOICES_SECTIONS_V_Budget_Control') }}
 ),
@@ -461,7 +461,7 @@ select
     coalesce("אומדן נוכחי", 0) as "אומדן נוכחי",
     coalesce("אומדן נוכחי", 0) - coalesce("אומדן קודם", 0) as "שינוי"
 from measurement_change_summary
-
+/*
 union all
 --הפרשי מחירים
 select
@@ -474,7 +474,7 @@ select
     lag(coalesce("הפרשי מחירים", 0)) over (partition by "חברה", "מספר פרויקט" order by "חודש דוח") as "אומדן קודם",
     coalesce("הפרשי מחירים", 0) as "אומדן נוכחי",
     coalesce("הפרשי מחירים", 0) - coalesce(lag("הפרשי מחירים") over (partition by "חברה", "מספר פרויקט" order by "חודש דוח"), 0) as "שינוי"
-from price_difference_summary
+from price_difference_summary*/
 )
 
 select
@@ -497,7 +497,7 @@ select
     --when "מרכיבי אומדן הכנסות" = 'קיזוז מזמין מוסכם' then 7
     when "מרכיבי אומדן הכנסות" = 'קיזוז ידני מזמין' then 8
     when "מרכיבי אומדן הכנסות" = 'קיזוז חוזי מזמין' then 9
-    when "מרכיבי אומדן הכנסות" = 'הפרשי מחירים' then 10
+    --when "מרכיבי אומדן הכנסות" = 'הפרשי מחירים' then 10
     --when "מרכיבי אומדן הכנסות" = 'קיזוז ביטוח (1.2%)' then 11
     --when "מרכיבי אומדן הכנסות" = 'קיזוז ביטוח (0.75%)' then 12
     --when "מרכיבי אומדן הכנסות" = 'קיזוז בדיקות מת"י (0.5%)' then 13
