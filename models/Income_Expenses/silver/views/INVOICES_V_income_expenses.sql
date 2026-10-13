@@ -1,12 +1,12 @@
 select 
-    INVOICE_NUMBER as "מספר חשבנית",
-    DOC_PROJECT as "מספר פרויקט",
+    INVOICE_NAME as "מספר חשבנית",
+    PROJECT_NAME as "מספר פרויקט",
     INVOICE_DATE  as "Date",
-    TOTAL_PRICE as "סכום חשבונית",
+    TOTPRICE as "סכום חשבונית",
     id AS id_INVOICES,
     a.SOURCE_DB  as "חברה",
     p.projtypedes as "סוג פרויקט אחרי סינון"
 
-from {{ ref('INVOICES_STG') }} a
+from {{ ref('CINVOICES_STG') }} a
 
-{{ join_valid_projects('a.DOC_PROJECT', 'a.SOURCE_DB') }}
+{{ join_valid_projects('a.PROJECT_NAME', 'a.SOURCE_DB') }}

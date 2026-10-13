@@ -1,5 +1,5 @@
   models:
-  - name: INVOICES_STG
+  - name: CINVOICES_STG
     columns:
       - name: id
         data_tests:
