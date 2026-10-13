@@ -20,7 +20,7 @@ left join {{ ref('DIM_SUBCHAPTERS_V_Budget_Control') }} cc
      on coalesce(t.SUB_CHAPTER_NAME, 'ללא') = cc."מספר תת פרק"
      and t.SOURCE_DB = cc."חברה"
 
-{{ join_bst_projects_budget_control('PROJECT_NAME','t.SOURCE_DB') }}),
+{{ join_valid_projects('PROJECT_NAME','t.SOURCE_DB') }}),
 
 -- סיכום הוצאות הבסיס (ללא אגף ביצוע) לפי פרויקט וחודש, כאשר אומדן נוכחי וקודם מחושבים ללא תת פרק 991
 expense_base as (

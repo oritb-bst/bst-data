@@ -14,7 +14,7 @@ SELECT
     'MED_DOCUMENTS' as "מקור הוצאה"
 FROM {{ ref('MED_DOCUMENTS_D_V_Income_Expenses') }} t
 
-{{ join_bst_projects_budget_control('t."מספר פרויקט"', 't."חברה"') }}
+{{ join_valid_projects('t."מספר פרויקט"', 't."חברה"') }}
 
 WHERE "Date" >= TO_DATE('2026-06-01')
 

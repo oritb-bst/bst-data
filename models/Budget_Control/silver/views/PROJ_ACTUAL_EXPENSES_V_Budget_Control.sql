@@ -1,6 +1,6 @@
 --דוח שעמית מוציא - רק נתוני TODAY
 SELECT 
-    source_db        AS "חברה",
+    a.source_db      AS "חברה",
     Control_Date     AS "Date",
     Project          AS "מספר פרויקט",
     Project_Desc     AS "תיאור פרויקט",
@@ -28,4 +28,6 @@ SELECT
     Entity_Name
 FROM {{ ref('PROJECT_ACTUAL_EXPENSES_STG') }} a
 
-{{ join_bst_projects_without_sourceDB_budget_control('Project') }}
+{{ join_valid_projects('a.Project', 'a.source_db') }}
+
+--WHERE Doc_Type<>'CO'

@@ -13,7 +13,7 @@ income_forecast as ( --אומדן הכנסות
     from {{ ref('PROJ_BUD_INC_FORECAST_V') }}
 ),
 
-partial_account as ( --חשבון חלקי מזמין >> חלוקה לסעיפים
+partial_account as ( --חשבון חלקי מזמין >> סכומים מאושרים לחשבון חלקי >> חלוקה לסעיפים
     select *
     from {{ ref('MAZMIN_PARTIAL_INVOICES_SECTIONS_V_Budget_Control') }}
 ),
@@ -268,7 +268,6 @@ measurement_change_summary as (
     from measurement_change_raw
 ),
 
-
 --12.שיוך נתוני התקציב לכל אחד מחודשי הדוח של הפרויקט
 budget_by_report_month as (
     select
@@ -285,8 +284,25 @@ budget_by_report_month as (
         and b."מספר פרויקט" = r."מספר פרויקט"
 ),
 
+--13.חישוב הפרשי מחירים: הפער בין מהדורה מעודכנת למהדורה 0, בנטרול גידול/קיטון בכמויות
+price_difference_summary as (
+    select
+        b."חברה",
+        b."מספר פרויקט",
+        b."חודש דוח",
+        (coalesce(b."מעודכן", 0) - coalesce(b."אפס", 0) - coalesce(m."אומדן נוכחי", 0)) as "הפרשי מחירים"
+    from budget_by_report_month b
 
---13.התייקרות בפועל מתוך החשבון החלקי
+    left join measurement_change_summary m
+        on b."חברה" = m."חברה"
+        and b."מספר פרויקט" = m."מספר פרויקט"
+        and b."חודש דוח" = m."חודש דוח"
+
+    where b."מרכיבי אומדן הכנסות" = 'חוזה כמויות למדידה'
+),
+
+
+--14.התייקרות בפועל מתוך החשבון החלקי
 --רק סעיף "התייקרות מצטברת"
 actual_escalation_raw as (
     select
@@ -301,7 +317,7 @@ actual_escalation_raw as (
 ),
 
 
---14.שמירת החשבון האחרון בכל חודש עבור ההתייקרות המצטברת
+--15.שמירת החשבון האחרון בכל חודש עבור ההתייקרות המצטברת
 actual_escalation_by_month as (
     select *
     from actual_escalation_raw
@@ -314,7 +330,7 @@ actual_escalation_by_month as (
 ),
 
 
---15.מוצא לכל חודש בקרה את ההתייקרות האחרונה שהייתה ידועה עד אותו חודש
+--16.מוצא לכל חודש בקרה את ההתייקרות האחרונה שהייתה ידועה עד אותו חודש
 actual_escalation_by_report_month as (
     select
         r."חברה",
@@ -338,7 +354,7 @@ actual_escalation_by_report_month as (
 ),
 
 
---16.חישוב התייקרות הנוכחית והקודמת לפי רצף חודשי הבקרה באומדן ההכנסות
+--17.חישוב התייקרות הנוכחית והקודמת לפי רצף חודשי הבקרה באומדן ההכנסות
 actual_escalation_summary as (
     select
         "חברה",
@@ -349,15 +365,17 @@ actual_escalation_summary as (
 from actual_escalation_by_report_month
 ),
 
---17.חיבור בין התקציב לאומדן ומחשב את הערכים הסופיים לכל מרכיב
+--18.חיבור בין התקציב לאומדן ומחשב את הערכים הסופיים לכל מרכיב
 base_result as (
     select
         b."חברה",
         b."מספר פרויקט",
         b."חודש דוח",
         b."מרכיבי אומדן הכנסות",
-        case when b."מרכיבי אומדן הכנסות" = 'חוזה כמויות למדידה' then coalesce(b."אפס", 0)    - coalesce(m."אומדן קודם", 0) else b."אפס" end as "אפס",
-        case when b."מרכיבי אומדן הכנסות" = 'חוזה כמויות למדידה' then coalesce(b."מעודכן", 0) - coalesce(m."אומדן נוכחי", 0) else b."מעודכן" end as "מעודכן",
+        b."אפס",
+        --b."מעודכן",
+        --case when b."מרכיבי אומדן הכנסות" = 'חוזה כמויות למדידה' then coalesce(b."אפס", 0)    - coalesce(m."אומדן קודם", 0) else b."אפס" end as "אפס",
+        case when b."מרכיבי אומדן הכנסות" = 'חוזה כמויות למדידה' then coalesce(b."מעודכן", 0) - coalesce(m."אומדן נוכחי", 0) - coalesce(pd."הפרשי מחירים", 0) else coalesce(b."מעודכן", 0) end as "מעודכן",
         -- בהתייקרות על היתרה מורידים מהאומדן הקודם את ההתייקרות בפועל הקודמת
         case when b."מרכיבי אומדן הכנסות" = 'התייקרות על היתרה'  then coalesce(f."אומדן קודם", 0) - coalesce(a."אומדן קודם", 0)
              when b."מרכיבי אומדן הכנסות" = 'חוזה כמויות למדידה' then coalesce(f."אומדן קודם", 0) - coalesce(m."אומדן קודם", 0)
@@ -395,6 +413,11 @@ base_result as (
         on  b."חברה" = m."חברה"
         and b."מספר פרויקט" = m."מספר פרויקט"
         and b."חודש דוח" = m."חודש דוח"
+
+    left join price_difference_summary pd --נדרש לטובת נטרול הפרשי מחירים
+        on b."חברה" = pd."חברה"
+        and b."מספר פרויקט" = pd."מספר פרויקט"
+        and b."חודש דוח" = pd."חודש דוח"
 ),
 
 final_result as (
@@ -438,6 +461,20 @@ select
     coalesce("אומדן נוכחי", 0) as "אומדן נוכחי",
     coalesce("אומדן נוכחי", 0) - coalesce("אומדן קודם", 0) as "שינוי"
 from measurement_change_summary
+/*
+union all
+--הפרשי מחירים
+select
+    "חברה",
+    "מספר פרויקט",
+    "חודש דוח",
+    'הפרשי מחירים' as "מרכיבי אומדן הכנסות",
+    0 as "אפס",
+    coalesce("הפרשי מחירים", 0) as "מעודכן",
+    lag(coalesce("הפרשי מחירים", 0)) over (partition by "חברה", "מספר פרויקט" order by "חודש דוח") as "אומדן קודם",
+    coalesce("הפרשי מחירים", 0) as "אומדן נוכחי",
+    coalesce("הפרשי מחירים", 0) - coalesce(lag("הפרשי מחירים") over (partition by "חברה", "מספר פרויקט" order by "חודש דוח"), 0) as "שינוי"
+from price_difference_summary*/
 )
 
 select
@@ -460,7 +497,7 @@ select
     --when "מרכיבי אומדן הכנסות" = 'קיזוז מזמין מוסכם' then 7
     when "מרכיבי אומדן הכנסות" = 'קיזוז ידני מזמין' then 8
     when "מרכיבי אומדן הכנסות" = 'קיזוז חוזי מזמין' then 9
-    --when "מרכיבי אומדן הכנסות" = 'מנהל מודל BIM (50%)' then 10
+    --when "מרכיבי אומדן הכנסות" = 'הפרשי מחירים' then 10
     --when "מרכיבי אומדן הכנסות" = 'קיזוז ביטוח (1.2%)' then 11
     --when "מרכיבי אומדן הכנסות" = 'קיזוז ביטוח (0.75%)' then 12
     --when "מרכיבי אומדן הכנסות" = 'קיזוז בדיקות מת"י (0.5%)' then 13

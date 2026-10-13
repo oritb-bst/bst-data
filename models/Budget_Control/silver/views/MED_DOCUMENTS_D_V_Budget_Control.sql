@@ -14,4 +14,4 @@ select
 
 from {{ ref('MED_DOCUMENTS_D_STG') }} t
 
-{{ join_bst_projects_budget_control('PROJECT_DOCNO', 't.SOURCE_DB') }}
+{{ join_valid_projects('PROJECT_DOCNO', 't.SOURCE_DB') }}
