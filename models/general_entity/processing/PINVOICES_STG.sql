@@ -34,14 +34,16 @@ with incoming_data as (
         DEBIT,
         DOCNO,
         UDATE,
-        SOURCE_DB
+        SOURCE_DB,
+        PAYDATE
     from {{ ref('PINVOICES_J_INC') }}
 )
 
 {% if relation_exists %}
 
 , historical_unmodified_data as (
-    select h.*
+    select h.*,
+   CAST(NULL AS VARCHAR) as PAYDATE
     from {{ this }} h
     left join incoming_data i
         on h.INVOICE_NAME = i.INVOICE_NAME
