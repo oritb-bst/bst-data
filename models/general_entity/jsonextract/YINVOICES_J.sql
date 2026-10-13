@@ -11,7 +11,7 @@ SELECT
     item.value:FINAL::string         AS FINAL,
     item.value:STATDES::string       AS STATDES,
     item.value:ORDNAME::string       AS ORDNAME,
+    item.value:PAYDATE::date          AS PAYDATE,
     SOURCE_DB::string                AS SOURCE_DB
-
 FROM {{ source('json', 'YINVOICES') }},
 LATERAL FLATTEN(input => DATA) item

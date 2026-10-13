@@ -16,6 +16,7 @@ SELECT
     item.value:DEBIT::string         AS DEBIT,
     item.value:DOCNO::string         AS DOCNO,    
     item.value:ZBST_UDATE::timestamp AS UDATE,
+    item.value:IVDATE::date          AS PAYDATE,
     SOURCE_DB::string                AS SOURCE_DB
 
 FROM {{ source('json', 'PINVOICES') }},
