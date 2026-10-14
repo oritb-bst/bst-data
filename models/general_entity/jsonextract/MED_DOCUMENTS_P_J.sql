@@ -13,5 +13,5 @@ SELECT
     item.value:DOCNO::string        as DOCNO,
     item.value:MED_EXEMONTH::string as MED_EXEMONTH
 
-FROM {{ source('json', 'MED_DOCUMENTS_P') }},
+FROM {{ source('json', 'MED_DOCRETENTION_SUBFORM') }},
 lateral flatten(input => DATA) item
