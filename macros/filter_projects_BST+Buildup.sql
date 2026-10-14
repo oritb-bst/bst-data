@@ -1,4 +1,4 @@
-{% macro join_valid_projects(project_column, source_column, join_type='inner') %}
+{% macro join_valid_projects_BST_BUILDUP(project_column, source_column, join_type='inner') %}
 
 {{ join_type }} join (
 

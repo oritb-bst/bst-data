@@ -42,8 +42,8 @@ with incoming_data as (
 {% if relation_exists %}
 
 , historical_unmodified_data as (
-    select h.*,
-   CAST(NULL AS VARCHAR) as PAYDATE
+    select h.*
+   --,CAST(NULL AS VARCHAR) as PAYDATE --צריך את זה רק בפעם הראשונה שמריצים כדי להוסיף שדה
     from {{ this }} h
     left join incoming_data i
         on h.INVOICE_NAME = i.INVOICE_NAME
