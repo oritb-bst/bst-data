@@ -13,6 +13,6 @@ select
 from {{ ref('DIM_PROJECTS_STG') }} a
 
 
-{{ join_valid_projects_project_managment('a.DOCNO', 'a.SOURCE_DB') }}
+{{ join_valid_projects_BST_BUILDUP('a.DOCNO', 'a.SOURCE_DB') }}
 
 

@@ -7,6 +7,6 @@ select
     a.SOURCE_DB  as "חברה"
 from {{ ref('ZCBS_PROJPOSITIONS_STG') }} a
 
-{{ join_valid_projects_project_managment('a.PROJECT_NAME', 'a.SOURCE_DB') }}
+{{ join_valid_projects_BST_BUILDUP('a.PROJECT_NAME', 'a.SOURCE_DB') }}
 
 where POSITION_CODE = 33

@@ -9,6 +9,6 @@ select
     a.SOURCE_DB          as "חברה"
 from {{ ref('GOODS_RECEIPTS_STG') }} a
 
-{{ join_valid_projects_project_managment('a.PROJECT_NAME', 'a.source_db') }}
+{{ join_valid_projects_BST_BUILDUP('a.PROJECT_NAME', 'a.source_db') }}
 
 where {{ filter_last_n_years('CURDATE') }} --סינון שנים
