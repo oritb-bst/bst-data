@@ -90,7 +90,8 @@ sources:
       - name: BUD_FORECASTTEXT_SUBFORM
       - name: RINVOICES
       - name: TINVOICES
-
+      - name: BUD_APPCONTREDUCTD_SUBFORM
+      - name: BUD_APPMANREDUCTIOND_SUBFORM
   - name: txt
     database: BRONZE_UAT
     schema: TXT_FILES
