@@ -88,6 +88,8 @@ sources:
       - name: CURRENCIES
       - name: CURRHIS_SUBFORM
       - name: BUD_FORECASTTEXT_SUBFORM
+      - name: BUD_APPCONTREDUCTD_SUBFORM
+      - name: BUD_APPMANREDUCTIOND_SUBFORM
 
 
   - name: txt
