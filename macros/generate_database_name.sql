@@ -23,7 +23,7 @@
         {%- elif 'gold' in file_path -%}
             GOLD_PROD
         {%- elif 'jsonextract' in file_path or 'bronze' in file_path -%}
-            BRONZE_PROD
+            BRONZE_UAT
         {%- elif 'processing' in file_path or 'ready' in file_path -%}
             STAGING_PROD
         {%- else -%}
