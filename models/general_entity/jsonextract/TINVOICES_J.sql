@@ -1,3 +1,5 @@
+{{ config(enabled=false) }}
+
 SELECT
     item.value:IVNUM::string            AS IVNUM,
     item.value:PROJDOCNO::string        AS PROJDOCNO,

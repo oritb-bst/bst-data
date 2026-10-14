@@ -1,3 +1,5 @@
+{{ config(enabled=false) }}
+
 SELECT
     IV               AS id,
     IVNUM            AS INVOICE_NAME,
