@@ -14,6 +14,6 @@ select
 	a.SOURCE_DB                as "חברה"
 from {{ ref('CONTRACTOR_PARTIAL_INVOICES_STG') }} a
 
-{{ join_valid_projects_project_managment('a.PROJECT_NAME', 'a.SOURCE_DB') }}
+{{ join_valid_projects_BST_BUILDUP('a.PROJECT_NAME', 'a.SOURCE_DB') }}
 
 where {{ filter_last_n_years('CURDATE') }} --סינון שנים
