@@ -5,7 +5,7 @@ select
     SUP_NAME         as "מספר ספק",
     CONTRACT_REDUCTION as "קיזוז חוזי",
     MANUAL_REDUCTION   as "קיזוז ידני",
-    t.SOURCE_DB
+    t.SOURCE_DB        as "חברה"
 from {{ ref('CONTRACTOR_REDUCTIONS_STG') }} t
 
 {{ join_valid_projects('t.PROJECT_NAME', 't.SOURCE_DB') }}
