@@ -3,7 +3,7 @@ SELECT
 	PROJDOCNO as PROJECT_NAME,
 	SUPNAME   as SUP_NAME,
 	BOOKNUM   as PARTIAL_INVOICE_NUM,
-	CURDATE,
+	p.CURDATE,
     DISPRICE  as PRICE_AFTER_DISCOUNT_INV,
     STATDES   as STATUS_INV,
     FLAG      as IS_BILLABLE,
@@ -13,8 +13,16 @@ SELECT
     CASE WHEN IVALL = 'Y' THEN 'שולם'
          WHEN IVALL = 'N' THEN 'לא שולם'
     ELSE IVALL END as IS_INVOICED,
-    DOCNO     as PARTIAL_INVOICE_NAME, --מספר חשבון חלקי
-	MED_EXEMONTH as EXECUTION_MONTH,
-    SOURCE_DB
-FROM {{ ref('MED_DOCUMENTS_P_J') }}
+    DOCNO          as PARTIAL_INVOICE_NAME, --מספר חשבון חלקי
+	MED_EXEMONTH   as EXECUTION_MONTH,
+    r.RET_PRICE    as RETENTION_AMOUNT, --סכום עכבון מצטבר - משאב 490000
+    p.SOURCE_DB
+FROM {{ ref('MED_DOCUMENTS_P_J') }} p
+
+LEFT JOIN {{ ref('CONTRACTOR_RETENTIONS_STG') }} r --מסך חשבון חלקי קבלן >> מסך בן פרטי עכבונות/קיזוזים 
+    ON p.PROJDOCNO = r.PROJECT_NAME
+   AND p.DOCNO     = r.PARTIAL_INVOICE_NAME
+   AND p.SOURCE_DB = r.SOURCE_DB
+   AND TRIM(TO_VARCHAR(r.SUB_TOPIC_NAME)) = '490000'
+
 WHERE STATDES NOT IN ('מבוטלת')
