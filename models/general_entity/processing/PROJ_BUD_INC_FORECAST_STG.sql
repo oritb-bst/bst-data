@@ -140,7 +140,7 @@ forecast_calc as ( -- מחשבים את האומדן הנוכחי והאומדן
                - 5982000 --קיזוז שאי אפשר להוסיף בפריוריטי אז באופן ידני
             -- בפרויקט PR25000009 לוקחים את הקיזוזים מהתנאים המיוחדים
             when PROJECT_NAME = 'PR25000009'
-            and BUD_CONTROL_DATE in ('2025-12-31', '2026-02-28') --חודש דצמבר+פברואר
+            and PREV_BUD_CONTROL_DATE in ('2025-12-31', '2026-02-28') --חודש דצמבר+פברואר
             and SUBCHAPTER_NUM = 993
             then coalesce(-1 * nullif(coalesce(PREV_CUSTOMER_CONTRACTUAL_DEDUCTION_CALCULATED, 0)
                + coalesce(PREV_CUSTOMER_CONTRACTUAL_DEDUCTION_FUTURE, 0)
