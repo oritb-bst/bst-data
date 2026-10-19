@@ -1,4 +1,56 @@
-with joined_data as (
+with project_plan_budget as ( --סיכום תקציב תכנון פרויקטלי לפי פרויקט ומהדורה
+    select
+        PROJECT_NAME as "מספר פרויקט",
+        SOURCE_DB    as "חברה",
+        VERSION_ID   as "מספר מהדורה",
+        SUM(SUBMISSION_TOTAL_PRICE) / 1000 as "סך הכל מחיר הגשה"
+    from {{ ref('PROJ_PLANNING_STG') }}
+    group by PROJECT_NAME,
+        SOURCE_DB,
+        VERSION_ID
+),
+
+control_period_versions as ( --מהדורת התכנון המקושרת לכל תקופת בקרה
+    select
+        PROJECT_NAME     as "מספר פרויקט",
+        BUD_CONTROL_DATE as "Date",
+        CURVERSION       as "מהדורה נוכחית",
+        SOURCE_DB        as "חברה"
+    from {{ ref('PROJ_BUDGET_CONTROL_STG') }}
+),
+
+
+current_budget as ( --תקציב מעודכן לפי המהדורה המשויכת לתקופת הבקרה
+    select
+        cp."מספר פרויקט",
+        cp."Date",
+        cp."חברה",
+        pb."סך הכל מחיר הגשה" as "תקציב הכנסות מעודכן באלפי שח"
+    from control_period_versions cp
+    left join project_plan_budget pb
+        on cp."מספר פרויקט" = pb."מספר פרויקט"
+       and cp."חברה" = pb."חברה"
+       and to_varchar(cp."מהדורה נוכחית") = to_varchar(pb."מספר מהדורה")
+),
+
+original_budget as ( --תקציב אפס לפי דגל מהדורת 0
+    select
+        pb."מספר פרויקט",
+        pb."חברה",
+        sum(pb."סך הכל מחיר הגשה") as "תקציב הכנסות מקורי באלפי שח"
+    from project_plan_budget pb
+
+    inner join {{ ref('PROJ_BUD_VERSIONS_V') }} pv
+        on pb."מספר פרויקט" = pv."מספר פרויקט"
+       and pb."חברה" = pv."חברה"
+       and pb."מספר מהדורה" = pv."מספר מהדורה"
+    where pv."דגל מהדורת 0" = 'Y'
+    group by
+        pb."מספר פרויקט",
+        pb."חברה"
+),
+
+joined_data as (
     select
         t.PROJECT_NAME      as "מספר פרויקט",
         t.PROJECT_ID        as "פרויקט_ID",
@@ -62,19 +114,33 @@ execution_overhead_agg as (
 ),
 
 --הכנסות
+--אומדנים ממקור קיים, תקציבים מהתכנון הפרויקטלי
 revenue_agg as (
     select
-        "מספר פרויקט",
-        "Date",
-        "חברה",
-        sum("אומדן לגמר (הכנסות) באלפי שח") as "אומדן לגמר (הכנסות) באלפי שח",
-        sum("תקציב הכנסות עדכני באלפי שח")  as "תקציב הכנסות עדכני באלפי שח",
-        sum("אומדן קודם (הכנסות) באלפי שח") as "אומדן קודם (הכנסות) באלפי שח",
-        sum("תקציב הכנסות מקורי באלפי שח")  as "תקציב הכנסות מקורי באלפי שח"
-    from {{ ref('PROJ_BUD_INC_FORECAST_V') }}
-    group by "מספר פרויקט", 
-             "Date",
-             "חברה"
+        r."מספר פרויקט",
+        r."Date",
+        r."חברה",
+        sum(r."אומדן לגמר (הכנסות) באלפי שח")  as "אומדן לגמר (הכנסות) באלפי שח",
+        sum(r."אומדן קודם (הכנסות) באלפי שח")  as "אומדן קודם (הכנסות) באלפי שח",
+        -- תקציב מעודכן - לפי מהדורה נוכחית
+        max(cb."תקציב הכנסות מעודכן באלפי שח") as "תקציב הכנסות עדכני באלפי שח",
+        -- תקציב אפס - לפי דגל מהדורת 0
+        max(ob."תקציב הכנסות מקורי באלפי שח")  as "תקציב הכנסות מקורי באלפי שח"
+    from {{ ref('PROJ_BUD_INC_FORECAST_V') }} r
+
+    left join current_budget cb
+        on r."מספר פרויקט" = cb."מספר פרויקט"
+       and r."Date" = cb."Date"
+       and r."חברה" = cb."חברה"
+
+    left join original_budget ob
+        on r."מספר פרויקט" = ob."מספר פרויקט"
+       and r."חברה" = ob."חברה"
+
+    group by
+        r."מספר פרויקט",
+        r."Date",
+        r."חברה"
 ),
 
 --טבלה סופית הכנסות הוצאות
