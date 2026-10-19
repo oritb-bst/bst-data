@@ -8,38 +8,45 @@ with base as (
 
 --תיקון לפרויקט גב ים העברית בחודש דצמבר - לקחת קיזוזים מתנאים מיוחדים
 --טיפול גם במקרה שמסתכלים בחודש פברואר 26 על אומדן קודם
+--ניצול בפועל - קיזוזים והתייקרויות מתנאים מיוחדים
 forecast_calc AS (
     SELECT
         o.*,
-        -- תיקון אומדן לגמר בדצמבר 2025
+        --ניצול בפועל - החלפת ערכים בתתי פרקים מיוחדים
+        CASE WHEN o.SUBCHAPTER_NUM = 991 THEN COALESCE(c.CONTRACTOR_CUMULATIVE_INCREASE, 0)          --991 - קבלן- התייקרות מצטברת
+             WHEN o.SUBCHAPTER_NUM = 993 THEN COALESCE(c.CONTRACTOR_CONTRACTUAL_DEDUCTION_ACTUAL, 0) --993 - קיזוז חוזי - קבלן
+             WHEN o.SUBCHAPTER_NUM = 994 THEN COALESCE(c.CONTRACTOR_MANUAL_DEDUCTION_ACTUAL, 0)      --994 - קיזוז ידני - קבלן 
+        --יתר הפרקים - הערך המקורי
+        ELSE o.ACTBUDGETBAL END AS ACTUAL_BUDGET_SPENT_CALC,
+        --תיקון אומדן לגמר בדצמבר 2025
         CASE
             WHEN o.DOCNO = 'PR25000009'
             AND o.CONDATE = DATE '2025-12-31'
             AND o.SUBCHAPTER_NUM = 993
-            THEN -1*COALESCE(c.CONTRACTOR_CONTRACTUAL_DEDUCTION_FUTURE, 0)
+            THEN -1 * COALESCE(c.CONTRACTOR_CONTRACTUAL_DEDUCTION_FUTURE, 0)
                 +
                  COALESCE(c.CONTRACTOR_CONTRACTUAL_DEDUCTION_ACTUAL, 0)
             ELSE o.EFORECAST
         END AS FORECAST_TO_COMPLETE_CALC,
-        -- תיקון אומדן קודם בפברואר 2026
-        -- על בסיס התנאים המיוחדים של דצמבר 2025
+        --תיקון אומדן קודם בפברואר 2026
+        --על בסיס התנאים המיוחדים של דצמבר 2025
         CASE WHEN o.DOCNO = 'PR25000009'
              AND o.CONDATE = DATE '2026-02-28'
              AND o.SUBCHAPTER_NUM = 993
-             THEN -1*COALESCE(c_prev.CONTRACTOR_CONTRACTUAL_DEDUCTION_FUTURE, 0)
+             THEN -1 * COALESCE(c_prev.CONTRACTOR_CONTRACTUAL_DEDUCTION_FUTURE, 0)
                 +
                   COALESCE(c_prev.CONTRACTOR_CONTRACTUAL_DEDUCTION_ACTUAL, 0)
             ELSE o.EPREVFORECAST
         END AS PREVIOUS_FORECAST_CALC
     FROM base o
 
-    -- תנאים מיוחדים של החודש הנוכחי
+    --תנאים מיוחדים של החודש הנוכחי
     LEFT JOIN {{ ref('PROJ_BUD_FORECAST_COND_STG') }} c
         ON o.DOCNO = c.PROJECT_NAME
        AND o.CONDATE = c.BUD_CONTROL_DATE
        AND o.SOURCE_DB = c.SOURCE_DB
 
-    -- תנאים מיוחדים של דצמבר 2025
+    --תנאים מיוחדים של דצמבר 2025
     LEFT JOIN {{ ref('PROJ_BUD_FORECAST_COND_STG') }} c_prev
         ON o.DOCNO = c_prev.PROJECT_NAME
        AND c_prev.BUD_CONTROL_DATE = DATE '2025-12-31'
@@ -87,8 +94,10 @@ select
     SUBCHAPTERDES       as SUB_CHAPTER_DES,
     o.SUBTOPICNAME      as SUB_TOPIC_NAME,
     SUBTOPICDES         as SUB_TOPIC_DES,
-    ACTBUDGETBAL        as ACTUAL_BUDGET_SPENT,
-    ACTBUDGETBAL / 1000 as ACTUAL_BUDGET_SPENT_K,
+--    ACTBUDGETBAL        as ACTUAL_BUDGET_SPENT,
+--    ACTBUDGETBAL / 1000 as ACTUAL_BUDGET_SPENT_K,
+    ACTUAL_BUDGET_SPENT_CALC        as ACTUAL_BUDGET_SPENT,
+    ACTUAL_BUDGET_SPENT_CALC / 1000 as ACTUAL_BUDGET_SPENT_K,
 --    EFORECAST           as FORECAST_TO_COMPLETE,
 --    EFORECAST / 1000    as FORECAST_TO_COMPLETE_K,
     FORECAST_TO_COMPLETE_CALC        as FORECAST_TO_COMPLETE,
