@@ -1,4 +1,3 @@
-{{ config(enabled=false) }}
 
 SELECT
     IV               AS id,
@@ -13,4 +12,4 @@ SELECT
     IFF(FINAL IS NULL, 'N', FINAL) as FINALFLAG,
     IFF(STORNOFLAG IS NULL, 'N', STORNOFLAG) as STORNOFLAG,
     SOURCE_DB
-FROM {{ ref('CINVOICES_J') }}
+FROM {{ ref('TINVOICES_J') }}
