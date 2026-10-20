@@ -1,6 +1,7 @@
-{{ config(enabled=false) }}
+
 
 SELECT
+    item.value:IV::string               AS IV,
     item.value:IVNUM::string            AS IVNUM,
     item.value:PROJDOCNO::string        AS PROJDOCNO,
     item.value:IVDATE::date             AS IVDATE,
