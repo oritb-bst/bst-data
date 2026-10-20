@@ -9,6 +9,7 @@ select
     FOREX as id,
     TOTPRICE as total_purchase_orders_amount,
     TOTMAN as total_site_management_expenses,
+    TOTKAB as total_subcontractor_expenses,
     LOAD_TS,
     SOURCE_DB
 from {{ ref('FORECAST_PROJECTS_J') }}

@@ -7,6 +7,7 @@ SELECT
     item.value:EARNCAST::string       AS EARNCAST,
     item.value:TOTEXPENSE::string     AS TOTEXPENSE,
     item.value:FOREX::string          AS FOREX,
+    item.value:TOTKAB::string         AS TOTKAB,
     item.value:TOTMAN::NUMBER(16,2)   AS TOTMAN,
     item.value:TOTPRICE::NUMBER(16,2) AS TOTPRICE,
     SOURCE_DB::string                 AS SOURCE_DB,
