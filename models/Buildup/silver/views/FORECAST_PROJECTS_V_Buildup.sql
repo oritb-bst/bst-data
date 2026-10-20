@@ -9,6 +9,7 @@ select
     t.forecast_expense as "הערכת הוצאות",    
     t.total_purchase_orders_amount as "סך הזמנות רכש",
     t.total_site_management_expenses as "סהכ הוצ ניהול אתר",
+    t.total_subcontractor_expenses as "סהכ הוצאות קבלני משנה",
     t.SOURCE_DB  as "חברה"
 from {{ ref('FORECAST_PROJECTS_STG') }} t
 
