@@ -87,17 +87,16 @@ escalation as (
 management_targets as (
     select
         "מספר פרויקט",
-        sum(case when "מקור" in (
-                    'סך הוצ ישירות',
-                    'סך הוצ כלליות',
-                    'בצ"מ',
-                    'בדק ואחריות',
-                    'העמסת אגף ביצוע'
-                ) then coalesce("יעד ההנהלה", 0) else 0 end) as "יעד הנהלה"
+        sum(
+            coalesce("סך הוצ ישירות", 0)
+          + coalesce("סך הוצ כלליות", 0)
+          + coalesce("בצמ", 0)
+          + coalesce("בדק ואחריות", 0)
+          + coalesce("העמסת אגף ביצוע", 0)) as "יעד הנהלה"
     from {{ source('csv', 'MANAGEMENT_TARGET') }}
-
     group by "מספר פרויקט"
 ),
+
 
 -- שורת ריכוז ההוצאות באמצעות חיבור הוצאות הבסיס עם העמסת אגף ביצוע ויעד ההנהלה
 expense_summary_row as (
