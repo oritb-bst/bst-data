@@ -8,7 +8,7 @@ select
     PORDER_NAME          as "מספר הזמנת רכש",
     TYPECODE             as "קוד סוג הזמנה",
     TYPEDES              as "תאור סוג הזמנה",
-	a.SOURCE_DB          as "חברה"
+	a.SOURCE_DB          as "חברה" 
 from {{ ref('PURCHASE_ORDERS_STG') }} a
 
 {{ join_valid_projects_BST_BUILDUP('a.PROJECT_NAME', 'a.source_db') }}
