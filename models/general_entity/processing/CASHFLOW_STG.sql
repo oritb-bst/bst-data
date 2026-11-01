@@ -1,7 +1,6 @@
 SELECT
 	DOCNO   as PROJECT_NAME,
     IVNUMA  as INVOICE_NUM,
-    IVDATE  as INVOICE_DATE, --תאריך תקבול  - לא נראה לי שזה תאריך החשבונית??
     BALDATE,
     IVNUM  as RECEIPT_NUM,  
     RINCIPALVATCODE, --קוד אופן תשלום
@@ -16,7 +15,7 @@ SELECT
     CASE WHEN CASHFLOWCLASSIFDES = 'תקבול' THEN TOTMAAM ELSE -1*TOTMAAM END as TOTMAAM_TAZRIM, --עמודה שמחזיקה את סכום הקרן בפלוס או במינוס עבור סכימה לתזרים
     ACCNAME,
     ACCDES,
-    TIVDATE, --תאריך תקבול/תשלום
+    CURDATE,
     FNCDATE,-- תאריך ערך
 	SOURCE_DB 
 FROM {{ ref('ZCBS_PAYMENTRECEIPT_J') }}
@@ -25,12 +24,13 @@ FROM {{ ref('ZCBS_PAYMENTRECEIPT_J') }}
 /*---------------------------------------*/
 /*       הוספת תזרים עתידי חזוי        */
 /*---------------------------------------*/
-
+/*
 UNION ALL
 
 select PROJDOCNO AS PROJECT_NAME,
        IVNUM AS INVOICE_NUM,
        IVDATE  as INVOICE_DATE, 
+       IVDATE  as CASHFLOW_DATE, --תאריך ראשי במודל תזרים 
        null as BALDATE,   
        null as RECEIPT_NUM,  
        null as RINCIPALVATCODE, --קוד אופן תשלום
@@ -45,6 +45,7 @@ select PROJDOCNO AS PROJECT_NAME,
        -1*TOTMAAM as TOTMAAM_TAZRIM,       
        SUPNAME AS ACCNAME,
        null as ACCDES,
+       null as CURDATE,
        PAYDATE as TIVDATE, --תאריך תשלום = תאריך פרעון בחשבונית ספק
        null as FNCDATE,
        SOURCE_DB
@@ -63,6 +64,7 @@ UNION ALL
 select PROJDOCNO AS PROJECT_NAME,
        IVNUM AS INVOICE_NUM,
        IVDATE  as INVOICE_DATE, 
+       IVDATE  as CASHFLOW_DATE, --תאריך ראשי במודל תזרים 
        null as BALDATE,   
        null as RECEIPT_NUM,  
        null as RINCIPALVATCODE, --קוד אופן תשלום
@@ -77,6 +79,7 @@ select PROJDOCNO AS PROJECT_NAME,
        -1*TOTMAAM as TOTMAAM_TAZRIM,       
        SUPNAME AS ACCNAME,
        null as ACCDES,
+       null as CURDATE,
        PAYDATE as TIVDATE, --תאריך תשלום = תאריך פרעון בחשבונית ספק
        null as FNCDATE,
        SOURCE_DB
@@ -88,3 +91,5 @@ AND NOT EXISTS (
     FROM {{ ref('ZCBS_PAYMENTRECEIPT_J') }} cf
     WHERE cf.IVNUMA = inv.IVNUM
     AND cf.SOURCE_DB = inv.SOURCE_DB)
+
+    */
