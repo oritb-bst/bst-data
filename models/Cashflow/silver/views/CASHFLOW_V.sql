@@ -1,12 +1,11 @@
 SELECT
     -- מזהים ונתוני פרויקט
-    b.PROJECT_NAME                          AS "מספר פרויקט",
+    b.PROJECT_NAME                           AS "מספר פרויקט",
     b.INVOICE_NUM                            AS "חשבונית",
     b.RECEIPT_NUM                            AS "תקבול/תשלום",
-    b.INVOICE_DATE                           AS "Date", 
-    b.BALDATE                                AS "ת. למאזן",
-    b.TIVDATE                                AS "ת. תקבול/תשלום",
-    b.FNCDATE                                AS "ת. ערך",
+   -- b.INVOICE_DATE                           AS "ת. תקבול", 
+    b.BALDATE                                AS "Date", -- תאריך למאזן
+    b.FNCDATE                                AS "תאריך ערך",
     b.TOTPRICE                               AS "סכום התקבול/תשלום",
     b.TOTPRICE  /1000                        AS "סכום התקבול/תשלום באלפי שח",
     b.TOTKEREN                               AS "סכום הקרן",
@@ -22,5 +21,6 @@ SELECT
     b.RINCIPALVATDES                         AS "תיאור אופן תשלום",
     b.ACCNAME                                AS "מספר חשבון",
     b.ACCDES                                 AS "תאור חשבון",
+    b.CURDATE                                AS "ת. אסמכתא",
     b.SOURCE_DB                              AS "חברה"
 FROM {{ ref('CASHFLOW_STG') }} b 
