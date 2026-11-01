@@ -10,6 +10,7 @@ SELECT
     sub.value:TOPICNAME::STRING         AS TOPICNAME, --מספר נושא
 
     parent.value:DOCNO::VARCHAR         AS DOCNO,
+    parent.value:CONMONTH::string       AS CONMONTH,
     parent.value:CONDATE::DATE          AS CONDATE,
     src.SOURCE_DB::VARCHAR              AS SOURCE_DB
 
