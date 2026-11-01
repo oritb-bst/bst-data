@@ -13,6 +13,8 @@ select
     IS_INVOICED              as "חויבה",
     PARTIAL_INVOICE_NAME     as "מספר חשבון חלקי קבלן",
     RETENTION_AMOUNT         as "עכבון",
+    CUMULATIVE_ACCOUNT       as "חשבון מצטבר קבלן",
+    MAX_CUMULATIVE_ACCOUNT   as "חשבון מצטבר אחרון",
 	t.SOURCE_DB              as "חברה"
 from {{ ref('CONTRACTOR_PARTIAL_INVOICES_STG') }} t
 
