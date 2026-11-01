@@ -5,8 +5,9 @@ SELECT
     cost.value:PURCHASEPRICE::FLOAT     AS PURCHASEPRICE,
     cost.value:TOTPURCHASEPRICE::FLOAT  AS TOTPURCHASEPRICE,
 
-    sub.value:SUBCHAPTERNAME::STRING    AS SUBCHAPTERNAME,
-    sub.value:SUBTOPICNAME::STRING      AS SUBTOPICNAME,
+    sub.value:SUBCHAPTERNAME::STRING    AS SUBCHAPTERNAME, --מספר תת פרק
+    sub.value:SUBTOPICNAME::STRING      AS SUBTOPICNAME, --מספר משאב
+    sub.value:TOPICNAME::STRING         AS TOPICNAME, --מספר נושא
 
     parent.value:DOCNO::VARCHAR         AS DOCNO,
     parent.value:CONDATE::DATE          AS CONDATE,
