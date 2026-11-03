@@ -12,6 +12,7 @@ select
     BUD_STARTORDERDATE as "תאריך צו תחילת עבודה",
     BUD_ASTARTDATE     as "תאריך התחלה בפועל",
     BUD_CONTDURATION   as "משך בחודשים חוזי",
+    AREA_MANAGER_USERNAME  as "מנהל איזור",
     BUD_CONTENDDATE    as "תאריך סיום ביצוע חוזי",
     t.SOURCE_DB        as "חברה"
 from {{ ref('DIM_PROJECTS_STG') }} t
