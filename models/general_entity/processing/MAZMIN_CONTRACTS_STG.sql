@@ -13,7 +13,7 @@ select
     mc.CURRENCY_LINKAGE,
     mc.CURRENCY_LINKAGE_DES,
 --    mc.ESCALATION_START_DATE,
-    case when mc.DOCNO = 'PR25000012' then '03/25' else to_char(mc.ESCALATION_START_DATE, 'MM/YY') end as ESCALATION_START_DATE,
+    case when DOCNO = 'PR25000012' then '03/25' else to_char(mc.ESCALATION_START_DATE, 'MM/YY') end as ESCALATION_START_DATE,
     mc.BASE_RATE,
     mo.SOURCE_DB
 from {{ ref('MED_ORDERS_J') }} mo
