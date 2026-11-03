@@ -9,7 +9,8 @@ select
     BSA_SIZESUM as "סך הכל מטר רבוע לפרויקט",
     BSA_APARTSUM as "מספר יחידות דיור",
     STATDES      as "סטטוס פרויקט",
-    a.SOURCE_DB  as "חברה"
+    a.SOURCE_DB  as "חברה",
+    AREA_MANAGER_USERNAME as "מנהל אזור"
 from {{ ref('DIM_PROJECTS_STG') }} a
 
 {{ join_valid_projects('a.DOCNO', 'a.SOURCE_DB') }}
