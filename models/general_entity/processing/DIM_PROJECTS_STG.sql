@@ -1,4 +1,16 @@
 --DOCUMENTS_p
-select
- *
-from {{ ref('DIM_PROJECTS_J') }}
+SELECT
+    a.*,
+    b.AREA_MANAGER_USERNAME
+FROM {{ ref('DIM_PROJECTS_J') }} a
+
+LEFT JOIN (
+    SELECT
+        DOC,
+        SOURCE_DB,
+        USERNAME AS AREA_MANAGER_USERNAME
+    FROM {{ ref('ZCBS_PROJPOSITIONS_J') }}
+    WHERE POSITIONCODE = 33
+) b
+    ON a.DOC = b.DOC
+    AND a.SOURCE_DB = b.SOURCE_DB
