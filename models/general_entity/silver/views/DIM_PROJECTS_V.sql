@@ -9,7 +9,8 @@ select
     d.BSA_APARTSUM       as "מספר יחידות דיור",
     d.STATDES            as "סטטוס פרויקט",
     d.BUD_STARTORDERDATE as "תאריך צו תחילת עבודה",
-    d.SOURCE_DB          as "חברה"
+    d.SOURCE_DB          as "חברה",
+    d.AREA_MANAGER_USERNAME as "מנהל אזור"
 from {{ ref('DIM_PROJECTS_STG') }} d
 
 {{ join_valid_projects_BST_BUILDUP('d.DOCNO', 'd.SOURCE_DB') }}
