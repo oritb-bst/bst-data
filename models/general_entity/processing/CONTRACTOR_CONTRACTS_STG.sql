@@ -13,6 +13,8 @@ SELECT
     ELSE MED_TYPE END as MED_TYPE_DESC,
     STATDES           as STATUS_CON,
     ORD               as PORD_ID,
+    DETAILS,
+    MED_ORIGCONTNAME  as ORIG_CONT_NAME, --מספר חוזה מקורי
 	SOURCE_DB 
 FROM {{ ref('MED_PORDERS_J') }}
 WHERE STATDES IN ('מאושר', 'ממתין לאישור','טיוטא')
