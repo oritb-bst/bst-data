@@ -10,7 +10,9 @@ select
     source_db::string                       as SOURCE_DB,
     item.value:ORDNAME::string              as ORDNAME,
     item.value:STATDES::string              as STATDES,
-    item.value:ORD::varchar                 as ORD
+    item.value:ORD::varchar                 as ORD,
+    item.value:DETAILS::string              as DETAILS,
+    item.value:MED_ORIGCONTNAME::varchar    as MED_ORIGCONTNAME
 
 from {{ source('json', 'MED_PORDERS') }},
 lateral flatten(input => DATA) item
