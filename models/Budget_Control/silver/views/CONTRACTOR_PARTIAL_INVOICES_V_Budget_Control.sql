@@ -13,6 +13,7 @@ select
     IS_INVOICED              as "חויבה",
     PARTIAL_INVOICE_NAME     as "מספר חשבון חלקי קבלן",
     RETENTION_AMOUNT         as "עכבון",
+    MAX_RETENTION_AMOUNT     as "עכבון אחרון",
     CUMULATIVE_ACCOUNT       as "חשבון מצטבר קבלן",
     MAX_CUMULATIVE_ACCOUNT   as "חשבון מצטבר אחרון",
 	t.SOURCE_DB              as "חברה"
