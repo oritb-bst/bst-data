@@ -11,6 +11,8 @@ select
     MED_TYPE_DESC   as "תיאור סוג חוזה",
     STATUS_CON      as "סטטוס חוזה",
     PORD_ID         as "חוזה_ID",
+    DETAILS         as "פרטים",
+    ORIG_CONT_NAME  as "מספר חוזה מקורי",
 	t.SOURCE_DB     as "חברה"
 from {{ ref('CONTRACTOR_CONTRACTS_STG') }} t
 
