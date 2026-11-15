@@ -30,6 +30,7 @@ select
     g.GUARANTEE_NAME            as "מספר ערבות",
     g.CREDIT_LIMIT              as "מסגרת בנק",
     g.DEPOSIT                   as "סכום פקדון לבנק",
+    g.GUARANTEE_TEXT            as "טקסט חופשי ערבות",
     g.SOURCE_DB                 as "חברה",
 
     d.LAST_DECREASE_DATE        as "תאריך הקטנה אחרון",
