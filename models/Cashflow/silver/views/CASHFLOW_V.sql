@@ -8,7 +8,7 @@ SELECT
     b.FNCDATE                                AS "תאריך ערך",
     b.TOTPRICE                               AS "סכום התקבול/תשלום",
     b.TOTPRICE  /1000                        AS "סכום התקבול/תשלום באלפי שח",
-    b.TOTKEREN                               AS "סכום הקרן",
+    b.TOTKEREN                               AS "סכום הקרן", 
     b.TOTKEREN /1000                         AS "סכום הקרן באלפי שח",
     b.PEREXTRACTION                          AS "אחוז המע""מ",
     b.TOTMAAM                                AS "סכום המע""מ",

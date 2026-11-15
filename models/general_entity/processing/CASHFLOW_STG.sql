@@ -55,14 +55,14 @@ AND NOT EXISTS (
     AND cf.SOURCE_DB = inv.SOURCE_DB)
 
 
-    /*
+
 UNION ALL
 
-select PROJDOCNO AS PROJECT_NAME,
-       IVNUM AS INVOICE_NUM,
-       IVDATE  as INVOICE_DATE, 
-       IVDATE  as CASHFLOW_DATE, --תאריך ראשי במודל תזרים 
-       null as BALDATE,   
+select PROJECT_NAME,
+       INVOICE_NAME as INVOICE_NUM,
+       INVOICE_DATE  as CURDATE, --תאריך אסמכתא
+       PAYDATE as FNCDATE, --תאריך ערך בתזרים = תאריך פרעון בחשבונית ספק
+       BALDATE,    --תאריך מאזן
        null as RECEIPT_NUM,  
        null as RINCIPALVATCODE, --קוד אופן תשלום
        null as RINCIPALVATDES,
@@ -76,17 +76,12 @@ select PROJDOCNO AS PROJECT_NAME,
        -1*TOTMAAM as TOTMAAM_TAZRIM,       
        SUPNAME AS ACCNAME,
        null as ACCDES,
-       null as CURDATE,
-       PAYDATE as TIVDATE, --תאריך תשלום = תאריך פרעון בחשבונית ספק
-       null as FNCDATE,
        SOURCE_DB
-FROM {{ ref('YINVOICES_STG') }} inv
+FROM {{ ref('PINVOICES_STG') }} inv
 WHERE FINAL = 'Y'
-AND STORNOFLAG IS NULL
+AND IS_CANCELED IS NULL
 AND NOT EXISTS (
     SELECT 1 
     FROM {{ ref('ZCBS_PAYMENTRECEIPT_J') }} cf
-    WHERE cf.IVNUMA = inv.IVNUM
+    WHERE cf.IVNUMA = inv.INVOICE_NAME
     AND cf.SOURCE_DB = inv.SOURCE_DB)
-
-*/
