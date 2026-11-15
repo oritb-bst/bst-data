@@ -1,6 +1,7 @@
 select
     a.value:DOCNO::varchar                           as DOCNO,
     trim(
+    regexp_replace(
         regexp_replace(
             regexp_replace(
                 regexp_replace(
@@ -10,16 +11,18 @@ select
                         ' ',
                         1, 0, 'is'
                     ),
-                    '<[^>]+>',
-                    ' '
+                    '<br[[:space:]]*/?>|</p[[:space:]]*>|</div[[:space:]]*>|</li[[:space:]]*>',
+                    chr(10),
+                    1, 0, 'i'
                 ),
-                '&[a-zA-Z0-9#]+;',
+                '<[^>]+>',
                 ' '
             ),
-            '\\s+',
+            '&nbsp;|&#160;',
             ' '
-        )
-    )                                                as TEXT,
+        ),
+        '[[:blank:]]+',
+        ' '))                                        as TEXT,
     SOURCE_DB::string                                as SOURCE_DB
 
 from {{ source('json', 'MEDR_GUARANTEESTEXT_SUBFORM') }} j,
