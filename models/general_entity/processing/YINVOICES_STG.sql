@@ -16,6 +16,6 @@ select
     DOCNO,
     UDATE,
     SOURCE_DB,
-    PAYDATE,
+    PAYDATE, 
     BALDATE
 from {{ ref ('YINVOICES_J') }}
