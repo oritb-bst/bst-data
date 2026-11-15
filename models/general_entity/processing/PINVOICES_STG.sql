@@ -35,7 +35,8 @@ with incoming_data as (
         DOCNO,
         UDATE,
         SOURCE_DB,
-        PAYDATE
+        PAYDATE,
+        BALDATE
     from {{ ref('PINVOICES_J_INC') }}
 )
 
@@ -43,7 +44,7 @@ with incoming_data as (
 
 , historical_unmodified_data as (
     select h.*
-   --,CAST(NULL AS VARCHAR) as PAYDATE --צריך את זה רק בפעם הראשונה שמריצים כדי להוסיף שדה
+   ,CAST(NULL AS VARCHAR) as BALDATE --צריך את זה רק בפעם הראשונה שמריצים כדי להוסיף שדה
     from {{ this }} h
     left join incoming_data i
         on h.INVOICE_NAME = i.INVOICE_NAME
