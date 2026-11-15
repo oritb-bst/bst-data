@@ -16,9 +16,9 @@ SELECT
     item.value:DEBIT::string         AS DEBIT,
     item.value:DOCNO::string         AS DOCNO,    
     item.value:ZBST_UDATE::timestamp AS UDATE,
-    item.value:IVDATE::date          AS PAYDATE,
+    item.value:PAYDATE::date          AS PAYDATE,
+    item.value:BALDATE::date          AS BALDATE,
     SOURCE_DB::string                AS SOURCE_DB
-
 FROM {{ source('json', 'PINVOICES') }},
 LATERAL FLATTEN(input => DATA) item
 

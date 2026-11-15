@@ -6,12 +6,17 @@ SELECT
     item.value:QPRICE::float         AS QPRICE,
     item.value:DISPRICE::float       AS DISPRICE,
     item.value:TOTPRICE::float       AS TOTPRICE,
+    item.value:CALPRICE::float       AS CALPRICE,
     item.value:STORNOFLAG::string    AS STORNOFLAG,
     item.value:SUPNAME::string       AS SUPNAME,
     item.value:FINAL::string         AS FINAL,
     item.value:STATDES::string       AS STATDES,
     item.value:ORDNAME::string       AS ORDNAME,
+    item.value:DEBIT::string         AS DEBIT,
+    item.value:DOCNO::string         AS DOCNO,    
+    item.value:ZBST_UDATE::timestamp AS UDATE,
     item.value:PAYDATE::date          AS PAYDATE,
+    item.value:BALDATE::date          AS BALDATE,
     SOURCE_DB::string                AS SOURCE_DB
 FROM {{ source('json', 'YINVOICES') }},
 LATERAL FLATTEN(input => DATA) item
