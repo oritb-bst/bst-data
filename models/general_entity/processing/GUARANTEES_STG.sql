@@ -14,7 +14,8 @@ select
     CDES          as GUARANTEED_ENTITY_NAME, --שם הנערב
     GUARANTYPENAME as GUARANTEE_TYPE_NAME,
     STATDES        as GUARANTEE_STATUS,
-    DOCNO          as GUARANTEE_NAME, --מספר ערבות
+    g.DOCNO        as GUARANTEE_NAME, --מספר ערבות
+    t.TEXT         as GUARANTEE_TEXT,
     case when GUARANTYPENAME in (4,6,13,15,20) then 'מזמין'
          when GUARANTYPENAME in (2,3,21) then 'קבלן' else 'אחר' end as GUARANTEE_PARTY,
     b.CREDIT_LIMIT,
@@ -25,3 +26,7 @@ from {{ ref('MEDR_GUARANTEES_J') }} g
 left join {{ source('csv', 'BANK_CREDITS_DEPOSITS') }} b
     on g.BANKCODE = b.BANK_CODE
     and g.SOURCE_DB = b.SOURCE_DB
+
+left join {{ ref('MEDR_GUARANTEESTEXT_J') }} t
+    on g.DOCNO = t.DOCNO
+   and g.SOURCE_DB = t.SOURCE_DB
