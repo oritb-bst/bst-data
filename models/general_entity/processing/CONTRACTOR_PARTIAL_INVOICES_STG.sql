@@ -29,6 +29,7 @@ select
     case when p.rn = 1 and p.STATDES in ('ממתין לאישור', 'מאושר') then p.MED_DOCTOTPRICE else null end as MAX_CUMULATIVE_ACCOUNT, --סכום החשבון המצטבר האחרון בסטטוס המבוקש
     r.RET_PRICE as RETENTION_AMOUNT, --עכבון ברמת החשבון
     case when p.rn = 1 and p.STATDES in ('ממתין לאישור', 'מאושר') then r.RET_PRICE else null end as MAX_RETENTION_AMOUNT, --עכבון החשבון האחרון בסטטוס המבוקש - פעם אחת לקבלן
+    p.MED_FINALPAY as IS_FINAL_INVOICE, 
     p.SOURCE_DB
 from ranked_documents p
 
