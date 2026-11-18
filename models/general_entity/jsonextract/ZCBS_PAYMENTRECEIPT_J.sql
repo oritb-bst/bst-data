@@ -1,5 +1,5 @@
 SELECT
-    item.value:DOCNO::string                AS DOCNO,
+    item.value:DOCNO::string                 AS DOCNO,
     item.value:IVNUMA::string               AS IVNUMA,
     item.value:BALDATE::date                AS BALDATE,
     item.value:CURDATE::date                AS CURDATE,

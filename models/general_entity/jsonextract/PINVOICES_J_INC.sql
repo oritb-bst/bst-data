@@ -2,7 +2,7 @@
 --חשבוניות ספק מרכזות
 SELECT
     item.value:IVNUM::string         AS IVNUM,
-    item.value:PROJDOCNO::string     AS PROJDOCNO,
+    item.value:PROJDOCNO::VARCHAR     AS PROJDOCNO,
     item.value:IVDATE::date          AS IVDATE,
     item.value:QPRICE::float         AS QPRICE,
     item.value:DISPRICE::float       AS DISPRICE,

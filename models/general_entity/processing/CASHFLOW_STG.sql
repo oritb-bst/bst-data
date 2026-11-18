@@ -17,21 +17,20 @@ SELECT
     ACCDES,
     CURDATE,
     FNCDATE,-- תאריך ערך
-	SOURCE_DB 
+	SOURCE_DB,
+    'N' AS FORECASTED_CF --דגל תזרים חזוי
 FROM {{ ref('ZCBS_PAYMENTRECEIPT_J') }}
 --where לסנן קבלות לא זמניות
 
 /*---------------------------------------*/
 /*       הוספת תזרים עתידי חזוי        */
 /*---------------------------------------*/
-/*
+
 UNION ALL
 
 select PROJDOCNO AS PROJECT_NAME,
        IVNUM AS INVOICE_NUM,
-       IVDATE  as INVOICE_DATE, 
-       IVDATE  as CASHFLOW_DATE, --תאריך ראשי במודל תזרים 
-       null as BALDATE,   
+       BALDATE,   
        null as RECEIPT_NUM,  
        null as RINCIPALVATCODE, --קוד אופן תשלום
        null as RINCIPALVATDES,
@@ -40,15 +39,29 @@ select PROJDOCNO AS PROJECT_NAME,
        DISPRICE AS TOTKEREN, --מחיר לפני מעמ
        TOTPRICE - DISPRICE AS TOTMAAM, --סכום המעמ
        'חשבוניות ספק' as CLASSIFICATION,
-       -1*TOTPRICE as TOTPRICE_TAZRIM, 
-       -1*TOTKEREN  as TOTKEREN_TAZRIM,
-       -1*TOTMAAM as TOTMAAM_TAZRIM,       
+
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * TOTPRICE
+           ELSE TOTPRICE
+       END AS TOTPRICE_TAZRIM,
+
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * TOTKEREN
+           ELSE TOTKEREN
+       END AS TOTKEREN_TAZRIM,
+
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * (TOTPRICE - DISPRICE)
+           ELSE (TOTPRICE - DISPRICE)
+       END AS TOTMAAM_TAZRIM,
+
+            
        SUPNAME AS ACCNAME,
        null as ACCDES,
-       null as CURDATE,
-       PAYDATE as TIVDATE, --תאריך תשלום = תאריך פרעון בחשבונית ספק
-       null as FNCDATE,
-       SOURCE_DB
+       IVDATE  as CURDATE, --תאריך אסמכתא
+       PAYDATE as FNCDATE, --תאריך תשלום = תאריך פרעון בחשבונית ספק
+       SOURCE_DB,
+       'Y' AS FORECASTED_CF --דגל תזרים חזוי
 FROM {{ ref('YINVOICES_J') }} inv
 WHERE FINAL = 'Y'
 AND STORNOFLAG IS NULL
@@ -63,9 +76,7 @@ UNION ALL
 
 select PROJDOCNO AS PROJECT_NAME,
        IVNUM AS INVOICE_NUM,
-       IVDATE  as INVOICE_DATE, 
-       IVDATE  as CASHFLOW_DATE, --תאריך ראשי במודל תזרים 
-       null as BALDATE,   
+       null as BALDATE,  --אחרי טעינה מלאה נוסיף את זה 
        null as RECEIPT_NUM,  
        null as RINCIPALVATCODE, --קוד אופן תשלום
        null as RINCIPALVATDES,
@@ -74,15 +85,27 @@ select PROJDOCNO AS PROJECT_NAME,
        DISPRICE AS TOTKEREN, --מחיר לפני מעמ
        TOTPRICE - DISPRICE AS TOTMAAM, --סכום המעמ
        'חשבוניות ספק מרכזות' as CLASSIFICATION,
-       -1*TOTPRICE as TOTPRICE_TAZRIM, 
-       -1*TOTKEREN  as TOTKEREN_TAZRIM,
-       -1*TOTMAAM as TOTMAAM_TAZRIM,       
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * TOTPRICE
+           ELSE TOTPRICE
+       END AS TOTPRICE_TAZRIM,
+
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * TOTKEREN
+           ELSE TOTKEREN
+       END AS TOTKEREN_TAZRIM,
+
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * (TOTPRICE - DISPRICE)
+           ELSE (TOTPRICE - DISPRICE)
+       END AS TOTMAAM_TAZRIM,
+
        SUPNAME AS ACCNAME,
        null as ACCDES,
-       null as CURDATE,
-       PAYDATE as TIVDATE, --תאריך תשלום = תאריך פרעון בחשבונית ספק
-       null as FNCDATE,
-       SOURCE_DB
+       IVDATE  as CURDATE, --תאריך אסמכתא
+       PAYDATE as FNCDATE, --תאריך תשלום = תאריך פרעון בחשבונית ספק
+       SOURCE_DB,
+       'Y' AS FORECASTED_CF --דגל תזרים חזוי
 FROM {{ ref('PINVOICES_J_INC') }} inv
 WHERE FINAL = 'Y'
 AND STORNOFLAG IS NULL
@@ -92,4 +115,4 @@ AND NOT EXISTS (
     WHERE cf.IVNUMA = inv.IVNUM
     AND cf.SOURCE_DB = inv.SOURCE_DB)
 
-    */
+    
