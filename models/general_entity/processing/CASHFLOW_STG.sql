@@ -17,7 +17,9 @@ SELECT
     CASE WHEN CASHFLOWCLASSIFDES = 'תקבול' THEN TOTMAAM ELSE -1*TOTMAAM END as TOTMAAM_TAZRIM, --עמודה שמחזיקה את סכום הקרן בפלוס או במינוס עבור סכימה לתזרים
     ACCNAME,
     ACCDES,
-	SOURCE_DB 
+	SOURCE_DB,
+    'N' AS FORECASTED_CF --דגל תזרים חזוי
+
 FROM {{ ref('ZCBS_PAYMENTRECEIPT_J') }}
 --where לסנן קבלות לא זמניות
 
@@ -39,12 +41,27 @@ select PROJECT_NAME,
        DISPRICE AS TOTKEREN, --מחיר לפני מעמ
        TOTPRICE - DISPRICE AS TOTMAAM, --סכום המעמ
        'חשבוניות ספק מרכזות' as CLASSIFICATION,
-       -1*TOTPRICE as TOTPRICE_TAZRIM, 
-       -1*TOTKEREN  as TOTKEREN_TAZRIM,
-       -1*TOTMAAM as TOTMAAM_TAZRIM,       
+
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * TOTPRICE
+           ELSE TOTPRICE
+       END AS TOTPRICE_TAZRIM,
+
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * DISPRICE
+           ELSE DISPRICE
+       END AS TOTKEREN_TAZRIM,
+
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * (TOTPRICE - DISPRICE)
+           ELSE (TOTPRICE - DISPRICE)
+       END AS TOTMAAM_TAZRIM,
+      
        SUPNAME AS ACCNAME,
        null as ACCDES,
-       SOURCE_DB
+       SOURCE_DB,
+       'Y' AS FORECASTED_CF --דגל תזרים חזוי
+
 FROM {{ ref('PINVOICES_STG') }} inv
 WHERE FINAL = 'Y'
 AND IS_CANCELED IS NULL
@@ -71,13 +88,72 @@ select PROJECT_NAME,
        DISPRICE AS TOTKEREN, --מחיר לפני מעמ
        TOTPRICE - DISPRICE AS TOTMAAM, --סכום המעמ
        'חשבוניות ספק' as CLASSIFICATION,
-       -1*TOTPRICE as TOTPRICE_TAZRIM, 
-       -1*TOTKEREN  as TOTKEREN_TAZRIM,
-       -1*TOTMAAM as TOTMAAM_TAZRIM,       
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * TOTPRICE
+           ELSE TOTPRICE
+       END AS TOTPRICE_TAZRIM,
+
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * DISPRICE
+           ELSE DISPRICE
+       END AS TOTKEREN_TAZRIM,
+
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * (TOTPRICE - DISPRICE)
+           ELSE (TOTPRICE - DISPRICE)
+       END AS TOTMAAM_TAZRIM,
+
        SUPNAME AS ACCNAME,
        null as ACCDES,
-       SOURCE_DB
-FROM {{ ref('PINVOICES_STG') }} inv
+       SOURCE_DB,
+       'Y' AS FORECASTED_CF --דגל תזרים חזוי
+
+FROM {{ ref('YINVOICES_STG') }} inv
+WHERE FINAL = 'Y'
+AND IS_CANCELED IS NULL
+AND NOT EXISTS (
+    SELECT 1 
+    FROM {{ ref('ZCBS_PAYMENTRECEIPT_J') }} cf
+    WHERE cf.IVNUMA = inv.INVOICE_NAME
+    AND cf.SOURCE_DB = inv.SOURCE_DB)
+
+
+UNION ALL
+
+select PROJECT_NAME,
+       INVOICE_NAME as INVOICE_NUM,
+       INVOICE_DATE  as CURDATE, --תאריך אסמכתא
+       PAYDATE as FNCDATE, --תאריך ערך בתזרים = תאריך פרעון בחשבונית ספק
+       BALDATE,    --תאריך מאזן
+       null as RECEIPT_NUM,  
+       null as RINCIPALVATCODE, --קוד אופן תשלום
+       null as RINCIPALVATDES,
+       null as PEREXTRACTION,
+       TOTPRICE, --כולל מעמ
+       DISPRICE AS TOTKEREN, --מחיר לפני מעמ
+       TOTPRICE - DISPRICE AS TOTMAAM, --סכום המעמ
+       'חשבוניות מרכזות' as CLASSIFICATION,
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * TOTPRICE
+           ELSE TOTPRICE
+       END AS TOTPRICE_TAZRIM,
+
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * DISPRICE
+           ELSE DISPRICE
+       END AS TOTKEREN_TAZRIM,
+
+       CASE
+           WHEN DEBIT = 'D' THEN -1 * (TOTPRICE - DISPRICE)
+           ELSE (TOTPRICE - DISPRICE)
+       END AS TOTMAAM_TAZRIM,
+
+       SUPNAME AS ACCNAME,
+       null as ACCDES,
+       SOURCE_DB,
+       'Y' AS FORECASTED_CF --דגל תזרים חזוי
+
+FROM {{ ref('CINVOICES_STG') }} inv
 WHERE FINAL = 'Y'
 AND IS_CANCELED IS NULL
 AND NOT EXISTS (
