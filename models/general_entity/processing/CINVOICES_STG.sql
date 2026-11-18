@@ -1,13 +1,27 @@
-SELECT
-    IV               AS id,
-    IVNUM            AS INVOICE_NAME,
-    PROJDOCNO        AS PROJECT_NAME,
-    IVDATE ::DATE    AS  INVOICE_DATE,
-    TOTPRICE,
+--חשבוניות ספק
+select
+    IV         as id,
+    IVNUM      as INVOICE_NAME,
+    PROJDOCNO  as PROJECT_NAME,
+    IVDATE     as INVOICE_DATE,
+    QPRICE     as QNT_BEFORE_DISCOUNT,
     DISPRICE,
-    STATDES,
-    DETAILS,
+    TOTPRICE,
+    CALPRICE,
+    STORNOFLAG as IS_CANCELED,
+    SUPNAME,
+    FINAL,
+    STATDES    as INVOICE_STATUS,
+    ORDNAME    as ORDER_NAME,
+    DEBIT,
+    DOCNO,
+    UDATE,
+    SOURCE_DB,
+    PAYDATE, 
+    BALDATE,
     IFF(FINAL IS NULL, 'N', FINAL) as FINALFLAG,
-    IFF(STORNOFLAG IS NULL, 'N', STORNOFLAG) as STORNOFLAG,
-    SOURCE_DB
-FROM {{ ref('CINVOICES_J') }}
+    IFF(STORNOFLAG IS NULL, 'N', STORNOFLAG) as STORNOFLAG
+from {{ ref ('CINVOICES_J') }}
+
+
+
