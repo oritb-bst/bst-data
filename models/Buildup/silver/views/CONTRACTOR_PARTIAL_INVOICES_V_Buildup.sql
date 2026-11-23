@@ -14,6 +14,7 @@ select
     IS_INVOICED              as "חויבה",
     PARTIAL_INVOICE_NAME     as "מספר חשבון חלקי קבלן",
     IS_FINAL_INVOICE         as "חשבון סופי", 
+    ORDER_NAME               as "מספר חוזה",
 	t.SOURCE_DB              as "חברה"
 from {{ ref('CONTRACTOR_PARTIAL_INVOICES_STG') }} t
 
