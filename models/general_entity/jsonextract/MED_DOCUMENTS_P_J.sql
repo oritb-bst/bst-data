@@ -13,7 +13,8 @@ SELECT
     item.value:DOCNO::string        as DOCNO,
     item.value:MED_EXEMONTH::string as MED_EXEMONTH,
     item.value:MED_DOCTOTPRICE::float as MED_DOCTOTPRICE,
-    item.value:MED_FINALPAY::varchar  as MED_FINALPAY
+    item.value:MED_FINALPAY::varchar  as MED_FINALPAY,
+    item.value:ORDNAME::varchar       as ORDNAME
 
 FROM {{ source('json', 'MED_DOCRETENTION_SUBFORM') }},
 lateral flatten(input => DATA) item
