@@ -4,7 +4,7 @@ select
     INVOICE_DATE  as "Date",
     TOTPRICE as "סכום חשבונית",
     DISPRICE as "מחיר אחרי הנחה",
-    STATDES as "סטטוס",
+    INVOICE_STATUS as "סטטוס",
     DETAILS as "פרטים",
     FINALFLAG as "דגל סופית",
     STORNOFLAG as "דגל סטורנו",
