@@ -22,5 +22,6 @@ SELECT
     b.ACCNAME                                AS "מספר חשבון",
     b.ACCDES                                 AS "תאור חשבון",
     b.CURDATE                                AS "ת. אסמכתא",
-    b.SOURCE_DB                              AS "חברה"
+    b.SOURCE_DB                              AS "חברה",
+    b.FORECASTED_CF --דגל תזרים חזוי
 FROM {{ ref('CASHFLOW_STG') }} b 

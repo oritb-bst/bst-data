@@ -15,6 +15,7 @@ select
     ORDNAME    as ORDER_NAME,
     DEBIT,
     DOCNO,
+    DETAILS,
     UDATE,
     SOURCE_DB,
     PAYDATE, 
