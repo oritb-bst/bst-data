@@ -17,7 +17,7 @@ SELECT
     t.fncnum                                             AS "מספר תנועה"
 FROM {{ ref('ACCFNCITEMS_STG') }} t
 
-INNER JOIN {{ ref('ACCOUNTS_STG') }} a
+INNER JOIN {{ ref('DIM_ACCOUNTS_STG') }} a
     ON t.account_id = a.account_id
    AND t.source_db = a.source_db
 
