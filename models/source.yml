@@ -70,6 +70,8 @@ sources:
       - name: PORDERS
       - name: DOCUMENTS_P
       - name: ACCOUNTS
+      - name: ACCOUNTS_PAYABLE
+      - name: ACCOUNTS_RECEIVABLE
       - name: ACCFNCITEMS2_SUBFORM
       - name: MED_PORDERITEMS_SUBFORM
       - name: BST_FOREXSUBA_SUBFORM
