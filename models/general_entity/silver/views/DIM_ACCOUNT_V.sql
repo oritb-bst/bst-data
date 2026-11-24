@@ -8,7 +8,7 @@ SELECT
     a.project_docno                                      AS "מספר פרויקט",
     a.project_id                                         AS "סוג חשבון" ,
     a.flag_acc_type,
-FROM {{ ref('DIM_ACCOUNT_STG') }} t
+FROM {{ ref('DIM_ACCOUNTS_STG') }} t
 
 {{ join_valid_projects_BST_BUILDUP('a.project_docno', 'a.source_db') }}
 
