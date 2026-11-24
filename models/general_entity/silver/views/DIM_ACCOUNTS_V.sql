@@ -8,5 +8,6 @@ SELECT
     project_docno                                      AS "מספר פרויקט", --קיים רק בחשבונות ראשיים
     project_id                                         AS "פרויקט_ID",  --קיים רק בחשבונות ראשיים                           
     flag_acc_type                                      AS "סוג חשבון",
+    source_db                                          AS "חברה"
 FROM {{ ref('DIM_ACCOUNTS_STG') }} 
 
