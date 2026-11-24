@@ -144,6 +144,15 @@ budget_summary as (
     group by 1, 2, 3
 ),
 
+-- הסרת שורות תקציב ללא שיוך כאשר שני התקציבים אפס
+budget_summary_filtered as (
+    select *
+    from budget_summary
+    where "מרכיבי אומדן הכנסות" not like 'תקציב ללא שיוך מפורט - תת פרק %'
+       or round("אפס", 2) <> 0
+       or round("מעודכן", 2) <> 0
+),
+
 -- 4. שמירה של הבקרה האחרונה בכל חודש לכל פרויקט
 income_forecast_by_month as (
     select
@@ -314,7 +323,7 @@ budget_by_report_month as (
         b."מרכיבי אומדן הכנסות",
         b."אפס",
         b."מעודכן"
-    from budget_summary b
+    from budget_summary_filtered b
 
     inner join report_months r
         on b."חברה" = r."חברה"
