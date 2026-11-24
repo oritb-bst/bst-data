@@ -1,0 +1,35 @@
+--חשבונות
+SELECT
+	ACCOUNT     as ACCOUNT_ID,
+    ACCNAME     as ACCOUNT_NUMBER,
+    ACCDES      as ACCOUNT_DES,
+    ACCTYPENAME as ACCOUNT_TYPE_NAME,
+    BUD_DOCNO   as PROJECT_DOCNO,
+    BUD_PROJ    as PROJECT_ID,
+    'חשבונות ראשיים' as FLAG_ACC_TYPE,
+	SOURCE_DB 
+FROM {{ ref('ACCOUNTS_J') }}
+
+concatenate
+SELECT
+	ACCOUNT     as ACCOUNT_ID,
+    ACCNAME     as ACCOUNT_NUMBER,
+    ACCDES      as ACCOUNT_DES,
+    ACCTYPENAME as ACCOUNT_TYPE_NAME,
+    BUD_DOCNO   as PROJECT_DOCNO,
+    BUD_PROJ    as PROJECT_ID,
+    'חשבונות לקוחות' as FLAG_ACC_TYPE,
+	SOURCE_DB 
+FROM {{ ref('ACCOUNTS_RECEIVABLE_J') }}
+
+concatenate
+SELECT
+	ACCOUNT     as ACCOUNT_ID,
+    ACCNAME     as ACCOUNT_NUMBER,
+    ACCDES      as ACCOUNT_DES,
+    ACCTYPENAME as ACCOUNT_TYPE_NAME,
+    BUD_DOCNO   as PROJECT_DOCNO,
+    BUD_PROJ    as PROJECT_ID,
+    'חשבונות ספקים' as FLAG_ACC_TYPE,
+	SOURCE_DB 
+FROM {{ ref('ACCOUNTS_PAYABLE_J') }}

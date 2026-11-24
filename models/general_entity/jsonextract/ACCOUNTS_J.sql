@@ -1,3 +1,4 @@
+--חשבונות ראשיים
 SELECT
     item.value:ACCOUNT::number(18,0)      AS ACCOUNT,
     item.value:ACCNAME::string            AS ACCNAME,
