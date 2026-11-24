@@ -55,6 +55,8 @@ classified as (
             when pp."מספר תת פרק" = '994' then 'קיזוז ידני מזמין' 
             -- בונוס מוסכם ראשי
             when pp."מספר תת פרק" = '97' and coalesce(pp."שם פעילות", '') like '%בונוס מוסכם%' then 'בונוס מוסכם'
+            -- שירותי קבלן ראשי
+            when pp."מספר תת פרק" = '97' and coalesce(pp."שם פעילות", '') like '%שירותי קבלן ראשי%' then 'שירותי קבלן ראשי'
             -- חוזה למדידת כמויות
             when try_to_number(pp."מספר תת פרק") not between 90 and 96
                 and coalesce(pp."מחיר ליחידה", 0) > 0
@@ -64,8 +66,6 @@ classified as (
             -- עבודות נוספות וחריגים
             -- כולל כרגע גם BIM
             when pp."מספר תת פרק" = '99' then 'עבודות נוספות וחריגים'
-            -- שירותי קבלן ראשי
-            when pp."מספר תת פרק" = '97' and coalesce(pp."שם פעילות", '') like '%שירותי קבלן ראשי%' then 'שירותי קבלן ראשי'
             -- חוזה פאושלי
             when coalesce(pp."שם פעילות", '') like '%פאושל%' then 'חוזה פאושלי'
 
@@ -97,7 +97,7 @@ sub_chapter_mapping as (
 ),
 
 -- 3. מסכם את תקציב אפס והתקציב המעודכן לפי מרכיב אומדן הכנסות
-budget_summary as (
+/*budget_summary as (
     select
         c."חברה",
         c."מספר פרויקט",
@@ -118,6 +118,30 @@ budget_summary as (
         c."חברה",
         c."מספר פרויקט",
         m."מרכיבי אומדן הכנסות"
+),*/
+
+
+
+-- תקציבים: מיפוי לפי תת פרק כשיש קטגוריה אחת, ולפי פעילות כשיש כמה קטגוריות
+budget_summary as (
+    select
+        c."חברה",
+        c."מספר פרויקט",
+        case when m.category_count = 1 then m."מרכיבי אומדן הכנסות"
+             when c."מרכיבי אומדן הכנסות" is not null then c."מרכיבי אומדן הכנסות"
+        else 'תקציב ללא שיוך מפורט - תת פרק ' || to_varchar(c."מספר תת פרק") end as "מרכיבי אומדן הכנסות",
+        sum(case when c."דגל מהדורת 0" = 'Y' then coalesce(c."סך הכל מחיר הגשה", 0) / 1000.0 else 0 end) as "אפס",
+        sum(case when c."דגל ביצוע" = 'Y'    then coalesce(c."סך הכל מחיר הגשה", 0) / 1000.0 else 0 end) as "מעודכן"
+    from classified c
+
+    inner join sub_chapter_mapping m
+        on c."חברה" = m."חברה"
+        and c."מספר פרויקט" = m."מספר פרויקט"
+        and c."מספר תת פרק" = m."מספר תת פרק"
+
+    where m.category_count >= 1
+
+    group by 1, 2, 3
 ),
 
 -- 4. שמירה של הבקרה האחרונה בכל חודש לכל פרויקט
@@ -178,6 +202,20 @@ forecast_summary as (
         "מרכיבי אומדן הכנסות"
 ),
 
+-- אומדנים ללא שיוך מפורט, רק כאשר קיים סכום באומדן
+unmapped_forecast_summary as (
+    select
+        "חברה",
+        "מספר פרויקט",
+        "חודש דוח",
+        "מספר תת פרק",
+        sum(coalesce("אומדן נוכחי", 0)) as "אומדן נוכחי",
+        sum(coalesce("אומדן קודם", 0)) as "אומדן קודם"
+    from forecast_classified
+    where coalesce(category_count, 0) <> 1
+    group by 1, 2, 3, 4
+    having sum(coalesce("אומדן נוכחי", 0)) <> 0 or sum(coalesce("אומדן קודם", 0)) <> 0
+),
 
 -- 7. יצירת רשימה של כל החודשים שבהם קיימת בקרת אומדן לפרויקט
 control_months as (
@@ -188,7 +226,6 @@ control_months as (
     from income_forecast
     where "Date" is not null
 ),
-
 
 -- 8. חישוב לכל חודש דוח מהו חודש הבקרה הקודם של אותו פרויקט
 report_months as ( 
@@ -493,6 +530,20 @@ select
     coalesce("הפרשי מחירים", 0) as "אומדן נוכחי",
     coalesce("הפרשי מחירים", 0) - coalesce("הפרשי מחירים קודמים", 0) as "שינוי"
 from price_difference_with_prev
+
+union all
+-- הצגת אומדנים שלא ניתן לפצל בשורה נפרדת
+select
+    "חברה",
+    "מספר פרויקט",
+    "חודש דוח",
+    'אומדן ללא שיוך מפורט - תת פרק ' || coalesce(to_varchar("מספר תת פרק"), 'ללא') as "מרכיבי אומדן הכנסות",
+    0 as "אפס",
+    0 as "מעודכן",
+    "אומדן קודם",
+    "אומדן נוכחי",
+    "אומדן נוכחי" - "אומדן קודם" as "שינוי"
+from unmapped_forecast_summary
 )
 
 select
@@ -522,6 +573,7 @@ select
     --when "מרכיבי אומדן הכנסות" = 'קיזוז בגין שכירות עגורן' then 14
     when "מרכיבי אומדן הכנסות" = 'התייקרות בפועל' then 15
     when "מרכיבי אומדן הכנסות" = 'התייקרות על היתרה' then 16
+    when "מרכיבי אומדן הכנסות" like 'אומדן ללא שיוך מפורט - תת פרק %' then 17
     else 99
 end as "סדר מיון"
 from final_result
