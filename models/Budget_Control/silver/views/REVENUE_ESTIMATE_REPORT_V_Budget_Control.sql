@@ -214,7 +214,7 @@ unmapped_forecast_summary as (
     from forecast_classified
     where coalesce(category_count, 0) <> 1
     group by 1, 2, 3, 4
-    having sum(coalesce("אומדן נוכחי", 0)) <> 0 or sum(coalesce("אומדן קודם", 0)) <> 0
+    having round(sum(coalesce("אומדן נוכחי", 0)), 2) <> 0 or round(sum(coalesce("אומדן קודם", 0)), 2) <> 0
 ),
 
 -- 7. יצירת רשימה של כל החודשים שבהם קיימת בקרת אומדן לפרויקט
