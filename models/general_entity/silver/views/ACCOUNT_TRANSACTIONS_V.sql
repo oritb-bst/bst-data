@@ -5,8 +5,8 @@ SELECT
     a.account_number                                     AS "חשבון",
     a.account_des                                        AS "תאור חשבון",
     a.account_type_name                                  AS "כותרת מאזן/רווח והפ.",
-    t.project_docno                                      AS "מספר פרויקט",
-    t.project_id                                         AS "פרויקט_ID" ,
+    a.project_docno                                      AS "מספר פרויקט",
+    a.project_id                                         AS "פרויקט_ID" ,
     t.baldate                                            AS  "Date", -- "ת. למאזן",
     t.fncdate                                            AS "תאריך ערך",
     t.account_details                                    AS "פרטים",
@@ -22,7 +22,7 @@ INNER JOIN {{ ref('DIM_ACCOUNTS_STG') }} a
    AND t.source_db = a.source_db
 
 
-{{ join_valid_projects_BST_BUILDUP('t.project_docno', 'a.source_db') }}
+{{ join_valid_projects_BST_BUILDUP('a.project_docno', 'a.source_db') }}
 
 WHERE a.account_type_name IN ('עלות המכירות', 'הכנסות') 
     and t.stornoflag IS DISTINCT FROM 'Y'
