@@ -30,6 +30,7 @@ select
     r.RET_PRICE as RETENTION_AMOUNT, --עכבון ברמת החשבון
     case when p.rn = 1 and p.STATDES in ('ממתין לאישור', 'מאושר') then r.RET_PRICE else null end as MAX_RETENTION_AMOUNT, --עכבון החשבון האחרון בסטטוס המבוקש - פעם אחת לקבלן
     p.MED_FINALPAY as IS_FINAL_INVOICE, 
+    p.ORDNAME      as ORDER_NAME,
     p.SOURCE_DB
 from ranked_documents p
 
