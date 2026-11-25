@@ -23,7 +23,6 @@ budget_control as ( --פרויקטים - בקרה תקציבית
     from {{ ref('PROJ_BUDGET_CONTROL_V') }}
 ),
 
-
 -- 1. מסווג כל שורת תכנון למרכיב המתאים באומדן ההכנסות
 classified as (
     select
@@ -121,17 +120,17 @@ sub_chapter_mapping as (
 ),*/
 
 
-
--- תקציבים: מיפוי לפי תת פרק כשיש קטגוריה אחת, ולפי פעילות כשיש כמה קטגוריות
+-- 3.תקציבים: מיפוי לפי תת פרק כשיש קטגוריה אחת, ולפי פעילות כשיש כמה קטגוריות
 budget_summary as (
     select
         c."חברה",
         c."מספר פרויקט",
+        c."מספר מהדורה",
         case when m.category_count = 1 then m."מרכיבי אומדן הכנסות"
              when c."מרכיבי אומדן הכנסות" is not null then c."מרכיבי אומדן הכנסות"
         else 'תקציב ללא שיוך מפורט - תת פרק ' || to_varchar(c."מספר תת פרק") end as "מרכיבי אומדן הכנסות",
         sum(case when c."דגל מהדורת 0" = 'Y' then coalesce(c."סך הכל מחיר הגשה", 0) / 1000.0 else 0 end) as "אפס",
-        sum(case when c."דגל ביצוע" = 'Y'    then coalesce(c."סך הכל מחיר הגשה", 0) / 1000.0 else 0 end) as "מעודכן"
+        sum(coalesce(c."סך הכל מחיר הגשה", 0) / 1000.0) as "מעודכן"
     from classified c
 
     inner join sub_chapter_mapping m
@@ -141,10 +140,10 @@ budget_summary as (
 
     where m.category_count >= 1
 
-    group by 1, 2, 3
+    group by 1, 2, 3,4
 ),
 
--- הסרת שורות תקציב ללא שיוך כאשר שני התקציבים אפס
+-- 4. הסרת שורות תקציב ללא שיוך כאשר שני התקציבים אפס
 budget_summary_filtered as (
     select *
     from budget_summary
@@ -153,7 +152,7 @@ budget_summary_filtered as (
        or round("מעודכן", 2) <> 0
 ),
 
--- 4. שמירה של הבקרה האחרונה בכל חודש לכל פרויקט
+-- 5. שמירה של הבקרה האחרונה בכל חודש לכל פרויקט
 income_forecast_by_month as (
     select
         *,
@@ -164,7 +163,7 @@ income_forecast_by_month as (
         order by "Date" desc, "בקרה תקציבית_ID" desc) = 1
 ),
 
--- 5. שיוך שורות אומדן ההכנסות לקטגוריות שנקבעו לפי תתי הפרקים
+-- 6. שיוך שורות אומדן ההכנסות לקטגוריות שנקבעו לפי תתי הפרקים
 forecast_classified as (
     select
         f."חברה",
@@ -187,7 +186,7 @@ forecast_classified as (
 ),
 
 
--- 6. סיכום אומדן הנוכחי והקודם לפי חודש וקטגוריית אומדן הכנסות
+-- 7. סיכום אומדן הנוכחי והקודם לפי חודש וקטגוריית אומדן הכנסות
 forecast_summary as (
     select
         "חברה",
@@ -211,7 +210,7 @@ forecast_summary as (
         "מרכיבי אומדן הכנסות"
 ),
 
--- אומדנים ללא שיוך מפורט, רק כאשר קיים סכום באומדן
+-- 8. אומדנים ללא שיוך מפורט, רק כאשר קיים סכום באומדן
 unmapped_forecast_summary as (
     select
         "חברה",
@@ -226,7 +225,7 @@ unmapped_forecast_summary as (
     having round(sum(coalesce("אומדן נוכחי", 0)), 2) <> 0 or round(sum(coalesce("אומדן קודם", 0)), 2) <> 0
 ),
 
--- 7. יצירת רשימה של כל החודשים שבהם קיימת בקרת אומדן לפרויקט
+-- 9. יצירת רשימה של כל החודשים שבהם קיימת בקרת אומדן לפרויקט
 control_months as (
     select distinct
         "חברה",
@@ -236,7 +235,7 @@ control_months as (
     where "Date" is not null
 ),
 
--- 8. חישוב לכל חודש דוח מהו חודש הבקרה הקודם של אותו פרויקט
+-- 10. חישוב לכל חודש דוח מהו חודש הבקרה הקודם של אותו פרויקט
 report_months as ( 
     select 
         "חברה", 
@@ -246,7 +245,7 @@ report_months as (
     from control_months 
 ),
 
--- 9.שומרים את הבקרה האחרונה בכל חודש כדי לדעת מה היתה המהדורה הנוכחית באותו חודש
+-- 11. שומרים את הבקרה האחרונה בכל חודש כדי לדעת מה היתה המהדורה הנוכחית באותו חודש
 budget_control_by_month as (
     select
         "חברה",
@@ -266,7 +265,7 @@ budget_control_by_month as (
         order by "Date" desc,"בקרה תקציבית_ID" desc) = 1
 ),
 
---10. גידול/קיטון בכמויות למדידה - משווים את אותה פעילות בין מהדורה נוכחית למהדורה 0 ורק אם הכמות השתנתה מחשבים את ההפרש
+--12. גידול/קיטון בכמויות למדידה - משווים את אותה פעילות בין מהדורה נוכחית למהדורה 0 ורק אם הכמות השתנתה מחשבים את ההפרש
 measurement_change_raw as (
     select
         r."חברה",
@@ -303,7 +302,7 @@ measurement_change_raw as (
         bc."מהדורה נוכחית"
 ),
 
---11.מביא את האומדן הקודם מחודש קודם
+--13. מביא את האומדן הקודם מחודש קודם
 measurement_change_summary as (
     select
         "חברה",
@@ -314,23 +313,30 @@ measurement_change_summary as (
     from measurement_change_raw
 ),
 
---12.שיוך נתוני התקציב לכל אחד מחודשי הדוח של הפרויקט
+--14. שיוך נתוני התקציב לכל אחד מחודשי הדוח של הפרויקט לפי המהדורה המקושרת
 budget_by_report_month as (
     select
         b."חברה",
         b."מספר פרויקט",
         r."חודש דוח",
         b."מרכיבי אומדן הכנסות",
-        b."אפס",
-        b."מעודכן"
+        sum(b."אפס") as "אפס",
+        sum(case when b."מספר מהדורה" = bc."מהדורה נוכחית" then b."מעודכן" else 0 end) as "מעודכן"
     from budget_summary_filtered b
 
     inner join report_months r
         on b."חברה" = r."חברה"
         and b."מספר פרויקט" = r."מספר פרויקט"
+
+    left join budget_control_by_month bc
+        on r."חברה" = bc."חברה"
+        and r."מספר פרויקט" = bc."מספר פרויקט"
+        and r."חודש דוח" = bc."חודש דוח"
+
+    group by 1, 2, 3, 4
 ),
 
---13.חישוב הפרשי מחירים: הפער בין מהדורה מעודכנת למהדורה 0, בנטרול גידול/קיטון בכמויות
+--15. חישוב הפרשי מחירים: הפער בין מהדורה מעודכנת למהדורה 0, בנטרול גידול/קיטון בכמויות
 price_difference_summary as (
     select
         b."חברה",
@@ -347,7 +353,7 @@ price_difference_summary as (
     where b."מרכיבי אומדן הכנסות" = 'חוזה כמויות למדידה'
 ),
 
---חישוב הפרשי מחירים של חודש בקרה קודם
+--16. חישוב הפרשי מחירים של חודש בקרה קודם
 price_difference_with_prev as (
     select
         "חברה",
@@ -359,7 +365,7 @@ price_difference_with_prev as (
 ),
 
 
---14.התייקרות בפועל מתוך החשבון החלקי
+--17.התייקרות בפועל מתוך החשבון החלקי
 --רק סעיף "התייקרות מצטברת"
 actual_escalation_raw as (
     select
@@ -374,7 +380,7 @@ actual_escalation_raw as (
 ),
 
 
---15.שמירת החשבון האחרון בכל חודש עבור ההתייקרות המצטברת
+--18.שמירת החשבון האחרון בכל חודש עבור ההתייקרות המצטברת
 actual_escalation_by_month as (
     select *
     from actual_escalation_raw
@@ -387,7 +393,7 @@ actual_escalation_by_month as (
 ),
 
 
---16.מוצא לכל חודש בקרה את ההתייקרות האחרונה שהייתה ידועה עד אותו חודש
+--19.מוצא לכל חודש בקרה את ההתייקרות האחרונה שהייתה ידועה עד אותו חודש
 actual_escalation_by_report_month as (
     select
         r."חברה",
@@ -411,7 +417,7 @@ actual_escalation_by_report_month as (
 ),
 
 
---17.חישוב התייקרות הנוכחית והקודמת לפי רצף חודשי הבקרה באומדן ההכנסות
+--20. חישוב התייקרות הנוכחית והקודמת לפי רצף חודשי הבקרה באומדן ההכנסות
 actual_escalation_summary as (
     select
         "חברה",
@@ -422,7 +428,7 @@ actual_escalation_summary as (
 from actual_escalation_by_report_month
 ),
 
---18.חיבור בין התקציב לאומדן ומחשב את הערכים הסופיים לכל מרכיב
+--21. חיבור בין התקציב לאומדן ומחשב את הערכים הסופיים לכל מרכיב
 base_result as (
     select
         b."חברה",
@@ -483,6 +489,7 @@ base_result as (
         and b."חודש דוח" = pd."חודש דוח"
 ),
 
+-- 22. איחוד התוצאות והוספת שורות נפרדות עבור התייקרות בפועל, גידול/קיטון בכמויות, הפרשי מחירים ואומדנים ללא שיוך מפורט
 final_result as (
 select
     "חברה",
